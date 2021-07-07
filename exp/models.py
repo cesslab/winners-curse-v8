@@ -51,6 +51,7 @@ def save_bid_history_to_player(player, rounds_per_lottery,  player_bid_history: 
     player.bid3 = bid_history.bid3
     player.bid4 = bid_history.bid4
     player.up_ticket = round(bid_history.up_ticket * 100)
+    player.others_high_bid = bid_history.other_high_bid
 
 
 def create_player_bid_histories(treatment_code, players, lottery_ids, session_id, rounds_per_lottery, phase):
@@ -101,13 +102,6 @@ class BidHistoryPlayer:
         payoff_lottery = self.participant.vars['part_one_payoff_lottery']
         return round_number == payoff_round and lottery_number == payoff_lottery
 
-    def is_part_two_payoff(self, rounds_per_lottery):
-        lottery_number = self.get_lottery_order(rounds_per_lottery)
-        round_number = self.get_lottery_round_number(rounds_per_lottery)
-        payoff_round = self.participant.vars['part_two_payoff_round']
-        payoff_lottery = self.participant.vars['part_two_payoff_lottery']
-        return round_number == payoff_round and lottery_number == payoff_lottery
-
     def is_highest_bidder(self):
         return self.bid > self.bid1 and self.bid > self.bid2 and self.bid >= self.bid3
 
@@ -131,41 +125,14 @@ class BidHistoryPlayer:
     def payoff_question_number(self):
         return self.participant.vars['question_phase_payoff_question_number']
 
-    @property
-    def question_one_data(self):
-        return self.participant.vars['q1_data']
-
-    @property
-    def question_two_data(self):
-        return self.participant.vars['q2_data']
-
-    @property
-    def question_three_data(self):
-        return self.participant.vars['q3_data']
-
-    def get_part_one_payoff_data(self):
+    def get_bid_payoff_data(self):
         return self.participant.vars['bid_payoff_data']
 
-    def get_part_one_payoff(self):
+    def get_bid_earnings(self):
         return self.participant.vars['bid_payoff_data']['earnings']
 
-    def get_part_two_payoff(self):
-        if self.payoff_question_number == 1:
-            return self.participant.vars['q1_data']['earnings_q1']
-        elif self.payoff_question_number == 2:
-            return self.participant.vars['q3_data']['earnings_q3']
-        else:
-            # TODO: replace prob_earnings with earnings_q2
-            return self.participant.vars['q2_data']['prob_earnings']
-
-    def get_part_two_payoff_data(self):
-        if self.payoff_question_number == 1:
-            return self.participant.vars['q1_data']
-        elif self.payoff_question_number == 2:
-            return self.participant.vars['q3_data']
-        else:
-            # TODO: replace prob_earnings with earnings_q2
-            return self.participant.vars['q2_data']
+    def get_guess_earnings(self):
+        return self.participant.vars['guess_payoff_data']['earnings']
 
     def get_lottery_round_number(self, rounds_per_lottery):
         # Calculates the relative round number given the oTree round number

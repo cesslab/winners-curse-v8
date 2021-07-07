@@ -1,0 +1,71 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'global/css/payoff_outcome.css' %}">
+    <link rel="stylesheet" href="{% static 'global/css/bid.css' %}">
+    <link rel="stylesheet" href="{% static 'global/css/custom_font.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div id="outcome-header">
+        <h2 class="text-center">Payoff for Task 1</h2>
+    </div>
+    <div class="text-center">
+        <span>
+            The computer randomly selected round {{ lottery_round_number }} for lottery of type {{lottery_order}} for Payoff.
+        </span>
+    </div>
+
+    <div class="outcome-header lottery-header">
+        <h4 class="text-center">Outcome in Round {{ lottery_round_number }}</h4>
+    </div>
+
+    <div class="two-column-container">
+        <div class="item text-center">
+            <h5>Your Bid</h5>
+            <p><span class="credits">C</span>{{ bid }}</p>
+        </div>
+        <div class="item text-center">
+            <h5>Highest Bid</h5>
+            <span><span class="credits">C</span>{{ new_highest_bid }}</span>
+        </div>
+    </div>
+    <div class="text-center">
+        <span>
+        {% if tie %}
+                You and at least one other bidder submitted identical highest bids. The computer randomly selected
+                {% if winner %}you{% else %}one other{% endif %} as the winner.
+        {% else %}
+            You {% if winner %} won {% else %} did not win {% endif %} the auction.
+        {% endif %}
+        </span>
+    </div>
+
+    <div id="lottery-ticket-header" class="text-center">
+      <p>
+        The {{ player.selected_value_text }} was
+        {% if player.is_value_treatment %}
+        {{ ticket_value_before }}.
+        {% else %}
+        {{ ticket_probability }}.
+        {% endif %}
+        Therefore, the actual lottery ticket was:
+      </p>
+    </div>
+
+    {% include 'global/RealizedLottery.html' with  is_value_treatment=player.is_value_treatment %}
+
+    <div id="played-outcome" class="text-center">
+      <p>The lottery was played and its outcome was <span class="credits">C</span>{{ ticket_value_after }}.</p>
+    </div>
+
+    <div id="earnings-header" class="text-center">
+        <h4>Your Earnings</h4>
+        <p>Your earnings for this round were <span class="credits">C</span>{{ earnings }}.</p>
+    </div>
+    {% next_button %}
+{% endblock %}

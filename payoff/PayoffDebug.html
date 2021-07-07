@@ -1,0 +1,45 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block styles %}
+{% endblock %}
+
+{% block content %}
+<h5>Question 1a: point belief about highest of the other 3 bids.</h5>
+<p>
+  Answer: subject enters X = {{guess}}
+</p>
+<p>
+  Payoff function:
+</p>
+<ul>
+  <li>Computer computes loss function L= (X-OthersHBid)^2 = {{computed_loss}} = ({{guess}} - {{others_high_bid}})^2</li>
+  <li>Computer draws random number K ~ U[0,1296] = {{random_k}}</li>
+  <li>Computer pays 12 credits if L < K ; 0 otherwise (in particular if L>1296). L is {{computed_loss}} and K is {{random_k}}
+    so {% if l_less_than_k %} L is less than K {% else %} L is greater than or equal to K {% endif %}
+    and the computer pays {{guess_earnings}}.
+  </li>
+  <li>
+   We also compute the probability of getting 12 credits given the subject's answer: Prob(K>L)=prob =
+    (1296-L)/1296 = {{prob_k_greater_than_l}}
+  </li>
+</ul>
+<h5>Question 1b: confidence interval about worth of the lottery.</h5>
+<p>
+  Answer: l for lower boundary and u for upper boundary
+</p>
+<p>
+  Payoff function:
+</p>
+<ul>
+  <li>
+    Computer computes 12*[1- (u-l)/(Emax-Emin)] = 12*[1 - ({{max_guess}} - {{min_guess}})/({{prep_emax}} - {{prep_emin}})] = {{confidence_value}}.
+    if positive and OthersHBid in [l,u] (worth is in interval); 0 otherwise.
+    The computed value is {{confidence_value}} and {% if computed_value_non_zero %} is greater than zero {% else %} less than zero {% endif %}
+    and the OthersHBid is {% if high_bid_within_interval %} in {% else %} not in {% endif %} [{{prep_emax}}, {{prep_emin}}] so payoff
+    for this part is {{interval_earnings}}.
+  </li>
+</ul>
+
+{% next_button %}
+{% endblock %}

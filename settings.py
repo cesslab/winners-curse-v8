@@ -1,16 +1,12 @@
 from os import environ, getenv
 
 GENERIC_CONFIG = {
-    "app_sequence": ["instructions", "partonesample", "partone"],
+    "app_sequence": ["instructions", "partonesample", "partone", "payoff"],
     "num_demo_participants": 2,
     "part_one_lottery_1": "1",
     "part_one_lottery_2": "2",
     "part_one_lottery_3": "3",
     "part_one_lottery_4": "4",
-    "part_two_lottery_1": "1",
-    "part_two_lottery_2": "2",
-    "part_two_lottery_3": "3",
-    "part_two_lottery_4": "4",
 }
 
 SESSION_CONFIGS = [
@@ -36,7 +32,7 @@ LANGUAGE_CODE = 'en'
 
 # e.g. EUR, GBP, CNY, JPY
 REAL_WORLD_CURRENCY_CODE = 'USD'
-USE_POINTS = True
+USE_POINTS = False
 
 ADMIN_USERNAME = 'admin'
 # for security, best to set admin password in an environment variable

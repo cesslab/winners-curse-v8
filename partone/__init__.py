@@ -57,12 +57,24 @@ class Player(BasePlayer, BidHistoryPlayer):
     guess = models.IntegerField(min=0, max=100)
     bid = models.IntegerField(min=0, max=100)
     is_payment_round = models.BooleanField(initial=False)
+    # Guess Payoff
+    prep_emin = models.FloatField()
+    prep_emax = models.FloatField()
+    computed_loss = models.FloatField()
+    random_k = models.IntegerField()
+    high_bid_within_interval = models.BooleanField()
+    confidence_value = models.FloatField(initial=0.0)
+    guess_earnings = models.FloatField()
+    interval_earnings = models.FloatField()
+    computed_value_non_zero = models.BooleanField()
 
     tie = models.BooleanField(initial=False)
     win_tie_break = models.BooleanField(initial=False)
     winner = models.BooleanField(initial=False)
     earnings = models.IntegerField()
     new_highest_bid = models.IntegerField()
+    prob_k_greater_than_l = models.IntegerField()
+    l_less_than_k = models.BooleanField()
     # Bid History
     bid_history_id = models.IntegerField()
     previous_session_id = models.IntegerField()
@@ -90,6 +102,7 @@ class Player(BasePlayer, BidHistoryPlayer):
     fixed_value = models.IntegerField()
     ticket_value_after = models.IntegerField()
     up_ticket = models.IntegerField()
+    others_high_bid = models.IntegerField()
     # Player Bid History
     rounds_per_lottery = models.IntegerField()
     player_bid_history_id = models.IntegerField()
@@ -97,4 +110,4 @@ class Player(BasePlayer, BidHistoryPlayer):
     be_bid = models.FloatField()
 
 
-page_sequence = [Instructions, BestGuess, Interval, Bid, Outcome]
+page_sequence = [Instructions, BestGuess, Interval, Bid]
