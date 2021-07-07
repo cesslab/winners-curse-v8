@@ -94,14 +94,34 @@ def save_bid_history_for_all_players(players, rounds_per_lottery, phase):
 
 
 class BidHistoryPlayer:
-    def is_question_phase_payoff(self, question_number, rounds_per_lottery):
+    def is_part_one_payoff(self, rounds_per_lottery):
         lottery_number = self.get_lottery_order(rounds_per_lottery)
         round_number = self.get_lottery_round_number(rounds_per_lottery)
-        payoff_question_number = self.participant.vars['question_phase_payoff_question_number']
-        payoff_round_number = self.participant.vars['question_phase_payoff_lottery_round_number']
-        payoff_lottery_number = self.participant.vars['question_phase_payoff_lottery_number']
-        return round_number == payoff_round_number and lottery_number == payoff_lottery_number and question_number == payoff_question_number
+        payoff_round = self.participant.vars['part_one_payoff_round']
+        payoff_lottery = self.participant.vars['part_one_payoff_lottery']
+        return round_number == payoff_round and lottery_number == payoff_lottery
 
+    def is_part_two_payoff(self, rounds_per_lottery):
+        lottery_number = self.get_lottery_order(rounds_per_lottery)
+        round_number = self.get_lottery_round_number(rounds_per_lottery)
+        payoff_round = self.participant.vars['part_two_payoff_round']
+        payoff_lottery = self.participant.vars['part_two_payoff_lottery']
+        return round_number == payoff_round and lottery_number == payoff_lottery
+
+    def is_highest_bidder(self):
+        return self.bid > self.bid1 and self.bid > self.bid2 and self.bid >= self.bid3
+
+    def is_bid_tied(self):
+        return self.bid == self.bid1 or self.bid == self.bid2 or self.bid == self.bid3
+
+    def break_tie(self):
+        return random.choice([True, False])
+
+    def highest_bid(self):
+        return max([self.bid, self.bid1, self.bid2, self.bid3])
+
+    def previous_highest_bid(self):
+        return max([self.bid1, self.bid2, self.bid3])
 
     @property
     def prep_worth(self):
