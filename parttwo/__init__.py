@@ -12,12 +12,12 @@ from exp.models import (
 from exp.db import Phase, close_db
 
 from .views import (
-    Choice, Outcome
+    Instructions, Choice, Outcome
 )
 from .constants import Constants
 
 doc = """
-Choice Phase
+Part II
 """
 
 
