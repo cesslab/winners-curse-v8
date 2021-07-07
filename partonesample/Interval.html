@@ -20,7 +20,6 @@
       </div>
 
       {% include 'global/Lottery.html' %}
-      {% include 'global/LotteryInfo.html' %}
 
       {% include 'global/YourSignal.html' %}
 
@@ -29,14 +28,6 @@
     </div>
 
     <div>
-      <div>
-        <p>You are the bidder with the highest signal.</p>
-        <p>Given that your signal of {{player.signal4}} is the highest one, the lottery ticket
-          is probably as follows:</p>
-      </div>
-      <div>
-        {% include 'global/RightLottery.html' %}
-      </div>
       <div id="task">
         <div>
           <div class="pb-2">

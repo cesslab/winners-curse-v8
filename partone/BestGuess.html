@@ -22,7 +22,6 @@
       </div>
 
       {% include 'global/Lottery.html' %}
-      {% include 'global/LotteryInfo.html' %}
 
       {% include 'global/YourSignal.html' %}
 
@@ -31,18 +30,10 @@
     </div>
 
     <div>
-      <div>
-        <p>You are the bidder with the highest signal.</p>
-        <p>Given that your signal of {{player.signal4}} is the highest one, the lottery ticket
-          is probably as follows:</p>
-      </div>
-      <div>
-        {% include 'global/RightLottery.html' %}
-      </div>
       <div id="task">
         <div>
           <div id="question" class="text-center">
-            <h5>What is the lottery, on average, worth?</h5>
+            <h5>What do you think is the highest bid among the three other bids?</h5>
           </div>
           <div id="slider">
           </div>
@@ -61,7 +52,7 @@
             </thead>
             <tr>
               <th>
-                <span>Lottery Worth</span>
+                <span>Highest Bid</span>
               </th>
               <td class="text-center">
                 <input type="number" id="id_bid" name="guess" min="{{ min_value }}" max="{{ max_value }}" step="1"
