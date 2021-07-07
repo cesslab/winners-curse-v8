@@ -15,12 +15,13 @@ from .views import (
     Bid,
     BestGuess,
     Interval,
-    Instructions
+    Instructions,
+    Outcome
 )
 from .constants import Constants
 
 doc = """
-Observer Phase
+Part I
 """
 
 
@@ -35,8 +36,8 @@ def creating_session(subsession):
             Phase.QUESTION_PHASE)
 
         for player in subsession.get_players():
-            player.participant.vars['choice_payoff_lottery'] = random.randint(1, Constants.NUM_LOTTERIES)
-            player.participant.vars['choice_payoff_round'] = random.randint(1, Constants.ROUNDS_PER_LOTTERY)
+            player.participant.vars['part_one_payoff_lottery'] = random.randint(1, Constants.NUM_LOTTERIES)
+            player.participant.vars['part_one_payoff_round'] = random.randint(1, Constants.ROUNDS_PER_LOTTERY)
 
     save_bid_history_for_all_players(subsession.get_players(), Constants.ROUNDS_PER_LOTTERY, Phase.QUESTION_PHASE)
     close_db()
@@ -56,6 +57,12 @@ class Player(BasePlayer, BidHistoryPlayer):
     guess = models.IntegerField(min=0, max=100)
     bid = models.IntegerField(min=0, max=100)
     is_payment_round = models.BooleanField(initial=False)
+
+    tie = models.BooleanField(initial=False)
+    win_tie_break = models.BooleanField(initial=False)
+    winner = models.BooleanField(initial=False)
+    earnings = models.IntegerField()
+    new_highest_bid = models.IntegerField()
     # Bid History
     bid_history_id = models.IntegerField()
     previous_session_id = models.IntegerField()
@@ -90,4 +97,4 @@ class Player(BasePlayer, BidHistoryPlayer):
     be_bid = models.FloatField()
 
 
-page_sequence = [Instructions, Bid, BestGuess, Interval]
+page_sequence = [Instructions, Bid, BestGuess, Interval, Outcome]

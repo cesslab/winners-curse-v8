@@ -10,6 +10,6 @@ class Constants(BaseConstants):
     MIN_VALUATION = 0
     MAX_VALUATION = 100
     PREFIX = 'part_one_lottery_'
-    NUM_LOTTERIES = 4
-    ROUNDS_PER_LOTTERY = 3
+    NUM_LOTTERIES = 2
+    ROUNDS_PER_LOTTERY = 2
     num_rounds = NUM_LOTTERIES * ROUNDS_PER_LOTTERY

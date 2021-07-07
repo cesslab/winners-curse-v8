@@ -27,6 +27,71 @@ class Bid(Page):
                 )
         }
 
+    @staticmethod
+    def before_next_page(player, timeout_happened):
+
+        if player.is_part_one_payoff(Constants.ROUNDS_PER_LOTTERY):
+            player.is_payment_round = True
+
+            if player.is_highest_bidder():
+                player.new_highest_bid = player.bid
+                player.tie = False
+                player.winner = True
+                player.earnings = player.ticket_value_after - player.bid
+            elif player.is_bid_tied():
+                player.new_highest_bid = player.bid
+                player.tie = True
+                player.win_tie_break = player.break_tie()
+                if player.win_tie_break:
+                    player.earnings = player.ticket_value_after - player.bid
+                else:
+                    player.earnings = 0
+                player.winner = player.win_tie_break
+            else:
+                player.new_highest_bid = player.highest_bid()
+                player.tie = False
+                player.winner = False
+                player.earnings = 0
+
+            player.participant.vars['part_one_bid_payoff_data'] = {
+                "bid": player.bid,
+                "new_highest_bid": player.new_highest_bid,
+                "tie": player.tie,
+                "win_tie_break": player.win_tie_break,
+                "winner": player.winner,
+                "previous_highest_bid": player.previous_highest_bid(),
+                "fixed_value": player.fixed_value,
+                "alpha": player.alpha,
+                "beta": player.beta,
+                "epsilon": player.epsilon,
+                "signal": player.signal,
+                "treatment": player.treatment,
+                "earnings": player.earnings,
+                "lottery_order": player.lottery_order,
+                "lottery_round_number": player.lottery_round_number,
+                "ticket_value_after": player.ticket_value_after,
+                "ticket_value_before": player.ticket_value_before,
+                "ticket_probability": player.ticket_probability
+            }
+        else:
+            player.is_payment_round = True
+
+
+class Outcome(Page):
+    form_model = "player"
+
+    @staticmethod
+    def is_displayed(player):
+        return player.round_number == Constants.NUM_LOTTERIES * Constants.ROUNDS_PER_LOTTERY
+
+    @staticmethod
+    def vars_for_template(player):
+        earnings = player.ticket_value_after - player.bid
+        return {
+            "player": player,
+            **player.participant.vars['part_one_bid_payoff_data']
+        }
+
 
 class BestGuess(Page):
     form_model = "player"

@@ -126,19 +126,7 @@
     </div>
   </div>
 
-  <div class="accordion" id="accordionExample">
-    <div class="accordion-item">
-      <h2 class="accordion-header" id="headingOne">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-          Re-Read Instructions
-        </button>
-      </h2>
-      <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-        <div class="accordion-body">
-        </div>
-      </div>
-    </div>
-  </div>
+{% include 'partonesample/IntervalRereadInstructions.html' %}
 
 {% endblock %}
 
@@ -318,24 +306,6 @@
   if (js_vars.display_intro) {
     introJs().setOptions({
       steps: [
-        {
-          title: 'Interval',
-          intro: js_vars.interval_part_one,
-          position: 'left',
-          element: document.querySelector(('#guess-table'))
-        },
-        {
-          title: 'Interval (Continued)',
-          intro: js_vars.interval_part_two,
-          position: 'left',
-          element: document.querySelector(('#guess-table'))
-        },
-        {
-          title: 'Interval Limits',
-          intro: js_vars.interval_limits,
-          position: 'left',
-          element: document.querySelector(('#guess-table'))
-        },
       ]
     }).start()
 
