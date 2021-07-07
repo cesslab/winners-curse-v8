@@ -1,0 +1,29 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+  General Information
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'global/css/custom_font.css' %}">
+{% endblock %}
+
+{% block content %}
+<div>
+  <p>
+    Welcome. We kindly ask you to dedicate your full attention to the experiment.
+    This experiment consists of 2 parts. If you follow the instructions
+    and make good decisions you might earn a considerable amount of money.
+    Should you have a question, please send a message to the experimenter who
+    will assist you. Please turn on your web camera until the end of the experiment.
+    Should you disobey the rules, we will exclude you from the experiment and you will not be paid.
+  </p>
+  <p>
+    The currency in this experiment is credits(<span class="credits">C</span>). Each credit you earn will
+    be converted into U.S. dollars at the end of the experiment at the rate of $1
+    equals <span class="credits">C</span>6.
+  </p>
+</div>
+{% next_button %}
+{% endblock %}

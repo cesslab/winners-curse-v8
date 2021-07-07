@@ -1,0 +1,67 @@
+@charset "UTF-8";
+@import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.1.0/css/font-awesome.min.css";
+
+
+.flex-container {
+    display: flex;
+    flex-wrap: nowrap;
+}
+.pprogress {
+  display: grid;
+  grid-template-columns: 50px auto 50px auto 50px 30px;
+  grid-template-rows: 50px 50px;
+  align-items: center;
+  padding-left: 50px;
+  margin: 0;
+  width: 100%;
+  /* color: #F2F2F2; */
+  font-family: "Palanquin", sans-serif;
+  list-style: none;
+  background-color: #fff;
+  height: auto;
+}
+
+.progress-left-text {
+    grid-row: 2;
+    grid-column-start: 1;
+    grid-column: 1 / span 2;
+}
+.progress-middle-text {
+    grid-row: 2;
+    grid-column-start: 3;
+    grid-column: 3 / span 2;
+}
+.progress-right-text {
+    grid-row: 2;
+    grid-column-start: 5;
+    grid-column: 5 / span 2;
+}
+.progress__circle {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #F2F2F2;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  flex-flow: column nowrap;
+}
+.progress__circle:before {
+  content: "";
+  font-family: "FontAwesome";
+  font-size: 2em;
+  color: #fff;
+  /* margin-top: 0.3em; */
+}
+.progress__bar {
+  /* flex: 1; */
+  height: 5px;
+  width: auto;
+  background: #F2F2F2;
+}
+.progress--done {
+  background: #C9D645;
+}
+.progress--active {
+  border: 5px solid #C9D645;
+  color: #C9D645;
+}

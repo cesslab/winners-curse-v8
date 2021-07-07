@@ -1,0 +1,10 @@
+.noUi-horizontal .noUi-handle {
+    width: 5px;
+    height: 28px;
+    right: -2.5px;
+    top: -6px;
+}
+
+.noUi-handle::before, .noUi-handle::after {
+    content: none;
+}

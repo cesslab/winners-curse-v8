@@ -1,0 +1,45 @@
+<div class="accordion" id="accordionExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        Re-Read Instructions
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <div>
+          <h4>Interval Selection</h4>
+          <p>
+            Now choose an interval that contains the worth of the lottery with a 50% probability; that is,
+            you should be 50% sure that the interval contains the lottery’s true worth. The smaller your chosen
+            interval is, the more you will earn, but you will only earn a payoff if the actual worth of the lottery
+            lies within your chosen interval.
+          </p>
+        </div>
+        <div>
+          <div>
+            <h4>Details about payoff</h4>
+          </div>
+          <div>
+            <img src='{% static "global/img/INT1b.png" %}' alt="graph">
+            <img src='{% static "global/img/INT1a.png" %}' alt="graph">
+            <img src='{% static "global/img/INT.png" %}' alt="graph">
+          </div>
+          <div><p>The graphs show the trade-off between making your interval wider but not too wide.
+            Increasing the width of the interval increases the chances to capture the true worth of the lottery and to
+            get a payoff (top graph), but at the same time it decreases your payoff (middle graph).
+            The overall effect on your expected payment depends on the actual lottery and your chosen width (bottom graph).
+            Eventually, choosing an interval that is too wide, may decrease your average payment.</p></div>
+        </div>
+        <div>
+          <div><h4>Interval Boundaries</h4></div>
+          <div>
+            <p>Enter here the lower and upper threshold of your interval. Choose the values such that your best guess
+              lies within your selected interval.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

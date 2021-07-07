@@ -1,0 +1,17 @@
+<div class="lottery">
+  <p class="text-center">
+    {% if player.is_value_treatment %}
+    With a probability of <span class="text-primary"><b>{{ player.ticket_probability }}%</b></span> you get<br>
+    a value v between <b><span class="text-success"><span class="credits">C</span>{{ player.alpha }}</span></b>
+    and <b><span class="text-success"><span class="credits">C</span>{{ player.beta }}</span></b>,
+    <br>otherwise you get <b><span class="text-success"><span class="credits">C</span>0</span></b>.
+    {% else %}
+    With a probability <span class="text-success">p</span> between
+    <b><span class="text-success">{{ player.alpha }}%</span></b> and
+    <b><span class="text-success">{{ player.beta }}%</span></b>,<br>
+    you get a value
+    v = <span class="text-primary font-weight-bold"><span class="credits">C</span>{{ player.fixed_value }}</span>,
+    <br>otherwise you get <span class="text-primary font-weight-bold"><span class="credits">C</span>0</span>.
+    {% endif %}
+  </p>
+</div>

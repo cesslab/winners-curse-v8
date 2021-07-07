@@ -1,0 +1,6 @@
+<p>A signal of {{ player.signal }} means that the {{ player.selected_value_text }}
+  lies between {{ player.min_signal }}{{player.treatment_suffix}} and {{ player.max_signal }}{{player.treatment_suffix}} inclusively,
+  where every {% if player.is_value_treatment %} integer {% else %} percentage number {% endif %} between
+  {{ player.min_signal }}{{player.treatment_suffix}} and {{ player.max_signal }}{{player.treatment_suffix}} is equally likely to
+  be the {{ player.selected_value_text }}. To help you interpret the signal better, we will always display next to your
+  signal the range of possible {{ player.selected_values_text }} given your signal.</p>

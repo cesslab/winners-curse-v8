@@ -1,0 +1,39 @@
+<div id="lottery-navbar">
+  <div id="lottery-type">
+    <div class="row">
+      <div class="col-xs-12">
+
+        <div class="lottery-multi-step">
+          <ul class="lottery-multi-step-list">
+            {{ for i in num_lotteries }}
+            <li class="lottery-multi-step-item
+          {{ if i < player.lottery_order }}current{{elif i == player.lottery_order}}actual{{ endif }}">
+              <div class="item-wrap">
+                <p class="item-title">lottery {{ i }}</p>
+              </div>
+            </li>
+            {{ endfor }}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="row">
+      <div class="col-xs-12">
+
+        <div class="round-multi-step">
+          <ul class="round-multi-step-list">
+            {{ for i in num_rounds }}
+            <li class="round-multi-step-item {{ if i < player.lottery_round_number }}current{{elif i == player.lottery_round_number}}actual{{ endif }}">
+              <div class="item-wrap">
+                <p class="item-title">Round {{ i }}</p>
+              </div>
+            </li>
+            {{ endfor }}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

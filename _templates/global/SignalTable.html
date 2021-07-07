@@ -1,0 +1,20 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Bidder</th>
+      <th scope="col">Player 1 {% if player_id == 1 %} (you){% endif %}</th>
+      <th scope="col">Player 2 {% if player_id == 2 %} (you){% endif %}</th>
+      <th scope="col">Player 3 {% if player_id == 3 %} (you){% endif %}</th>
+      <th scope="col">Player 4 {% if player_id == 4 %} (you){% endif %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">signal</th>
+      <td>{{signal_1}}</td>
+      <td>{{signal_2}}</td>
+      <td>{{signal_3}}</td>
+      <td>{{signal_4}}</td>
+    </tr>
+  </tbody>
+</table>

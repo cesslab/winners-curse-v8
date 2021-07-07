@@ -1,0 +1,13 @@
+<div id="lottery-signal-interpretation">
+  <h5 class=""><u>Signal Interpretation</u></h5>
+  <p>
+    {% if player.is_value_treatment %}
+    The Selected Value v is at most {{ player.epsilon }} units away from your signal about v.
+    Given your signal, the Selected Value must lie<br> between <b><span class="credits">C</span>{{ player.min_signal }}</b>
+    and <b><span class="credits">C</span>{{ player.max_signal }}</b>.
+    {% else %}
+    The Selected Probability p is at most {{ player.epsilon }} percentage points away from your signal about p.
+    Given your signal, the Selected Probability must lie between <b>{{ player.min_signal }}%</b> and <b>{{ player.max_signal }}%</b>.
+    {% endif %}
+  </p>
+</div>

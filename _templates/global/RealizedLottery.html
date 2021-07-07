@@ -1,0 +1,20 @@
+<div class="lottery" id="lottery-text">
+  <p>
+    With a probability p of
+
+    {% if is_value_treatment %}
+      <span class="text-primary font-weight-bold">{{ fixed_value }}%</span>
+    {% else %}
+      <span class="text-success font-weight-bold">{{ ticket_probability }}%</span>
+    {% endif %}
+    you get a value v =
+    {% if is_value_treatment %}
+      <span class="text-success font-weight-bold"><span class="credits">C</span>{{ ticket_value_before }}</span>,
+      <br>otherwise you get <span class="text-success font-weight-bold"><span class="credits">C</span>0</span>.
+    {% else %}
+      <span class="text-primary font-weight-bold"><span class="credits">C</span>{{ fixed_value }}</span>,
+      <br>otherwise you get <span class="text-primary font-weight-bold"><span class="credits">C</span>0</span>.
+    {% endif %}
+  </p>
+</div>
+

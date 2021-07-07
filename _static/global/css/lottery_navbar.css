@@ -1,0 +1,176 @@
+/* Round navbar */
+
+.lottery-multi-step {
+  /*margin: 1em 0;*/
+}
+
+.lottery-multi-step-list {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  list-style-type: none;
+  padding: 0;
+}
+.lottery-multi-step-list .lottery-multi-step-item:first-child {
+  margin-left: 0;
+}
+.lottery-multi-step-list .lottery-multi-step-item:last-child {
+  margin-right: 0;
+}
+
+.lottery-multi-step-item {
+  position: relative;
+  width: 100%;
+  margin: 0 0.3333333333em;
+  z-index: 2;
+  border-radius: 0.2em;
+}
+@media only screen and (max-width: 786px) {
+  .lottery-multi-step-item {
+    margin: 0 0.3333333333em;
+  }
+}
+.lottery-multi-step-item .item-title,
+.lottery-multi-step-item .item-subtitle {
+  position: relative;
+  margin: 0;
+  z-index: 2;
+}
+@media only screen and (max-width: 786px) {
+  .lottery-multi-step-item .item-subtitle {
+    display: none;
+  }
+}
+.lottery-multi-step-item .item-title {
+  color: #888888;
+  font-weight: 600;
+    font-size: .90em;
+  margin: 0;
+}
+.lottery-multi-step-item.active:hover {
+  cursor: pointer;
+}
+
+.lottery-multi-step-item.current .item-title, .lottery-multi-step-item.current .item-subtitle {
+  color: #fff;
+}
+/* actual */
+.lottery-multi-step-item.actual .item-title, .lottery-multi-step-item.actual .item-subtitle {
+    color: #fff;
+}
+
+.lottery-multi-step-item.active.current:hover .item-title, .lottery-multi-step-item.active.current:hover .item-subtitle {
+  color: #cacaca;
+}
+/* actual */
+.lottery-multi-step-item.actual .item-title, .lottery-multi-step-item.actual .item-subtitle {
+    color: #fff;
+}
+.lottery-multi-step-item.active.actual:hover .item-title, .lottery-multi-step-item.active.actual:hover .item-subtitle {
+    color: #cacaca;
+}
+
+.lottery-multi-step-item.error:after {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  transform: translateY(-50%);
+  right: 0.5em;
+  content: "!";
+  color: #d50000;
+}
+
+.item-wrap {
+  padding: 0.5em;
+  position: relative;
+  height: 100%;
+}
+.item-wrap:before, .item-wrap:after {
+  position: absolute;
+  left: 0;
+  content: " ";
+  width: 100%;
+  height: 50.5%;
+  z-index: 1;
+  background-color: #eee;
+}
+.item-wrap:before {
+  top: 0;
+  transform: skew(20deg);
+  /*border-radius: 0.2em 0.2em 0 0;*/
+}
+.item-wrap:after {
+  bottom: 0;
+  transform: skew(-20deg);
+  /*border-radius: 0 0 0.2em 0.2em;*/
+}
+
+.current .item-wrap:before,
+.current .item-wrap:after {
+  background-color: #cacaca;
+}
+/* actual */
+.actual .item-wrap:before,
+.actual .item-wrap:after {
+    background-color: #a9a9a9;
+}
+
+.active:hover .item-wrap:before,
+.active:hover .item-wrap:after {
+  background-color: #d8f1ff;
+}
+
+.lottery-multi-step-item.error .item-title,
+.lottery-multi-step-item.error .item-subtitle {
+  padding-right: 2em;
+}
+
+.lottery-multi-step-item:first-child .item-wrap,
+.lottery-multi-step-item:last-child .item-wrap {
+  width: 100%;
+  border-radius: 0.2em;
+}
+.lottery-multi-step-item:first-child .item-wrap:before, .lottery-multi-step-item:first-child .item-wrap:after,
+.lottery-multi-step-item:last-child .item-wrap:before,
+.lottery-multi-step-item:last-child .item-wrap:after {
+  width: 50%;
+}
+
+.lottery-multi-step-item:first-child .item-wrap {
+  background: linear-gradient(to right, #eee 95%, transparent 5%);
+}
+.lottery-multi-step-item:first-child .item-wrap:before, .lottery-multi-step-item:first-child .item-wrap:after {
+  left: 50%;
+}
+
+.active.lottery-multi-step-item:first-child:hover .item-wrap {
+  background: linear-gradient(to right, #d8f1ff 95%, transparent 5%);
+}
+
+.current.lottery-multi-step-item:first-child .item-wrap {
+  background: linear-gradient(to right, #cacaca 95%, transparent 5%);
+}
+/* actual */
+.actual.lottery-multi-step-item:first-child .item-wrap {
+  background: linear-gradient(to right, #a9a9a9 95%, transparent 5%);
+}
+
+.lottery-multi-step-item:last-child .item-wrap {
+  background: linear-gradient(to left, #eee 95%, transparent 5%);
+}
+.lottery-multi-step-item:last-child .item-wrap:before, .lottery-multi-step-item:last-child .item-wrap:after {
+  right: 50%;
+}
+
+.active.lottery-multi-step-item:last-child:hover .item-wrap {
+  background: linear-gradient(to left, #d8f1ff 95%, transparent 5%);
+}
+
+.current.lottery-multi-step-item:last-child .item-wrap {
+  background: linear-gradient(to left, #cacaca 95%, transparent 5%);
+}
+/* actual */
+.actual.lottery-multi-step-item:last-child .item-wrap {
+    background: linear-gradient(to left, #a9a9a9 95%, transparent 5%);
+}

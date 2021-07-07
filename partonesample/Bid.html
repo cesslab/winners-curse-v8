@@ -1,0 +1,122 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'global/css/bid.css' %}">
+<link rel="stylesheet" href="{% static 'global/css/progress.css' %}">
+
+<link rel="stylesheet" href="{% static 'global/css/round_navbar.css' %}">
+<link rel="stylesheet" href="{% static 'global/css/lottery_navbar.css' %}">
+<link rel="stylesheet" href="{% static 'global/css/footer.css' %}">
+<link rel="stylesheet" href="{% static 'global/css/custom_font.css' %}">
+
+<link href='https://fonts.googleapis.com/css?family=Palanquin:500' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="{% static 'global/css/font-awesome.css' %}">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/3.4.0/introjs.css" integrity="sha512-i+WzzATeaDcwcfi5CfLn63qBxrKqiQvDLC+IChU1zVlaPguPgJlddOR07nU28XOoIOno9WPmJ+3ccUInpmHxBg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="{% static 'global/css/tooltip.css' %}">
+
+{% endblock %}
+
+  {% block content %}
+  {% if new_lottery %}
+    {% include 'global/LotteryUpdate.html' %}
+  {% endif %}
+
+  {% include 'global/RoundUpdate.html' %}
+
+  {% include 'global/LotteryRoundNavbar.html' %}
+  <div class="grid-container">
+    <div>
+      <div id="lottery-ticket">
+        <div class="lottery-header">
+          <h4 class="text-center"><u>Lottery of type {{ player.lottery_order }}</u></h4>
+        </div>
+        <div>
+          <p>Consider the following lottery ticket with two possible prizes,
+            0 and a value v.</p>
+        </div>
+
+        {% include 'global/Lottery.html' %}
+        {% include 'global/LotteryInfo.html' %}
+      </div>
+
+      {% include 'global/YourSignal.html' %}
+
+      {% include 'global/SignalInterpretation.html' %}
+  </div>
+  <div class="d-flex flex-column align-items-center" style="height: 100%;">
+    <div id="additional-information">
+      <div>
+        <p>You are the bidder with the highest signal.</p>
+        <p>Given that your signal of {{player.signal4}} is the highest one, the lottery ticket
+          is probably as follows:</p>
+      </div>
+      <div>
+        {% include 'global/RightLottery.html' %}
+      </div>
+    </div>
+    <div id="your-task">
+      <div class="align-self-center">
+        <h4>Your Bid</h4>
+      </div>
+      <div class="align-self-center">
+        <input type="number" id="bid" name="bid" min="0" max="100" step="1"
+               class="center-input form-control" value="" placeholder=""
+               data-for="bid-selected-probability"  readonly="readonly">
+      </div>
+    </div>
+    <div class="btn-container">
+      <button class="otree-btn-next btn btn-primary">Next</button>
+    </div>
+  </div>
+</div>
+
+{% include 'partonesample/BidRereadInstructions.html' %}
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/3.4.0/intro.min.js" integrity="sha512-QWPjvFqgUJv5X6Sq5NXmwJQSEzUEBxmCCcgqJd5/5luZnS6llRbshsChUNKrFlZ4bshKZEJxAHDB+WWdMsGvUA==" crossorigin="anonymous"></script>
+<script>
+  introJs().setOptions({
+    steps: [
+      {
+        title: 'Lottery Ticket',
+        intro: js_vars.lottery_ticket,
+        element: document.querySelector(('#lottery-ticket'))
+      },
+      {
+        title: 'The Signal',
+        intro: js_vars.your_signal,
+        element: document.querySelector(('#lottery-signal'))
+      },
+      {
+        title: 'Signal Interpretation',
+        intro: js_vars.signal_interpretation,
+        element: document.querySelector(('#lottery-signal-interpretation'))
+      },
+      {
+        title: 'General Remark',
+        intro: js_vars.general_remark,
+        element: document.querySelector(('#general-remark'))
+      },
+      {
+        title: 'Additional Information',
+        intro: js_vars.additional_information,
+        element: document.querySelector(('#additional-information'))
+      },
+      {
+        title: 'Your task',
+        intro: js_vars.your_task,
+        element: document.querySelector(('#your-task'))
+      },
+      {
+        title: 'Lottery Types',
+        intro: js_vars.lottery_types,
+        element: document.querySelector(('#lottery-navbar'))
+      },
+    ]
+  }).start();
+
+</script>
+{% endblock %}

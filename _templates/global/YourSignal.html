@@ -1,0 +1,10 @@
+<div id="lottery-signal">
+  <h4 class="text-center lottery-header"><u>Your Signal</u></h4>
+  <p class="text-center">
+    {% if player.is_value_treatment %}
+    Your signal about v is: <b>{{ player.signal }}</b>
+    {% else %}
+    Your signal about p is: <b>{{ player.signal }}%</b>
+    {% endif %} (with x = {{ player.epsilon }}).
+  </p>
+</div>

@@ -1,0 +1,10 @@
+<p>The actual lotteries you will be bidding for are slightly more complicated than what we have described above.
+  This is true because the {{ player.selected_value_text }} is only partially known: You learn that it could be any
+  {% if player.is_value_treatment %} integer {% else %} percentage number {% endif %}
+  between {% if player.is_value_treatment %} 10 {% else %} 10% {% endif %} and
+  {% if player.is_value_treatment %} 30 {% else %} 30% {% endif %} inclusively but you do not learn its exact {{player.value_text}}.
+  That is, the computer will choose one number in [10,30] that could be 10, 11, 12, ... , 29, or 30 with equal chances.
+  Thus, each time you see a lottery ticket, the {{ player.selected_value_text }} has already been set by the computer,
+  but it is not displayed. Neither you nor the three other bidders know the {{ player.selected_value_text }}.
+  To assess how much you would be willing to pay
+  for the lottery ticket, you will need to guess the {{ player.selected_value_text }} with the help of a signal provided to you.</p>
