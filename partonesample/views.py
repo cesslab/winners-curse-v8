@@ -133,3 +133,10 @@ class Payoff(Page):
             "num_rounds": range(1, Constants.ROUNDS_PER_LOTTERY + 1),
             "num_lotteries": range(1, Constants.NUM_LOTTERIES + 1),
         }
+
+
+class InstructionsPage(Page):
+    @staticmethod
+    def is_displayed(player):
+        return player.round_number == 1
+
