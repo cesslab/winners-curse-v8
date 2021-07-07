@@ -125,10 +125,7 @@ class BidHistoryPlayer:
 
     @property
     def prep_worth(self):
-        if self.is_value_treatment:
-            return self.ticket_value_before * self.fixed_value
-        else:
-            self.prep_worth = self.ticket_probability * self.fixed_value
+        return self.up_ticket * self.fixed_value / 100
 
     @property
     def payoff_question_number(self):
