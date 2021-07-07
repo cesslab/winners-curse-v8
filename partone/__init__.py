@@ -97,4 +97,4 @@ class Player(BasePlayer, BidHistoryPlayer):
     be_bid = models.FloatField()
 
 
-page_sequence = [Instructions, Bid, BestGuess, Interval, Outcome]
+page_sequence = [Instructions, BestGuess, Interval, Bid, Outcome]
