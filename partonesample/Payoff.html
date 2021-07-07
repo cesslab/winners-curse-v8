@@ -1,0 +1,51 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'global/css/outcome.css' %}">
+    <link rel="stylesheet" href="{% static 'global/css/round_navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'global/css/lottery_navbar.css' %}">
+{% endblock %}
+
+{% block content %}
+  <div class="outcome-header">
+      <h3 class="text-center">Your Payoff in Part I</h3>
+  </div>
+
+  <div>
+    <p>
+      After you have completed all 40 rounds in Part One, the computer will randomly select one out of the 40 auctions,
+      with each auction being equally likely to be selected. Your earnings from the selected auction will correspond to
+      your payoff in Part One. You should therefore in each of the 40 auctions choose your bid carefully as if it were
+      the one that will determine your payoff.
+    </p>
+  </div>
+
+  <div class="outcome-header">
+    <h3 class="text-center">Your Payment in the Experiment</h3>
+  </div>
+<div>
+  <p>
+    You will see your payment only at the end of the experiment, that is after having completed Part One and Part Two.
+    The payment you will receive at the end of the experiment will be a combination of payoffs you earned in Part One
+    (50%) and Part Two (50%). Your payoff in credits will be converted into dollars with an exchange rate of $1 for
+    6 credits. In addition, you will receive a participation fee of $10 and an endowment of $12. Negative earnings
+    (losses) will be subtracted from your endowment of $12.
+  </p>
+  <p>
+    Hence, your payment will be calculated as follows:
+  </p>
+  <p>
+    Payment = $10 participation fee + $12 endowment + 0.5 ∗ Payoff in Part One (in $) + 0.5 ∗ Payoff in Part Two (in $)
+  </p>
+</div>
+<div>
+  <p>
+    You have now completed the instructions for Part I. Please send the experimenter a message if you have a question.
+    Otherwise click on the button “NEXT" to complete a short comprehension quiz.
+  </p>
+</div>
+
+
+    {% next_button %}
+{% endblock %}

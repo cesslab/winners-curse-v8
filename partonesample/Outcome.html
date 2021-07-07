@@ -1,0 +1,61 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'global/css/outcome.css' %}">
+    <link rel="stylesheet" href="{% static 'global/css/round_navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'global/css/lottery_navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'global/css/custom_font.css' %}">
+{% endblock %}
+
+{% block content %}
+  <div id="outcome-header">
+      <h3 class="text-center">Outcome of the Auction</h3>
+  </div>
+
+  <div>
+    <p>
+      Whether or not you obtain the lottery ticket depends on how your bid compares to the other three bids. Thus, every auction has three possible outcomes:
+    </p>
+    <ul>
+      <li>
+        <p>
+          <b>You win the auction: </b>
+          If your bid is higher than the bids of the three
+          other participants, you will win the auction, pay your bid and receive
+          the lottery ticket. The computer will then execute the lottery. The
+          outcome of the lottery will be either the
+          {% if player.is_value_treatment %} Selected Value {% else %} value {% endif %}
+          (<span><span class="credits">C</span></span>) or zero, and you will receive the difference between the outcome
+          and your bid (i.e., your earnings = lottery outcome - your bid).
+        </p>
+        <p>
+          Note that if you win and bid more than the
+          {% if player.is_value_treatment %} Selected Value {% else %} value {% endif %}
+          or you win and the outcome turns out to be zero, you will lose money in a given auction.
+          We will provide you with an endowment of credits to absorb the losses you make. However, if you do not incur
+          a loss the endowment is yours to keep so incurring a loss means you will decrease what you earn in the
+          auction when it is over.
+        </p>
+      </li>
+      <li>
+        <p>
+          <b>You lose the auction: </b>
+          If at least one other bid is higher than yours, you will lose the auction and get nothing.
+        </p>
+      </li>
+      <li>
+        <p>
+          <b>There is a tie: </b>
+          If you and another bidder submit identical highest bids, the computer will determine the winner with equal chances.
+        </p>
+      </li>
+    </ul>
+    <p>
+      At the end of the auction, you will learn the {% if player.is_value_treatment %} Selected Value {% else %} Selected Probability {% endif %},
+      the winning bid, the outcome of the lottery and your earnings in this auction.
+    </p>
+  </div>
+
+    {% next_button %}
+{% endblock %}

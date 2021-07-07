@@ -12,12 +12,12 @@ from exp.models import (
 from exp.db import Phase, close_db
 
 from .views import (
-Bid, BestGuess, Interval
+    Bid, BestGuess, Interval, Outcome, Payoff
 )
 from .constants import Constants
 
 doc = """
-Part One Sample
+Part I (Walkthrough)
 """
 
 
@@ -66,7 +66,7 @@ class Player(BasePlayer, BidHistoryPlayer):
     ticket_probability = models.IntegerField(initial=70)
     fixed_value = models.IntegerField(initial=70)
     ticket_value_after = models.IntegerField(initial=0)
-    up_ticket = models.IntegerField(initial=0)
+    up_ticket = models.IntegerField(initial=20)
     # Player Bid History
     rounds_per_lottery = models.IntegerField(initial=1)
     player_bid_history_id = models.IntegerField(initial=0)
@@ -74,4 +74,4 @@ class Player(BasePlayer, BidHistoryPlayer):
     be_bid = models.FloatField(initial=0.0)
 
 
-page_sequence = [Bid, BestGuess, Interval]
+page_sequence = [Bid, BestGuess, Interval, Outcome, Payoff]

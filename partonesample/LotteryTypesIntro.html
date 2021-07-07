@@ -1,19 +1,23 @@
 <p>
   {% if player.is_value_treatment %}
-    There will be four different types of lotteries where a lottery type is defined by a range of possible {{ player.selected_value_text }}s and a
-    probability of receiving a {{ player.selected_value_text }}.
+  There will be four different types of lotteries where a lottery type is defined by a range of possible {{ player.selected_value_text }}s and a
+  probability of receiving a {{ player.selected_value_text }}.
 
-    For each type of lottery, the computer will produce
-    independently from each other 10 different lottery tickets and in each round you will bid for one of them. Moving
-    from round to round will involve a change in the {{ player.selected_value_text }} holding the range of possible
-    {{ player.selected_value_text }}s and the probability fixed, while a new type of lottery may involve a change in
-    both the range of {{ player.selected_value_text }}s and the probability.
+  For each type of lottery, the computer will produce
+  independently from each other 5 different lottery tickets and in each round you will bid for one of them.
+  Hence you will engage in 20 auctions altogether. Moving from round to round will involve a change in the
+  {{ player.selected_value_text }} holding the range of possible
+  {{ player.selected_value_text }}s and the probability fixed, while a new type of lottery may involve a change in
+  both the range of {{ player.selected_value_text }}s and the probability.
   {% else %}
-    There will be four different types of lotteries where a lottery type is defined by a value and a range of {{ player.selected_values_text }}.
+  There will be four different types of lotteries where a lottery type is defined by a value and a range of {{ player.selected_values_text }}.
 
-    For each type of lottery, the computer will produce
-    independently from each other 10 different lottery tickets and in each round you will bid for one of them. Moving
-    from round to round will involve a change in the {{ player.selected_value_text }} holding the range of possible
-    {{ player.selected_values_text }} and the value fixed, while a new type of lottery may involve a change in
-    both the range of {{ player.selected_value_text }}s and the value.
+  For each type of lottery, the computer will produce
+  independently from each other 5 different lottery tickets and in each round you will bid for one of them.
+  Hence you will engage in 20 auctions altogether. Moving from round to round will involve a change in the
+  {{ player.selected_value_text }} holding the range of possible
+  {{ player.selected_values_text }} and the value fixed, while a new type of lottery may involve a change in
+  both the range of {{ player.selected_value_text }}s and the value.
   {% endif %}
+
+</p>
