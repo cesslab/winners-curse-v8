@@ -1,0 +1,100 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+Quiz
+{% endblock %}
+
+{% block styles %}
+  <link rel="stylesheet" href="{% static 'global/css/bid.css' %}">
+  <link rel="stylesheet" href="{% static 'global/css/custom_font.css' %}">
+{% endblock %}
+
+{% block content %}
+<div>
+  <p>
+    Select the correct answer. If you don’t understand why your answer is incorrect, please send a private message to the experimenter.
+  </p>
+</div>
+<div>
+  {{ formfield 'q1'}}
+</div>
+<div>
+  {% if player.is_value_treatment %}
+  {{ formfield 'cv_q2'}}
+  {% else %}
+  {{ formfield 'cp_q2'}}
+  {% endif %}
+</div>
+<div>
+  {% if player.is_value_treatment %}
+  {{ formfield 'cv_q3'}}
+  {% else %}
+  {{ formfield 'cp_q3'}}
+  {% endif %}
+</div>
+<div>
+  {% if player.is_value_treatment %}
+  {{ formfield 'cv_q4'}}
+  {% else %}
+  {{ formfield 'cp_q4'}}
+  {% endif %}
+</div>
+
+<div>
+  <p>Following questions are based on the lottery ticket below:</p>
+</div>
+
+{% include 'global/Lottery.html' %}
+
+<div>
+  {% if player.is_value_treatment %}
+  {{ formfield 'cv_q5'}}
+  {% else %}
+  {{ formfield 'cp_q5'}}
+  {% endif %}
+</div>
+<div>
+  {% if player.is_value_treatment %}
+  {{ formfield 'cv_q6'}}
+  {% else %}
+  {{ formfield 'cp_q6'}}
+  {% endif %}
+</div>
+
+{{ next_button }}
+
+
+<div class="accordion" id="accordionExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        Re-read Instructions
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        {% include 'bidsample/PartOneInstructions.html' %}
+
+        <h4>Lottery Ticket</h4>
+        {% include 'bidsample/LotteryTicketIntro.html' %}
+
+        <h4>The Signal</h4>
+        {% include 'bidsample/YourSignalIntro.html' %}
+
+        <h4>Signal Interpretation</h4>
+        {% include 'bidsample/SignalInterpretationIntro.html' %}
+
+        <h4>General Remark</h4>
+        {% include 'bidsample/GeneralRemarkIntro.html' %}
+
+        <h4>Your Task</h4>
+        {% include 'bidsample/YourTaskIntro.html' %}
+
+        <h4>Lottery Types</h4>
+        {% include 'bidsample/LotteryTypesIntro.html' %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}}
