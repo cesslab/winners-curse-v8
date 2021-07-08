@@ -114,7 +114,6 @@ class BestGuess(Page):
 
     @staticmethod
     def js_vars(player):
-        loader = ibis.loaders.FileLoader(Path(__file__).parent)
         return dict(
             display_intro=(player.round_number == 1),
             lottery_max_value=player.lottery_max_value,
