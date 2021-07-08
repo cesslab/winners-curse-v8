@@ -1,0 +1,38 @@
+{{ block title }}
+{{ endblock }}
+
+{{ block content }}
+<div class="pb-4 text-center">
+  <h2>
+    Venmo Payment Form
+  </h2>
+</div>
+
+<div class="text-center">
+
+  <p> Your Total Payoff is: ${{po}}</p>
+  <p>Your Session ID is: {{sid}}</p>
+  <p>Your Participant ID is: {{pid}}</p>
+
+</div>
+<div class="m-4 pt-4 text-center">
+  <h5>Click on the "Venmo Payment Form" button below to open your payment form in a new browser tab.
+    When you complete the payment form you will receive a confirmation code.
+    Enter it below and click the "Next" button to complete the payment form submission process.</h5>
+</div>
+<div class="p-4 text-center">
+  <a
+    class="btn btn-success"
+    href="https://nyu.qualtrics.com/jfe/form/SV_9H0l0MruohpcoHI?Q_EED={{encoded_data}}"
+    target="_blank">
+    Venmo Payment Form
+  </a>
+</div>
+
+<div class="m-4">
+  {{ formfield 'confirmation_code'}}
+</div>
+
+{{ next_button }}
+
+{{ endblock }}
