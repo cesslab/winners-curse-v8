@@ -12,20 +12,20 @@
 
 {% block content %}
   <div class="outcome-header lottery-header">
-    <h2 class="text-center">Part I Payoff</h2>
+    <h2 class="text-center">Task I Payoff</h2>
   </div>
   <div class="text-center">
     <span>
-      Your Payoff in Part I was: <b>{{ bid_earnings_dollars }} (<span class="credits">C</span>{{bid_earnings_credits}})</b>.
+      Your Payoff for Task I was: <b>{{ bid_earnings_dollars }} (<span class="credits">C</span>{{bid_earnings_credits}})</b>.
     </span>
   </div>
 
   <div class="outcome-header lottery-header">
-    <h2 class="text-center">Part II Payoff</h2>
+    <h2 class="text-center">Task II Payoff</h2>
   </div>
   <div class="text-center">
     <span>
-      Your Payoff in Part II was: <b>{{ guess_earnings_dollars }} (<span class="credits">C</span>{{guess_earnings_credits}})</b>.
+      Your Payoff for Task II was: <b>{{ guess_earnings_dollars }} (<span class="credits">C</span>{{guess_earnings_credits}})</b>.
     </span>
   </div>
 
@@ -38,8 +38,8 @@
       It consists of:<br>
       $10 Participation fee
       + $12 endowment
-      + (0.5 x {{ bid_earnings_dollars }})
-      + (0.5 x {{ guess_earnings_dollars }})
+      + {{ bid_earnings_dollars }} Task I
+      + {{ guess_earnings_dollars }} Task II
     </p>
 </div>
 {% next_button %}

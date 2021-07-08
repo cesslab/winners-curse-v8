@@ -7,7 +7,7 @@
 {% block content %}
 <h5>Question 1a: point belief about highest of the other 3 bids.</h5>
 <p>
-  Answer: subject enters X = {{guess}}
+  Answer: subject enters X = {{guess}} credits
 </p>
 <p>
   Payoff function:
@@ -17,7 +17,7 @@
   <li>Computer draws random number K ~ U[0,1296] = {{random_k}}</li>
   <li>Computer pays 12 credits if L < K ; 0 otherwise (in particular if L>1296). L is {{computed_loss}} and K is {{random_k}}
     so {% if l_less_than_k %} L is less than K {% else %} L is greater than or equal to K {% endif %}
-    and the computer pays {{guess_earnings}}.
+    and the computer pays {{guess_earnings}} credits.
   </li>
   <li>
    We also compute the probability of getting 12 credits given the subject's answer: Prob(K>L)=prob =
@@ -37,7 +37,7 @@
     if positive and OthersHBid in [l,u] (worth is in interval); 0 otherwise.
     The computed value is {{confidence_value}} and {% if computed_value_non_zero %} is greater than zero {% else %} less than zero {% endif %}
     and the OthersHBid is {% if high_bid_within_interval %} in {% else %} not in {% endif %} [{{prep_emax}}, {{prep_emin}}] so payoff
-    for this part is {{interval_earnings}}.
+    for this part is {{interval_earnings}} credits.
   </li>
 </ul>
 
