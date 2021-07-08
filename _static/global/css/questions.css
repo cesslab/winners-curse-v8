@@ -30,3 +30,7 @@ img {
     width: 55%;
     height: 55%;
 }
+
+.grey-out {
+    background: #eaeaea;
+}

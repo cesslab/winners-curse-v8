@@ -36,17 +36,17 @@ class Bid(Page):
             max_signal=player.max_signal,
             is_cv_treatment=player.is_value_treatment,
             selected_value_text=player.selected_value_text,
-            lottery_ticket=loader('LotteryTicketIntro.html').render({"player": player}),
-            your_signal=loader('YourSignalIntro.html').render({"player": player}),
-            signal_interpretation=loader('SignalInterpretationIntro.html').render({"player": player}),
-            your_task=loader('YourTaskIntro.html').render({"player": player}),
-            general_remark=loader('GeneralRemarkIntro.html').render({"player": player}),
+            your_task=loader('YourTask.html').render({"player": player}),
+            bid_description_one=loader('BidDescriptionOne.html').render({"player": player}),
+            bid_description_two=loader('BidDescriptionTwo.html').render({"player": player}),
+            bid_description_three=loader('BidDescriptionThree.html').render({"player": player}),
+            your_bid_one=loader('YourBidOne.html').render({"player": player}),
+            your_bid_two=loader('YourBidTwo.html').render({"player": player}),
             lottery_types=loader('LotteryTypesIntro.html').render({"player": player}),
-            additional_information=loader('AdditionalInformation.html').render({"player": player}),
         )
 
 
-class BestGuess(Page):
+class BestGuessLeft(Page):
     form_model = "player"
 
     @staticmethod
@@ -72,10 +72,50 @@ class BestGuess(Page):
             is_probability_treatment=player.is_probability_treatment,
             is_cv_treatment=player.is_value_treatment,
             selected_value_text=player.selected_value_text,
+            lottery_ticket=loader('LotteryTicketIntro.html').render({"player": player}),
+            your_signal=loader('YourSignalIntro.html').render({"player": player}),
+            signal_interpretation=loader('SignalInterpretationIntro.html').render({"player": player}),
+            question=loader('Question.html').render({"player": player}),
             instructions_for_slider=loader('InstructionsForSliderIntro.html').render({"player": player}),
+            general_remark=loader('GeneralRemarkIntro.html').render({"player": player}),
             guess_task=loader('GuessTask.html').render({"player": player}),
         )
 
+class BestGuessRight(Page):
+    form_model = "player"
+
+    @staticmethod
+    def vars_for_template(player):
+        return {
+            "player": player,
+            "num_rounds": range(1, Constants.ROUNDS_PER_LOTTERY+1),
+            "num_lotteries": range(1, Constants.NUM_LOTTERIES+1),
+            "new_lottery":
+                (
+                    player.round_number != 1
+                    and ((player.round_number - 1) % Constants.ROUNDS_PER_LOTTERY) == 0
+                ),
+        }
+
+    @staticmethod
+    def js_vars(player):
+        loader = ibis.loaders.FileLoader(Path(__file__).parent)
+        return dict(
+            display_intro=(player.round_number == 1),
+            lottery_max_value=player.lottery_max_value,
+            mapping_divisor=player.fixed_value,
+            is_probability_treatment=player.is_probability_treatment,
+            is_cv_treatment=player.is_value_treatment,
+            selected_value_text=player.selected_value_text,
+            lottery_ticket=loader('LotteryTicketIntro.html').render({"player": player}),
+            your_signal=loader('YourSignalIntro.html').render({"player": player}),
+            signal_interpretation=loader('SignalInterpretationIntro.html').render({"player": player}),
+            question=loader('Question.html').render({"player": player}),
+            instructions_for_slider=loader('InstructionsForSliderIntro.html').render({"player": player}),
+            general_remark=loader('GeneralRemarkIntro.html').render({"player": player}),
+            guess_task=loader('GuessTask.html').render({"player": player}),
+            lottery_types=loader('LotteryTypesIntro.html').render({"player": player}),
+        )
 
 class Interval(Page):
     form_model = "player"
@@ -126,6 +166,16 @@ class Outcome(Page):
 
 
 class Payoff(Page):
+    @staticmethod
+    def vars_for_template(player):
+        return {
+            "player": player,
+            "num_rounds": range(1, Constants.ROUNDS_PER_LOTTERY + 1),
+            "num_lotteries": range(1, Constants.NUM_LOTTERIES + 1),
+        }
+
+
+class Summary(Page):
     @staticmethod
     def vars_for_template(player):
         return {

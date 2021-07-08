@@ -14,19 +14,17 @@
 
   <div class="grid-container">
     <div>
-      <div class="lottery-header">
-        <h4 class="text-center"><u>Lottery of type {{ player.lottery_order }}</u></h4>
+      <div id="lottery-ticket">
+        <div class="lottery-header">
+          <h4 class="text-center"><u>Lottery of type {{ player.lottery_order }}</u></h4>
+        </div>
+        <div>
+          <p>Consider the following lottery ticket with two possible prizes, 0 and a value v.</p>
+        </div>
+        {% include 'global/Lottery.html' %}
       </div>
-      <div>
-        <p>Consider the following lottery ticket with two possible prizes, 0 and a value v.</p>
-      </div>
-
-      {% include 'global/Lottery.html' %}
-
       {% include 'global/YourSignal.html' %}
-
       {% include 'global/SignalInterpretation.html' %}
-
     </div>
 
     <div>
@@ -35,37 +33,41 @@
           <div id="question" class="text-center">
             <h5>What do you think is the highest bid among the three other bids?</h5>
           </div>
+        </div>
+
+        <div id="slider-table">
           <div id="slider">
           </div>
-        </div>
 
-        <div class="worth-table" id="conversion-table">
-          <table>
-            <thead>
-            <tr>
-              <th class="text-center">
-              </th>
-              <th class="text-center">
-                <span>Best Guess</span>
-              </th>
-            </tr>
-            </thead>
-            <tr>
-              <th>
-                <span>Lottery Worth</span>
-              </th>
-              <td class="text-center">
-                <input type="number" id="id_bid" name="guess" min="0" max="100" step="1"
-                       class="center-input form-control" value=""
-                       placeholder="" data-for="bid-selected-probability" data-handle="0" readonly="readonly">
-                <small class="text-muted">Please enter an integer value</small>
+          <div class="worth-table" id="conversion-table">
+            <table>
+              <thead>
+              <tr>
+                <th class="text-center">
+                </th>
+                <th class="text-center">
+                  <span>Best Guess</span>
+                </th>
+              </tr>
+              </thead>
+              <tr>
+                <th>
+                  <span>Lottery Worth</span>
+                </th>
+                <td class="text-center">
+                  <input type="number" id="id_bid" name="guess" min="0" max="100" step="1"
+                         class="center-input form-control" value=""
+                         placeholder="" data-for="bid-selected-probability" data-handle="0" readonly="readonly">
+                  <small class="text-muted">Please enter an integer value</small>
 
-                <div id="guess_error"></div>
-              </td>
-            </tr>
-          </table>
+                  <div id="guess_error"></div>
+                </td>
+              </tr>
+            </table>
+          </div>
         </div>
       </div>
+
       <div>
         {% next_button %}
       </div>
@@ -222,16 +224,16 @@ let alertList = document.querySelectorAll('.alert')
     introJs().setOptions({
       steps: [
         {
-          title: 'Task',
-          intro: js_vars.guess_task,
-          position: 'top',
-          element: document.querySelector(('#slider'))
+          title: 'Question',
+          intro: js_vars.question,
+          position: 'left',
+          element: document.querySelector(('#question'))
         },
         {
           title: 'Instructions for slider',
           intro: js_vars.instructions_for_slider,
-          position: 'top',
-          element: document.querySelector(('#slider'))
+          position: 'left',
+          element: document.querySelector(('#slider-table'))
         },
       ]
     }).start()

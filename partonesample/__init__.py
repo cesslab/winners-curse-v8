@@ -12,7 +12,7 @@ from exp.models import (
 from exp.db import Phase, close_db
 
 from .views import (
-    InstructionsPage, Bid, BestGuess, Interval, Outcome, Payoff
+    InstructionsPage, Bid, BestGuessLeft, BestGuessRight, Interval, Outcome, Summary, Payoff
 )
 from .constants import Constants
 
@@ -74,4 +74,4 @@ class Player(BasePlayer, BidHistoryPlayer):
     be_bid = models.FloatField(initial=0.0)
 
 
-page_sequence = [InstructionsPage, BestGuess, Interval, Bid, Outcome, Payoff]
+page_sequence = [InstructionsPage, BestGuessLeft, Outcome, BestGuessRight, Interval, Bid, Summary, Payoff]

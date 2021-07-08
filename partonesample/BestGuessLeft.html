@@ -1,0 +1,208 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block styles %}
+  {% include 'global/QuestionCSS.html' %}
+{% endblock %}
+
+{% block content %}
+  {% if new_lottery %}
+    {% include 'global/LotteryUpdate.html' %}
+  {% endif %}
+
+  {% include 'global/LotteryRoundNavbar.html' %}
+
+  <div class="grid-container">
+    <div>
+      <div id="lottery-ticket">
+        <div class="lottery-header">
+          <h4 class="text-center"><u>Lottery of type {{ player.lottery_order }}</u></h4>
+        </div>
+        <div>
+          <p>Consider the following lottery ticket with two possible prizes, 0 and a value v.</p>
+        </div>
+        {% include 'global/Lottery.html' %}
+      </div>
+      {% include 'global/YourSignal.html' %}
+      {% include 'global/SignalInterpretation.html' %}
+    </div>
+    <div class="grey-out">
+    </div>
+    {% next_button %}
+  </div>
+
+{% include 'partonesample/BestGuessRereadInstructions.html' %}
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'global/js/wNumb.js' %}"></script>
+<script src="{% static 'global/js/nouislider.js' %}"></script>
+<script>
+let alertList = document.querySelectorAll('.alert')
+  alertList.forEach(function (alert) {
+    new bootstrap.Alert(alert)
+  })
+</script>
+<script>
+  let slider = document.getElementById('slider');
+
+  let worthInput = document.getElementById('id_bid');
+  let worthError = document.getElementById('guess_error');
+
+  let inputElements = [worthInput];
+  let errorElements = [worthError];
+  let handlesHiddenState = [true];
+
+  function isInteger(valStr) {
+    return !isNaN(valStr) && Number.isInteger(parseFloat(valStr));
+  }
+
+  let sliderTooltipFormatter = {
+    to: function(value) {
+      return '<span class="credits">C</span>' + value;
+    },
+    from: function(value) {
+      let dollar_value = value.split(" (")[0].slice(1)
+      return Number(dollar_value)
+    },
+  }
+
+  noUiSlider.create(slider, {
+      start: [0],
+      direction: 'ltr',
+      connect: true,
+      step: 1,
+      range: {
+          'min': 0,
+          'max': 100,
+      },
+      behaviour: 'tap-drag',
+      tooltips: [sliderTooltipFormatter],
+      pips: {
+          mode: 'values',
+          values: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+          density: 1,
+          stepped: true,
+          format: wNumb({
+            decimals: 0,
+            prefix: '<span class="credits">C</span>',
+          }),
+      }
+  });
+
+  function updateInputValue(handle, value) {
+    inputElements[handle].value = parseInt(value);
+  }
+
+  function displayHandleIfHidden(handle) {
+    if (handlesHiddenState[handle]) {
+      handlesHiddenState[handle] = false;
+      document.getElementsByClassName('noUi-handle')[handle].style.display = "block";
+    }
+  }
+
+  function handleSliderSlide(values, handle){
+    displayHandleIfHidden(handle);
+    updateInputValue(handle, values[handle]);
+  }
+
+  function handleSliderSet(values, handle) {
+    displayHandleIfHidden(handle);
+  }
+
+  function validateInput(value, handle) {
+    if (handle === 0 && value < 0) {
+      return {isValid: false, resetValue: 0, errorMessage: `Your "Best Guess" must be greater than or equal to 0.`};
+    }
+    else if (handle === 0 && value > 100) {
+      return {isValid: false, resetValue: 100, errorMessage: `Your "Best Guess" must be less than or equal to 100.`};
+    }
+    else {
+      return {isValid: true, errorMessage: ''};
+    }
+  }
+
+  function updateSliderHandleOnInputFieldChange(element) {
+    let handleId = parseInt(element.dataset.handle);
+    let inputString = element.value
+
+    if (!isInteger(inputString)) {
+      errorElements[handleId].innerHTML = '';
+      return;
+    }
+
+    let inputValue = parseInt(inputString);
+
+    let inputValidation = validateInput(inputValue, handleId)
+    if (!inputValidation.isValid) {
+      errorElements[handleId].innerHTML = `<small class="is-invalid text-danger">${inputValidation.errorMessage}</small>`;
+    }
+    else {
+      errorElements[handleId].innerHTML = '';
+    }
+
+    let handleValues = [null].map((e, i) => {
+      if (i === handleId) {
+        if (!inputValidation.isValid) {
+          return inputValidation.resetValue;
+        }
+        else {
+          return inputValue;
+        }
+      }
+      else {
+        return e;
+      }
+    })
+    console.log(handleValues)
+
+    slider.noUiSlider.set(handleValues);
+  }
+
+  handlesHiddenState.forEach((isHidden, handle) => {
+    if (isHidden) {
+      document.getElementsByClassName('noUi-handle')[handle].style.display = "none";
+    }
+  })
+
+  slider.noUiSlider.on('set', handleSliderSet)
+  slider.noUiSlider.on('slide', handleSliderSlide)
+
+  worthInput.addEventListener("keyup", (event) => {
+    updateSliderHandleOnInputFieldChange(event.target);
+  })
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/3.4.0/intro.min.js" integrity="sha512-QWPjvFqgUJv5X6Sq5NXmwJQSEzUEBxmCCcgqJd5/5luZnS6llRbshsChUNKrFlZ4bshKZEJxAHDB+WWdMsGvUA==" crossorigin="anonymous"></script>
+<script type="text/javascript">
+    IMG_URL = '{% static "global/img/q1a_graph.png" %}';
+</script>
+<script>
+  if (js_vars.display_intro) {
+    introJs().setOptions({
+      steps: [
+        {
+          title: 'Lottery Ticket',
+          intro: js_vars.lottery_ticket,
+          element: document.querySelector(('#lottery-ticket'))
+        },
+        {
+          title: 'The Signal',
+          intro: js_vars.your_signal,
+          element: document.querySelector(('#lottery-signal'))
+        },
+        {
+          title: 'Signal Interpretation',
+          intro: js_vars.signal_interpretation,
+          element: document.querySelector(('#lottery-signal-interpretation'))
+        },
+        {
+          title: 'General Remark',
+          intro: js_vars.general_remark,
+          element: document.querySelector(('#general-remark'))
+        },
+      ]
+    }).start()
+
+  }
+</script>
+{% endblock %}

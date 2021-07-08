@@ -1,0 +1,26 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+Summary
+{% endblock %}
+
+{% block styles %}
+{% endblock %}
+
+{% block content %}
+<p>
+  To summarize, every round has the following structure:
+</p>
+<ol>
+  <li> A lottery ticket is auctioned off.</li>
+  <li>You will receive some information about the lottery.</li>
+  <li>You will make a guess.</li>
+  <li>You will bid.</li>
+</ol>
+<p>
+  At the end of the experiment, you will learn the auction outcome of one selected round.
+</p>
+
+{% next_button %}
+{% endblock %}

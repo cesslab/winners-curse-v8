@@ -33,65 +33,68 @@
           <div class="pb-2">
             <h5>What do you think is the highest bid among the three other bids?</h5>
           </div>
+
           <div id="question">
             <h5>Choose an interval for your guess.</h5>
           </div>
+        </div>
+
+        <div id="slider-table">
           <div id="slider">
           </div>
+
+          <div class="worth-table" id="guess-table">
+            <table style="table-layout: fixed; width: 100%">
+              <thead>
+              <tr>
+                <th class="text-center">
+                </th>
+                <th class="text-center">
+                  <span>At Least</span>
+                </th>
+                <th class="text-center">
+                  <span>Best</span>
+                </th>
+                <th>
+                  <span>At Most</span>
+                </th>
+              </tr>
+              </thead>
+              <tr>
+                <th>
+                  <span>Guess</span>
+                </th>
+                <td class="text-center">
+                  <input type="number" id="id_min_guess" name="min_guess" min="0" max="100" step="1"
+                         class="center-input form-control" value=""
+                         placeholder="" data-for="min-selected-probability" data-handle="0" readonly="readonly">
+
+                </td>
+                <td class="text-center">
+                  <input type="number" id="id_bid" name="guess" min="0" max="100" step="1"
+                         class="center-input form-control" value="" placeholder=""
+                         data-for="bid-selected-probability" data-handle="1" readonly="readonly">
+
+                </td>
+                <td class="text-center">
+                  <input type="number" id="id_max_guess" name="max_guess" min="0" max="100" step="1"
+                         class="center-input form-control" value="" placeholder=""
+                         data-for="max-selected-probability" data-handle="2" readonly="readonly">
+
+                </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td colspan="3">
+                  <div id="min_guess_error"></div>
+                  <div id="guess_error"></div>
+                  <div id="max_guess_error"></div>
+                </td>
+              </tr>
+            </table>
+          </div>
+
         </div>
-
-        <div class="worth-table" id="guess-table">
-          <table style="table-layout: fixed; width: 100%">
-            <thead>
-            <tr>
-              <th class="text-center">
-              </th>
-              <th class="text-center">
-                <span>At Least</span>
-              </th>
-              <th class="text-center">
-                <span>Best</span>
-              </th>
-              <th>
-                <span>At Most</span>
-              </th>
-            </tr>
-            </thead>
-            <tr>
-              <th>
-                <span>Guess</span>
-              </th>
-              <td class="text-center">
-                <input type="number" id="id_min_guess" name="min_guess" min="0" max="100" step="1"
-                       class="center-input form-control" value=""
-                       placeholder="" data-for="min-selected-probability" data-handle="0" readonly="readonly">
-
-              </td>
-              <td class="text-center">
-                <input type="number" id="id_bid" name="guess" min="0" max="100" step="1"
-                       class="center-input form-control" value="" placeholder=""
-                       data-for="bid-selected-probability" data-handle="1" readonly="readonly">
-
-              </td>
-              <td class="text-center">
-                <input type="number" id="id_max_guess" name="max_guess" min="0" max="100" step="1"
-                       class="center-input form-control" value="" placeholder=""
-                       data-for="max-selected-probability" data-handle="2" readonly="readonly">
-
-              </td>
-            </tr>
-            <tr>
-              <td></td>
-              <td colspan="3">
-                <div id="min_guess_error"></div>
-                <div id="guess_error"></div>
-                <div id="max_guess_error"></div>
-              </td>
-            </tr>
-          </table>
-        </div>
-
-
       </div>
       <div>
         {% next_button %}
@@ -129,7 +132,7 @@
 
   let inputElements = [minWorthInput, worthInput, maxWorthInput];
   let errorElements = [minWorthError, worthError, maxWorthError];
-  let handlesHiddenState = [true, false, true];
+  let handlesHiddenState = [true, true, true];
 
   /**
    * Utility Functions
@@ -284,19 +287,19 @@
           title: 'Interval',
           intro: js_vars.interval_part_one,
           position: 'left',
-          element: document.querySelector(('#guess-table'))
+          element: document.querySelector(('#slider-table'))
         },
         {
           title: 'Interval (Continued)',
           intro: js_vars.interval_part_two,
           position: 'left',
-          element: document.querySelector(('#guess-table'))
+          element: document.querySelector(('#slider-table'))
         },
         {
           title: 'Interval Limits',
           intro: js_vars.interval_limits,
           position: 'left',
-          element: document.querySelector(('#guess-table'))
+          element: document.querySelector(('#slider-table'))
         },
       ]
     }).start()
