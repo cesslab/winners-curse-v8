@@ -1,0 +1,15 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block content %}
+<div>
+  <h4>Questionnaire: Part III - General questions</h4>
+</div>
+<div>
+  {% formfield 'p3_q1' %}
+  {% formfield 'p3_q2' %}
+  {% formfield 'p3_q3' %}
+</div>
+{% next_button %}
+
+{% endblock %}

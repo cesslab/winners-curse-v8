@@ -1,0 +1,88 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'global/css/bid.css' %}">
+<link rel="stylesheet" href="{% static 'global/css/progress.css' %}">
+
+<link rel="stylesheet" href="{% static 'global/css/round_navbar.css' %}">
+<link rel="stylesheet" href="{% static 'global/css/lottery_navbar.css' %}">
+<link rel="stylesheet" href="{% static 'global/css/footer.css' %}">
+<link rel="stylesheet" href="{% static 'global/css/custom_font.css' %}">
+
+<link href='https://fonts.googleapis.com/css?family=Palanquin:500' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="{% static 'global/css/font-awesome.css' %}">
+{% endblock %}
+
+{% block content %}
+<div>
+  <h4>Questionnaire: Part II - Questions related to the experiment</h4>
+</div>
+<div>
+  <div class="border mt-5 p-2">
+    {% formfield 'p2_q1' %}
+    {% formfield 'p2_q1_explain' %}
+  </div>
+  <div class='border mt-5 p-2'>
+    {% formfield 'p2_q2' %}
+  </div>
+
+  <div class="border p-2 mt-5">
+    <div>
+      <span>3. Consider the following lottery ticket with known {{player.selected_value_text}} shown below. How much would you bid for this lottery ticket?</span>
+      {% formfield 'p2_q3' %}
+    </div>
+
+    <div class="lottery">
+      <p class="text-center">
+        With a probability of <span class="text-primary"><b>25%</b></span> you get<br>
+        a value v = <b><span class="text-success"><span class="credits">C</span>100</span></b>,
+        <br>otherwise you get <b><span class="text-success"><span class="credits">C</span>0</span></b>.
+      </p>
+    </div>
+  </div>
+
+  <div class="border p-2 mt-5">
+    <p>Consider the following lottery tickets shown below.</p>
+
+    <div>
+      <p>Lottery A:</p>
+    </div>
+    <div class="lottery">
+      <p class="text-center">
+        With a probability of p = <span class="text-primary"><b>75%</b></span> you get<br>
+        a value v between <b><span class="text-success"><span class="credits">C</span>60</span></b>
+        and <b><span class="text-success"><span class="credits">C</span>90</span></b>,
+        <br>otherwise you get <b><span class="text-success"><span class="credits">C</span>0</span></b>.
+      </p>
+    </div>
+
+    <div>
+      <p>Lottery B:</p>
+    </div>
+    <div class="lottery">
+      <p class="text-center">
+        With a probability <b>p</b> between
+        <b><span class="text-success">60%</span></b> and
+        <b><span class="text-success">90%</span></b>,<br>
+        you get a value
+        v = <span class="text-primary font-weight-bold"><span class="credits">C</span>75</span>,
+        <br>otherwise you get <span class="text-primary font-weight-bold"><span class="credits">C</span>0</span>.
+      </p>
+    </div>
+
+    <div>
+      {% formfield 'p2_q4' %}
+      {% formfield 'p2_q4_explain' %}
+    </div>
+
+    <div>
+      {% formfield 'p2_q5' %}
+      {% formfield 'p2_q5_explain' %}
+    </div>
+  </div>
+
+</div>
+{% next_button %}
+
+{% endblock %}

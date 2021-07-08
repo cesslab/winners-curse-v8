@@ -1,7 +1,7 @@
 from os import environ, getenv
 
 GENERIC_CONFIG = {
-    "app_sequence": ["instructions", "partonesample", "partone", "payoff"],
+    "app_sequence": ["instructions", "partonesample", "partone", "payoff", "questionnaire"],
     "num_demo_participants": 2,
     "part_one_lottery_1": "1",
     "part_one_lottery_2": "2",

@@ -1,0 +1,21 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block styles %}
+{% endblock %}
+
+{% block content %}
+    <div>
+      <h4>Questionnaire: Part I - Personal Information</h4>
+    </div>
+    <div>
+        {% formfield 'p1_q1' %}
+    </div>
+    <div>
+      {% formfield 'p1_q2' %}
+    </div>
+    <div>
+      {% formfield 'p1_q3' %}
+    </div>
+    {% next_button %}
+{% endblock %}
