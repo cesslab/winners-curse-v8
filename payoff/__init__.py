@@ -58,7 +58,7 @@ class GuessPayoff(Page):
         bid_earnings_credits = player.get_bid_earnings()
         guess_earnings_credits = player.get_guess_earnings()
 
-        player.payoff = 10.0 + 12.0 + (0.5 * (bid_earnings_credits/6.0) + (0.5 * (guess_earnings_credits/6.0)))
+        player.payoff = 10.0 + 12.0 + (bid_earnings_credits/6.0) + (guess_earnings_credits/6.0)
         print(f"saving final payoff of {player.payoff}")
 
 
@@ -98,4 +98,4 @@ class QuestionPayoffDebug(Page):
         }
 
 
-page_sequence = [BidPayoff, GuessPayoff, FinalPayoff, PayoffDebug]
+page_sequence = [GuessPayoff, BidPayoff, FinalPayoff, PayoffDebug]

@@ -12,7 +12,7 @@
 
 {% block content %}
   <div id="outcome-header">
-      <h3 class="text-center">Payoff for Task 2</h3>
+      <h3 class="text-center">Payoff for Task I</h3>
   </div>
 
   <div class="text-center">
@@ -54,14 +54,8 @@
 </div>
 
 <div class="text-center">
-  <p>
-    Therefore the lottery ticket was actually worth <span class="credits">C</span>{{prep_worth}}.
-  </p>
-</div>
-
-<div class="text-center">
   <h4>Your Answer</h4>
-  <p>You estimated the lottery to be, on average, worth between
+  <p>You estimated the highest of the other 3 bids to be between
     <span class="credits">C</span>{{min_guess}} and <span class="credits">C</span>{{max_guess}}.
     Your best guess was <span class="credits">C</span>{{guess}}.
   </p>
@@ -91,9 +85,6 @@
   <p>
     In total, you get <span class="credits">C</span>{{ earnings }}.
   </p>
-  <p>experiment</p>
-  <p>You have now completed the main experiment. Next, we ask you to fill out a questionnaire and to submit your Venmo
-    ID. After that, you are free to leave the zoom room. Thank you for participating in this experiment!</p>
 </div>
 
   {% next_button %}
