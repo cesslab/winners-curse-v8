@@ -32,27 +32,59 @@ class Player(BasePlayer, BidHistoryPlayer):
     p1_q2 = models.IntegerField(min=18, max=100, label="Age")
     p1_q3 = models.StringField(label="Major")
 
-    p2_q1 = models.IntegerField(
-        label='1. What object did you think about when you submitted your bid?',
+    p2_q1 = models.LongStringField(
+        label='1. What general bidding rule given a signal do you think other people followed in the experiment?')
+
+    p2_q2 = models.IntegerField(min=0, max=100, label='')
+
+    p2_q3a = models.IntegerField(
+        label='"I am a competitive person."',
         choices=[
-            [1, 'The average worth of the lottery ticket given my signal'],
-            [2, 'Only my signal'],
-            [3, 'The worth of the lottery if I had the highest signal'],
-            [4, 'The highest possible worth of the lottery'],
-            [5, 'The lowest possible worth of the lottery'],
-            [6, 'Other (Please specify)'],
+            [1, '1'],
+            [2, '2'],
+            [3, '3'],
+            [4, '4'],
+            [5, '5']
         ],
-        widget=widgets.RadioSelect
+        widget=widgets.RadioSelectHorizontal
     )
-    p2_q1_explain = models.LongStringField(label="Specify Other", blank=True)
+    p2_q3b = models.IntegerField(
+        label='"I like to be better than others at almost everything."',
+        choices=[
+            [1, '1'],
+            [2, '2'],
+            [3, '3'],
+            [4, '4'],
+            [5, '5']
+        ],
+        widget=widgets.RadioSelectHorizontal
+    )
+    p2_q3c = models.IntegerField(
+        label='"Being the best makes me feel powerful."',
+        choices=[
+            [1, '1'],
+            [2, '2'],
+            [3, '3'],
+            [4, '4'],
+            [5, '5']
+        ],
+        widget=widgets.RadioSelectHorizontal
+    )
 
-    p2_q2 = models.LongStringField(
-        label='2. What general bidding rule given a signal do you think other people followed in the experiment?')
-
-    p2_q3 = models.IntegerField(min=0, max=100, label='')
+    p2_q3d = models.IntegerField(
+        label='"Competition allows me to judge my level of competence."',
+        choices=[
+            [1, '1'],
+            [2, '2'],
+            [3, '3'],
+            [4, '4'],
+            [5, '5']
+        ],
+        widget=widgets.RadioSelectHorizontal
+    )
 
     p2_q4 = models.IntegerField(
-        label='4. Suppose that you could choose to play one of the following two lottery tickets. Which one would you prefer?',
+        label='',
         choices=[
             [1, 'I prefer lottery A'],
             [2, 'I prefer lottery B'],
@@ -63,7 +95,7 @@ class Player(BasePlayer, BidHistoryPlayer):
     p2_q4_explain = models.LongStringField(label="Explain your choice", blank=True)
 
     p2_q5 = models.IntegerField(
-        label='5. Suppose that you could choose to <b>bid</b> in an auction for one of the following two lottery tickets displayed above. Which one would you prefer?',
+        label='5. Suppose that you could choose to <b>bid</b> in an auction for one of the two lottery tickets displayed above. Which one would you prefer?',
         choices=[
             [1, 'I prefer to bid for lottery A'],
             [2, 'I prefer to bid for lottery B'],

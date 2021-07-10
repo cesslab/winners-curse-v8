@@ -21,36 +21,54 @@
 <div>
   <div class="border mt-5 p-2">
     {% formfield 'p2_q1' %}
-    {% formfield 'p2_q1_explain' %}
   </div>
-  <div class='border mt-5 p-2'>
-    {% formfield 'p2_q2' %}
-  </div>
-
   <div class="border p-2 mt-5">
     <div>
-      <span>3. Consider the following lottery ticket with known {{player.selected_value_text}} shown below. How much would you bid for this lottery ticket?</span>
-      {% formfield 'p2_q3' %}
+      <span>Consider the following lottery ticket with <i>known</i> {{player.selected_value_text}}:</span>
     </div>
 
     <div class="lottery">
       <p class="text-center">
         With a probability of <span class="text-primary"><b>25%</b></span> you get<br>
-        a value v = <b><span class="text-success"><span class="credits">C</span>100</span></b>,
+        a value v between <b><span class="text-success"><span class="credits">C</span>100</span></b>,
         <br>otherwise you get <b><span class="text-success"><span class="credits">C</span>0</span></b>.
       </p>
     </div>
   </div>
 
+
+  <div class="border mt-5 p-2">
+    <div>
+      <span>2. How much would you bid for this lottery ticket?</span>
+      {% formfield 'p2_q2' %}
+    </div>
+  </div>
+
+
+  <div class='border mt-5 p-2'>
+    <p>
+      3. The following scale measures aspects of competitiveness. Please read each statement carefully and try to answer
+      as honestly as possible. Do not spend to much time on any one item; if trying to decide between two responses,
+      choose the one that first comes to mind.
+    </p>
+    <p>
+      (Response scale: 1=Strongly disagree; 2= Slightly disagree; 3=Neither agree nor disagree; 4= Slightly agree; 5= Strongly agree)
+    </p>
+    {% formfield 'p2_q3a' %}
+    {% formfield 'p2_q3b' %}
+    {% formfield 'p2_q3c' %}
+    {% formfield 'p2_q3d' %}
+  </div>
+
   <div class="border p-2 mt-5">
-    <p>Consider the following lottery tickets shown below.</p>
+    <p>Suppose that you could choose to play one of the following two lottery tickets. Which one would you prefer?</p>
 
     <div>
       <p>Lottery A:</p>
     </div>
     <div class="lottery">
       <p class="text-center">
-        With a probability of p = <span class="text-primary"><b>75%</b></span> you get<br>
+        With a probability of <span class="text-primary"><b>75%</b></span> you get<br>
         a value v between <b><span class="text-success"><span class="credits">C</span>60</span></b>
         and <b><span class="text-success"><span class="credits">C</span>90</span></b>,
         <br>otherwise you get <b><span class="text-success"><span class="credits">C</span>0</span></b>.
@@ -66,7 +84,7 @@
         <b><span class="text-success">60%</span></b> and
         <b><span class="text-success">90%</span></b>,<br>
         you get a value
-        v = <span class="text-primary font-weight-bold"><span class="credits">C</span>75</span>,
+        of <span class="text-primary font-weight-bold"><span class="credits">C</span>75</span>,
         <br>otherwise you get <span class="text-primary font-weight-bold"><span class="credits">C</span>0</span>.
       </p>
     </div>
