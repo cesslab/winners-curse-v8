@@ -15,12 +15,6 @@
 {% endblock %}
 
   {% block content %}
-  {% if new_lottery %}
-    {% include 'global/LotteryUpdate.html' %}
-  {% endif %}
-
-{% include 'global/RoundUpdate.html' %}
-
 {% include 'global/LotteryRoundNavbar.html' %}
   <div class="grid-container">
     <div>
@@ -38,9 +32,9 @@
 
       {% include 'global/SignalInterpretation.html' %}
   </div>
-  <div class="d-flex flex-column align-items-center" style="height: 100%;">
-    <div>
-      <p>You are the bidder with the highest signal.</p>
+  <div class="d-flex flex-column align-items-center" style="height: 100%; padding-right: 30px;">
+    <div class="">
+      <p><b>You are the bidder with the highest signal.</b></p>
       <p>Given that your signal of {{player.signal4}} is the highest one, the lottery ticket
       is probably as follows:</p>
     </div>

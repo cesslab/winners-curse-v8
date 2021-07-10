@@ -37,14 +37,16 @@
 
   <div style="height: 100%;">
     <div class="d-flex flex-column align-items-center"  id="your-task">
-      <div id="additional-information">
-        <div id="bid-description">
-          <p>You are the bidder with the highest signal.</p>
+      <div id="additional-information" class="pt-4">
+          <p id="highest-signal"><b>You are the bidder with the highest signal.</b></p>
+        <div id="signal-lottery">
           <p>Given that your signal of {{player.signal4}} is the highest one, the lottery ticket
             is probably as follows:</p>
+          <div id="right-lottery">
+            {% include 'global/RightLottery.html' %}
+          </div>
         </div>
-        <div id="right-lottery">
-          {% include 'global/RightLottery.html' %}
+        <div id="right-lottery-info">
           {% include 'global/LotteryInfo.html' %}
         </div>
       </div>
@@ -76,29 +78,35 @@
         title: 'Your Task',
         intro: js_vars.your_task,
         position: 'left',
-        element: document.querySelector(('#your-task'))
+        element: document.querySelector(('#your-bid'))
       },
       {
         title: 'Your Task (Continued)',
         intro: js_vars.bid_description_one,
         position: 'left',
-        element: document.querySelector(('#your-task'))
+        element: document.querySelector(('#highest-signal'))
       },
       {
         title: 'Your Task (Continued)',
         intro: js_vars.bid_description_two,
         position: 'left',
-        element: document.querySelector(('#right-lottery'))
+        element: document.querySelector(('#signal-lottery'))
       },
       {
         title: 'Your Task (Continued)',
         intro: js_vars.bid_description_three,
         position: 'left',
-        element: document.querySelector(('#right-lottery'))
+        element: document.querySelector(('#right-lottery-info'))
       },
       {
         title: 'Your Bid',
         intro: js_vars.your_bid_one,
+        position: 'left',
+        element: document.querySelector(('#your-bid'))
+      },
+      {
+        title: 'Your Bid (Continued)',
+        intro: js_vars.your_bid_two,
         position: 'left',
         element: document.querySelector(('#your-bid'))
       },

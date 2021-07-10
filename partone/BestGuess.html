@@ -6,9 +6,11 @@
 {% endblock %}
 
 {% block content %}
-  {% if new_lottery %}
-    {% include 'global/LotteryUpdate.html' %}
-  {% endif %}
+{% if new_lottery %}
+{% include 'global/LotteryUpdate.html' %}
+{% endif %}
+{% include 'global/RoundUpdate.html' %}
+
 
   {% include 'global/LotteryRoundNavbar.html' %}
 

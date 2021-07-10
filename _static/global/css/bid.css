@@ -87,6 +87,10 @@ input[type=number].form-control {
     margin-top: 1em;
 }
 
+.right-lottery {
+    background: #e6e5e5;
+}
+
 .lottery {
     border: 2px solid #969696;
     text-align: center;
@@ -102,6 +106,7 @@ input[type=number].form-control {
     height: 1.2em;
     width: 0.6em;
     border: 2px solid #969696;
+    background: #fff;
 }
 .lottery:before {
     left: -2px;
