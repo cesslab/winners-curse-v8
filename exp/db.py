@@ -14,12 +14,11 @@ Base = declarative_base()
 
 class Phase:
     BID_PHASE = 'bid'
-    QUESTION_PHASE = 'question'
-    VALUATION_PHASE = 'valuation'
+    GUESS_PHASE = 'guess'
 
 
 class PlayerBidHistory(Base):
-    PHASES = [(Phase.BID_PHASE, 'Bid'), (Phase.QUESTION_PHASE, 'Question'), (Phase.VALUATION_PHASE, 'Valuation')]
+    PHASES = [(Phase.BID_PHASE, 'Bid'), (Phase.GUESS_PHASE, 'Guess')]
     __tablename__ = "player_bid_history"
     id = Column(Integer, primary_key=True)
     bid_history_id = Column(Integer, ForeignKey("bid_history.id"), nullable=False)
