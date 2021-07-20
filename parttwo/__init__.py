@@ -12,7 +12,7 @@ from exp.models import (
 from exp.db import Phase, close_db
 
 from .views import (
-    Instructions, Choice, Outcome
+    Bid, Instructions
 )
 from .constants import Constants
 
@@ -22,20 +22,14 @@ Part II
 
 
 def creating_session(subsession):
+    print("executing create sessions for parttwo")
+    print(f"lotteries={Constants.NUM_LOTTERIES}, rounds per lottery={Constants.ROUNDS_PER_LOTTERY}")
     if subsession.round_number == 1:
-        create_player_bid_histories(
-            subsession.get_treatment_code(),
-            subsession.get_players(),
-            subsession.get_lottery_ids(Constants.NUM_LOTTERIES, Constants.PREFIX),
-            subsession.session_id,
-            Constants.ROUNDS_PER_LOTTERY,
-            Phase.QUESTION_PHASE)
-
         for player in subsession.get_players():
             player.participant.vars['choice_payoff_lottery'] = random.randint(1, Constants.NUM_LOTTERIES)
             player.participant.vars['choice_payoff_round'] = random.randint(1, Constants.ROUNDS_PER_LOTTERY)
 
-    save_bid_history_for_all_players(subsession.get_players(), Constants.ROUNDS_PER_LOTTERY, Phase.QUESTION_PHASE)
+    save_bid_history_for_all_players(subsession.get_players(), Constants.ROUNDS_PER_LOTTERY, Phase.GUESS_PHASE)
     close_db()
 
 
@@ -48,17 +42,15 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer, BidHistoryPlayer):
-    strategy_choice = models.IntegerField(
-        choices=[
-            [1, "Bid slightly below the average lottery payoff"],
-            [2, "Bid slightly above the highest bid of the other three bidders"],
-            [3, "Either is fine"]],
-        widget=widgets.RadioSelectHorizontal
-    )
-    is_payment_round = models.BooleanField(initial=False)
+    # Input
+    bid = models.IntegerField(min=0, max=100)
+    # Payoff
     tie = models.BooleanField(initial=False)
     win_tie_break = models.BooleanField(initial=False)
     winner = models.BooleanField(initial=False)
+    new_highest_bid = models.IntegerField()
+    earnings = models.IntegerField()
+    is_payment_round = models.BooleanField(initial=False)
     # Bid History
     bid_history_id = models.IntegerField()
     previous_session_id = models.IntegerField()
@@ -86,6 +78,7 @@ class Player(BasePlayer, BidHistoryPlayer):
     fixed_value = models.IntegerField()
     ticket_value_after = models.IntegerField()
     up_ticket = models.IntegerField()
+    others_high_bid = models.IntegerField()
     # Player Bid History
     rounds_per_lottery = models.IntegerField()
     player_bid_history_id = models.IntegerField()
@@ -93,4 +86,4 @@ class Player(BasePlayer, BidHistoryPlayer):
     be_bid = models.FloatField()
 
 
-page_sequence = [Choice, Outcome]
+page_sequence = [Instructions, Bid]

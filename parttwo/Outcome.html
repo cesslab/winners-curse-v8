@@ -14,7 +14,6 @@
 {% endblock %}
 
 {% block content %}
-{% include 'global/LotteryRoundNavbar.html' %}
     <div id="outcome-header">
         <h3 class="text-center">Outcome</h3>
     </div>
@@ -26,20 +25,20 @@
     <div class="two-column-container">
         <div class="item text-center">
             <h5>Your Bid</h5>
-            <p></p>
+            <p>{{ bid }}</p>
         </div>
         <div class="item text-center">
             <h5>Highest Bid</h5>
-            <span></span>
+            <span>{{ new_highest_bid }}</span>
         </div>
     </div>
     <div class="text-center">
         <span>
-        {% if player.winner %}
+        {% if winner %}
             You bought the lottery.
-        {% elif player.tie %}
+        {% elif tie %}
             You and at least one other bidder submitted identical highest bids.
-          {% if player.win_tie_break %}
+          {% if win_tie_break %}
           The computer randomly selected you as the winner.
           {% else %}
           The computer randomly selected one other bidder as the winner.
@@ -58,23 +57,23 @@
       <p>
           The {{ player.selected_value_text }} was
         {% if player.is_value_treatment %}
-          {{ player.ticket_value_before }}.
+          {{ ticket_value_before }}.
         {% else %}
-          {{ player.ticket_probability }}.
+          {{ ticket_probability }}.
         {% endif %}
         Therefore, the actual lottery ticket was:
       </p>
     </div>
 
-    {% include 'global/RealizedLottery.html' with is_value_treatment=player.is_value_treatment & fixed_value=player.fixed_value & ticket_probability=player.ticket_probability & ticket_value_before=player.ticket_value_before & fixed_value=player.fixed_value %}
+    {% include 'global/RealizedLottery.html' with is_value_treatment=player.is_value_treatment & fixed_value=fixed_value & ticket_probability=ticket_probability & ticket_value_before=ticket_value_before %}
 
     <div id="played-outcome" class="text-center">
-        <p>The lottery was played and its outcome was {{ player.ticket_value_after }}.</p>
+        <p>The lottery was played and its outcome was {{ ticket_value_after }}.</p>
     </div>
 
     <div class="lottery-header text-center">
         <h4>Your Earnings</h4>
-        <p>Your earnings for this round are.</p>
+        <p>Your earnings for this round are {{ player.earnings }}.</p>
     </div>
 
     {% next_button %}
