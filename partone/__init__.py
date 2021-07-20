@@ -12,7 +12,6 @@ from exp.models import (
 from exp.db import Phase, close_db
 
 from .views import (
-    Bid,
     BestGuess,
     Interval,
     Instructions,
@@ -26,6 +25,8 @@ Part I
 
 
 def creating_session(subsession):
+    print("executing create sessions for partone")
+    print(f"lotteries={Constants.NUM_LOTTERIES}, rounds per lottery={Constants.ROUNDS_PER_LOTTERY}")
     if subsession.round_number == 1:
         create_player_bid_histories(
             subsession.get_treatment_code(),
@@ -33,14 +34,17 @@ def creating_session(subsession):
             subsession.get_lottery_ids(Constants.NUM_LOTTERIES, Constants.PREFIX),
             subsession.session_id,
             Constants.ROUNDS_PER_LOTTERY,
-            Phase.QUESTION_PHASE)
+            Phase.GUESS_PHASE)
 
         for player in subsession.get_players():
             player.participant.vars['part_one_payoff_lottery'] = random.randint(1, Constants.NUM_LOTTERIES)
             player.participant.vars['part_one_payoff_round'] = random.randint(1, Constants.ROUNDS_PER_LOTTERY)
+            player.participant.vars['guess'] = []
+            player.participant.vars['min_guess'] = []
+            player.participant.vars['max_guess'] = []
 
-    save_bid_history_for_all_players(subsession.get_players(), Constants.ROUNDS_PER_LOTTERY, Phase.QUESTION_PHASE)
-    close_db()
+    save_bid_history_for_all_players(subsession.get_players(), Constants.ROUNDS_PER_LOTTERY, Phase.GUESS_PHASE)
+    # close_db()
 
 
 class Subsession(BaseSubsession, ExperimentSubSession):
@@ -52,12 +56,13 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer, BidHistoryPlayer):
+    # Input
     min_guess = models.IntegerField(min=0, max=100)
     max_guess = models.IntegerField(min=0, max=100)
     guess = models.IntegerField(min=0, max=100)
-    bid = models.IntegerField(min=0, max=100)
+    # Payoff
+    earnings = models.IntegerField()
     is_payment_round = models.BooleanField(initial=False)
-    # Guess Payoff
     prep_emin = models.FloatField()
     prep_emax = models.FloatField()
     computed_loss = models.FloatField()
@@ -67,12 +72,6 @@ class Player(BasePlayer, BidHistoryPlayer):
     guess_earnings = models.FloatField()
     interval_earnings = models.FloatField()
     computed_value_non_zero = models.BooleanField()
-
-    tie = models.BooleanField(initial=False)
-    win_tie_break = models.BooleanField(initial=False)
-    winner = models.BooleanField(initial=False)
-    earnings = models.IntegerField()
-    new_highest_bid = models.IntegerField()
     prob_k_greater_than_l = models.IntegerField()
     l_less_than_k = models.BooleanField()
     # Bid History
@@ -110,4 +109,4 @@ class Player(BasePlayer, BidHistoryPlayer):
     be_bid = models.FloatField()
 
 
-page_sequence = [Instructions, BestGuess, Interval, Bid]
+page_sequence = [Instructions, BestGuess, Interval]

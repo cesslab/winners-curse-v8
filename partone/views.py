@@ -8,75 +8,6 @@ from otree.api import Page, cu
 from .constants import Constants
 
 
-class Bid(Page):
-    form_model = "player"
-    form_fields = ["bid"]
-
-    @staticmethod
-    def vars_for_template(player):
-        return {
-            "player": player,
-            "num_rounds": range(1, Constants.ROUNDS_PER_LOTTERY+1),
-            "num_lotteries": range(1, Constants.NUM_LOTTERIES+1),
-            "min_valuation": Constants.MIN_VALUATION,
-            "max_valuation": Constants.MAX_VALUATION,
-            "new_lottery":
-                (
-                    player.round_number != 1
-                    and ((player.round_number - 1) % Constants.ROUNDS_PER_LOTTERY) == 0
-                )
-        }
-
-    @staticmethod
-    def before_next_page(player, timeout_happened):
-
-        if player.is_part_one_payoff(Constants.ROUNDS_PER_LOTTERY):
-            player.is_payment_round = True
-
-            if player.is_highest_bidder():
-                player.new_highest_bid = player.bid
-                player.tie = False
-                player.winner = True
-                player.earnings = player.ticket_value_after - player.bid
-            elif player.is_bid_tied():
-                player.new_highest_bid = player.bid
-                player.tie = True
-                player.win_tie_break = player.break_tie()
-                if player.win_tie_break:
-                    player.earnings = player.ticket_value_after - player.bid
-                else:
-                    player.earnings = 0
-                player.winner = player.win_tie_break
-            else:
-                player.new_highest_bid = player.highest_bid()
-                player.tie = False
-                player.winner = False
-                player.earnings = 0
-
-            player.participant.vars['bid_payoff_data'] = {
-                "bid": player.bid,
-                "new_highest_bid": player.new_highest_bid,
-                "tie": player.tie,
-                "win_tie_break": player.win_tie_break,
-                "winner": player.winner,
-                "previous_highest_bid": player.previous_highest_bid(),
-                "fixed_value": player.fixed_value,
-                "alpha": player.alpha,
-                "beta": player.beta,
-                "epsilon": player.epsilon,
-                "signal": player.signal,
-                "treatment": player.treatment,
-                "earnings": player.earnings,
-                "lottery_order": player.lottery_order,
-                "lottery_round_number": player.lottery_round_number,
-                "ticket_value_after": player.ticket_value_after,
-                "ticket_value_before": player.ticket_value_before,
-                "ticket_probability": player.ticket_probability
-            }
-        else:
-            player.is_payment_round = True
-
-
 class Outcome(Page):
     form_model = "player"
 
@@ -150,6 +81,9 @@ class Interval(Page):
 
     @staticmethod
     def before_next_page(player, timeout_happened):
+        player.set_guess(player.guess)
+        player.set_min_guess(player.min_guess)
+        player.set_max_guess(player.max_guess)
 
         if player.is_part_one_payoff(Constants.ROUNDS_PER_LOTTERY):
             #  Emin = fix * alpha
