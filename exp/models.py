@@ -91,6 +91,7 @@ def save_bid_history_for_all_players(players, rounds_per_lottery, phase):
             participant_id=player.participant.id,
             phase=phase
         )
+        print(f"round={player.get_lottery_round_number(rounds_per_lottery)} lottery id={player.get_lottery_order(rounds_per_lottery)}")
         save_bid_history_to_player(player, rounds_per_lottery, player_bid_history)
 
 
@@ -141,6 +142,24 @@ class BidHistoryPlayer:
     def get_lottery_order(self, rounds_per_lottery):
         # Calculates the lottery ID number given the oTree round number
         return ((self.round_number - 1) // rounds_per_lottery) + 1
+
+    def set_guess(self, guess):
+        self.participant.vars['guess'].append(guess)
+
+    def get_guess(self):
+        return self.participant.vars['guess'][self.round_number-1]
+
+    def set_min_guess(self, min_guess):
+        self.participant.vars['min_guess'].append(min_guess)
+
+    def get_min_guess(self):
+        return self.participant.vars['min_guess'][self.round_number-1]
+
+    def set_max_guess(self, max_guess):
+        self.participant.vars['max_guess'].append(max_guess)
+
+    def get_max_guess(self):
+        return self.participant.vars['max_guess'][self.round_number-1]
 
     @property
     def lottery_number(self):
