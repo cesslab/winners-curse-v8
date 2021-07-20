@@ -42,6 +42,7 @@ class Bid(Page):
             bid_description_three=loader('BidDescriptionThree.html').render({"player": player}),
             your_bid_one=loader('YourBidOne.html').render({"player": player}),
             your_bid_two=loader('YourBidTwo.html').render({"player": player}),
+            your_bid_three=loader('YourBidThree.html').render({"player": player}),
             lottery_types=loader('LotteryTypesIntro.html').render({"player": player}),
         )
 
