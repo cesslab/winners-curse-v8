@@ -27,11 +27,11 @@
       {% include 'global/Lottery.html' %}
       {% include 'global/YourSignal.html' %}
     </div>
-    <div class="guess-item worth-table" id="your-guess">
+    <div class="guess-item worth-table text-center" style="display: flex; flex-direction: column;" id="your-guess">
       <p>
         Your own guess about the highest of the other 3 bids was:
       </p>
-      <table class="table" style="table-layout: fixed;" id="belief-table">
+      <table class="table align-self-center" style="table-layout: fixed;" id="belief-table">
         <thead>
         <tr>
           <th>At Least</th>
@@ -47,20 +47,22 @@
       </table>
     </div>
     <div class="hint-text-item">
-      <div class="span-item">
+      <div class="span-item" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
         <div id="highest-signal" class="pt-4">
           <p><b>You are the bidder with the highest signal.</b></p>
         </div>
-        <div id="right-top-ticket-info">
-          <p>Given that your signal of {{player.signal4}} is the highest one, the lottery ticket
-            is probably as follows:</p>
-        </div>
-        <div id="right-lottery">
-          {% include 'global/RightLottery.html' %}
-        </div>
-        <div id="right-bottom-ticket-info">
-          {% include 'global/LotteryInfo.html' %}
-        </div>
+      </div>
+    </div>
+    <div id="hint-lottery-item">
+      <div id="right-top-ticket-info">
+        <p>Given that your signal of {{player.signal4}} is the highest one, the lottery ticket
+          is probably as follows:</p>
+      </div>
+      <div id="right-lottery">
+        {% include 'global/RightLottery.html' %}
+      </div>
+      <div id="right-bottom-ticket-info">
+        {% include 'global/LotteryInfo.html' %}
       </div>
     </div>
   </div>
