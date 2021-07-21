@@ -12,7 +12,7 @@ from exp.models import (
 from exp.db import Phase, close_db
 
 from .views import (
-    Bid, Instructions
+    Bid, Instructions, Outcome
 )
 from .constants import Constants
 
@@ -86,4 +86,4 @@ class Player(BasePlayer, BidHistoryPlayer):
     be_bid = models.FloatField()
 
 
-page_sequence = [Instructions, Bid]
+page_sequence = [Instructions, Bid, Outcome]

@@ -12,38 +12,26 @@
 
 <link href='https://fonts.googleapis.com/css?family=Palanquin:500' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="{% static 'global/css/font-awesome.css' %}">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/3.4.0/introjs.css" integrity="sha512-i+WzzATeaDcwcfi5CfLn63qBxrKqiQvDLC+IChU1zVlaPguPgJlddOR07nU28XOoIOno9WPmJ+3ccUInpmHxBg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="{% static 'global/css/tooltip.css' %}">
 {% endblock %}
 
-  {% block content %}
-{% include 'global/LotteryRoundNavbar.html' %}
-  <div class="grid-container">
-    <div>
+{% block content %}
+  {% include 'global/LotteryRoundNavbar.html' %}
+  <div class="bid-grid">
+    <div class="lottery-item">
       <div class="lottery-header">
         <h4 class="text-center"><u>Lottery of type {{ player.lottery_order }}</u></h4>
       </div>
-      <div>
-        <p>Consider the following lottery ticket with two possible prizes,
-          0 and a value v.</p>
-      </div>
-
       {% include 'global/Lottery.html' %}
-
       {% include 'global/YourSignal.html' %}
-
-      {% include 'global/SignalInterpretation.html' %}
-  </div>
-  <div class="d-flex flex-column align-items-center" style="height: 100%; padding-right: 30px;">
-    <div class="">
-      <p><b>You are the bidder with the highest signal.</b></p>
-      <p>Given that your signal of {{player.signal4}} is the highest one, the lottery ticket
-      is probably as follows:</p>
     </div>
-    <div>
-      {% include 'global/RightLottery.html' %}
-      {% include 'global/LotteryInfo.html' %}
-    </div>
-    <div class="worth-table">
-      <table class="table" style="table-layout: fixed;">
+    <div class="guess-item worth-table" id="your-guess">
+      <p>
+        Your own guess about the highest of the other 3 bids was:
+      </p>
+      <table class="table" style="table-layout: fixed;" id="belief-table">
         <thead>
         <tr>
           <th>At Least</th>
@@ -56,32 +44,49 @@
           <td>{{guess}}</td>
           <td>{{max_guess}}</td>
         </tr>
-
       </table>
     </div>
-    <div class="align-self-center">
-      <h4>Your Bid</h4>
-    </div>
-    <div class="align-self-center">
-      <input type="number" id="bid" name="bid" min="0" max="100" step="1"
-             class="center-input form-control" value="{{ form.bid.object_data }}" placeholder=""
-             data-for="bid-selected-probability" required>
-    </div>
-    {% if form.bid.errors %}
-    <div class="alert alert-danger align-self-center">
-      {{ form.bid.errors }}
-    </div>
-    {% endif %}
-
-
-
-    <div class="btn-container">
-      <button class="otree-btn-next btn btn-primary">Next</button>
+    <div class="hint-text-item">
+      <div class="span-item">
+        <div id="highest-signal" class="pt-4">
+          <p><b>You are the bidder with the highest signal.</b></p>
+        </div>
+        <div id="right-top-ticket-info">
+          <p>Given that your signal of {{player.signal4}} is the highest one, the lottery ticket
+            is probably as follows:</p>
+        </div>
+        <div id="right-lottery">
+          {% include 'global/RightLottery.html' %}
+        </div>
+        <div id="right-bottom-ticket-info">
+          {% include 'global/LotteryInfo.html' %}
+        </div>
+      </div>
     </div>
   </div>
-</div>
-
-{% include 'partonesample/BidRereadInstructions.html' %}
+  <div>
+    <div id="your-bid" style="display: flex; flex-direction: column;">
+      <div class="align-self-center">
+        <h4>Your Bid</h4>
+      </div>
+      <div class="align-self-center">
+        <input type="number" id="bid" name="bid" min="0" max="100" step="1"
+               class="center-input form-control" value="{{ form.bid.object_data }}" placeholder=""
+               data-for="bid-selected-probability" required>
+      </div>
+      {% if form.bid.errors %}
+      <div class="alert alert-danger align-self-center">
+        {{ form.bid.errors }}
+      </div>
+      {% endif %}
+    </div>
+    <div style="display: flex; flex-direction: column;">
+      <div class="btn-container align-self-center">
+        <button class="otree-btn-next btn btn-primary">Next</button>
+      </div>
+    </div>
+  </div>
+  {% include 'partonesample/BidRereadInstructions.html' %}
 {% endblock %}
 
 {% block scripts %}
@@ -90,5 +95,62 @@
   alertList.forEach(function (alert) {
     new bootstrap.Alert(alert)
   })
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/3.4.0/intro.min.js" integrity="sha512-QWPjvFqgUJv5X6Sq5NXmwJQSEzUEBxmCCcgqJd5/5luZnS6llRbshsChUNKrFlZ4bshKZEJxAHDB+WWdMsGvUA==" crossorigin="anonymous"></script>
+<script>
+  if (js_vars.display_intro) {
+    introJs().setOptions({
+      steps: [
+        {
+          title: '',
+          intro: js_vars.highest_signal,
+          position: 'left',
+          element: document.querySelector(('#highest-signal'))
+        },
+        {
+          title: '',
+          intro: js_vars.belief,
+          position: 'left',
+          element: document.querySelector(('#your-guess'))
+        },
+        {
+          title: '',
+          intro: js_vars.right_top_ticket_info,
+          position: 'left',
+          element: document.querySelector(('#right-top-ticket-info'))
+        },
+        {
+          title: '',
+          intro: js_vars.right_bottom_ticket_info,
+          position: 'left',
+          element: document.querySelector(('#right-bottom-ticket-info'))
+        },
+        {
+          title: 'Your Bid',
+          intro: js_vars.your_bid_one,
+          position: 'left',
+          element: document.querySelector(('#your-bid'))
+        },
+        {
+          title: 'Your Bid (Continued)',
+          intro: js_vars.your_bid_two,
+          position: 'left',
+          element: document.querySelector(('#your-bid'))
+        },
+        {
+          title: 'Your Guess',
+          intro: js_vars.your_guess,
+          position: 'right',
+          element: document.querySelector(('#your-guess'))
+        },
+        {
+          title: '',
+          intro: js_vars.right_lottery_info,
+          element: document.querySelector(('#right-lottery'))
+        },
+      ]
+    }).start();
+  }
+
 </script>
 {% endblock %}

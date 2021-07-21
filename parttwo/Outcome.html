@@ -25,20 +25,20 @@
     <div class="two-column-container">
         <div class="item text-center">
             <h5>Your Bid</h5>
-            <p>{{ bid }}</p>
+            <p>{{ player.bid }}</p>
         </div>
         <div class="item text-center">
             <h5>Highest Bid</h5>
-            <span>{{ new_highest_bid }}</span>
+            <span>{{ player.new_highest_bid }}</span>
         </div>
     </div>
     <div class="text-center">
         <span>
-        {% if winner %}
+        {% if player.winner %}
             You bought the lottery.
-        {% elif tie %}
+        {% elif player.tie %}
             You and at least one other bidder submitted identical highest bids.
-          {% if win_tie_break %}
+          {% if player.win_tie_break %}
           The computer randomly selected you as the winner.
           {% else %}
           The computer randomly selected one other bidder as the winner.
@@ -57,18 +57,18 @@
       <p>
           The {{ player.selected_value_text }} was
         {% if player.is_value_treatment %}
-          {{ ticket_value_before }}.
+          {{ player.ticket_value_before }}.
         {% else %}
-          {{ ticket_probability }}.
+          {{ player.ticket_probability }}.
         {% endif %}
         Therefore, the actual lottery ticket was:
       </p>
     </div>
 
-    {% include 'global/RealizedLottery.html' with is_value_treatment=player.is_value_treatment & fixed_value=fixed_value & ticket_probability=ticket_probability & ticket_value_before=ticket_value_before %}
+    {% include 'global/RealizedLottery.html' with is_value_treatment=player.is_value_treatment & fixed_value=player.fixed_value & ticket_probability=player.ticket_probability & ticket_value_before=player.ticket_value_before %}
 
     <div id="played-outcome" class="text-center">
-        <p>The lottery was played and its outcome was {{ ticket_value_after }}.</p>
+        <p>The lottery was played and its outcome was {{ player.ticket_value_after }}.</p>
     </div>
 
     <div class="lottery-header text-center">
