@@ -36,7 +36,7 @@
     Computer computes 12*[1- (u-l)/(Emax-Emin)] = 12*[1 - ({{max_guess}} - {{min_guess}})/({{prep_emax}} - {{prep_emin}})] = {{confidence_value}}.
     if positive and OthersHBid in [l,u] (worth is in interval); 0 otherwise.
     The computed value is {{confidence_value}} and {% if computed_value_non_zero %} is greater than zero {% else %} less than zero {% endif %}
-    and the OthersHBid is {% if high_bid_within_interval %} in {% else %} not in {% endif %} [{{prep_emax}}, {{prep_emin}}] so payoff
+    and the OthersHBid is {% if high_bid_within_interval %} in {% else %} not in {% endif %} [{{prep_emin}}, {{prep_emax}}] so payoff
     for this part is {{interval_earnings}} credits.
   </li>
 </ul>
