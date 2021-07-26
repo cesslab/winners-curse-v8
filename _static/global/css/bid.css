@@ -27,28 +27,23 @@ output {
 }
 
 #hint-lottery-item {
-    border-style: solid;
-    border-width: 3px 3px 3px 0;
-    border-color: #17a2b8;
-    border-radius: 0.2em;
-    padding: 10px;
 }
 
 #your-guess {
-    border-style: solid;
-    border-width: 3px 0 3px 3px;
-    border-color: #17a2b8;
-    border-radius: 0.2em;
-    padding: 10px;
 }
 
 #your-bid {
     margin-top: 20px;
 }
 
-.hint-lottery-item {
+#hint-lottery-item {
     grid-row: 2;
     grid-column: 2;
+    border-style: solid;
+    border-width: 3px 3px 3px 3px;
+    border-color: #17a2b8;
+    border-radius: 0.2em;
+    padding: 10px;
 }
 
 .hint-text-item {
@@ -66,6 +61,12 @@ output {
 .guess-item {
     grid-row: 2;
     grid-column: 1;
+    border-style: solid;
+    border-width: 3px 3px 3px 3px;
+    border-color: #17a2b8;
+    border-radius: 0.2em;
+    padding: 10px;
+    margin-right: 10px;
 }
 
 .title-item {
