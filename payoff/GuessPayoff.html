@@ -54,37 +54,40 @@
 </div>
 
 <div class="text-center">
-  <h4>Your Answer</h4>
-  <p>You estimated the highest of the other 3 bids to be between
-    <span class="credits">C</span>{{min_guess}} and <span class="credits">C</span>{{max_guess}}.
-    Your best guess was <span class="credits">C</span>{{guess}}.
-  </p>
+  <div class="text-center">
+    <h4>Your Answer</h4>
+    <p>You estimated the highest of the other 3 bids to be between
+      <span class="credits">C</span>{{min_guess}} and <span class="credits">C</span>{{max_guess}}.
+      Your best guess was <span class="credits">C</span>{{guess}}.
+    </p>
 
-  <h4>Correct Answer</h4>
-  <p>The highest bid of the other three bidders was <span class="credits">C</span>{{others_high_bid}}.</p>
+    <h4>Correct Answer</h4>
+    <p>The highest bid of the other three bidders was <span class="credits">C</span>{{others_high_bid}}.</p>
 
-  <h4>Your earnings</h4>
-  <p>Your earnings in this round are <span class="credits">C</span>{{earnings}}.</p>
-
-  <h4>Details</h4>
-  <p>
-    {% if high_bid_within_interval %}
+    <h4>Your earnings</h4>
+    <p>Your earnings in this round are <span class="credits">C</span>{{earnings}}.</p>
+  </div>
+  <div>
+    <h4>Details</h4>
+    <p>
+      {% if high_bid_within_interval %}
       {% if computed_value_non_zero %}
       The highest bid was within your chosen interval, and given your interval's width you get <span class="credits">C</span>{{interval_earnings}}.
       {% else %}
       The highest bid was within your chosen interval, but your interval was too wide. Therefore, you get <span class="credits">C</span>{{interval_earnings}}.
       {% endif %}
-    {% else %}
-    The highest bid was not within your chosen interval, therefore you get <span class="credits">C</span>{{interval_earnings}}.
-    {% endif %}
-  </p>
-  <p>
-    Given your best guess the probability of getting 12 credits was {{ prob_k_greater_than_l }}%. To compute your payoff the computer
-    used a random device with this probability and you get <span class="credits">C</span>{{guess_earnings}}.
-  </p>
-  <p>
-    In total, you get <span class="credits">C</span>{{ earnings }}.
-  </p>
+      {% else %}
+      The highest bid was not within your chosen interval, therefore you get <span class="credits">C</span>{{interval_earnings}}.
+      {% endif %}
+    </p>
+    <p>
+      Given your best guess the probability of getting 12 credits was {{ prob_k_greater_than_l }}%. To compute your payoff the computer
+      used a random device with this probability and you get <span class="credits">C</span>{{guess_earnings}}.
+    </p>
+    <p>
+      In total, you get <span class="credits">C</span>{{ earnings }}.
+    </p>
+  </div>
 </div>
 
   {% next_button %}

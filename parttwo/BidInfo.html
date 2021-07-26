@@ -1,0 +1,77 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'global/css/bid.css' %}">
+<link rel="stylesheet" href="{% static 'global/css/progress.css' %}">
+
+<link rel="stylesheet" href="{% static 'global/css/round_navbar.css' %}">
+<link rel="stylesheet" href="{% static 'global/css/lottery_navbar.css' %}">
+<link rel="stylesheet" href="{% static 'global/css/footer.css' %}">
+<link rel="stylesheet" href="{% static 'global/css/custom_font.css' %}">
+
+<link href='https://fonts.googleapis.com/css?family=Palanquin:500' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="{% static 'global/css/font-awesome.css' %}">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/3.4.0/introjs.css" integrity="sha512-i+WzzATeaDcwcfi5CfLn63qBxrKqiQvDLC+IChU1zVlaPguPgJlddOR07nU28XOoIOno9WPmJ+3ccUInpmHxBg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="{% static 'global/css/tooltip.css' %}">
+
+{% endblock %}
+
+  {% block content %}
+  {% include 'global/LotteryRoundNavbar.html' %}
+  <div class="grid-container">
+    <div id="lottery-ticket-signal">
+      <div id="lottery-ticket">
+        <div class="lottery-header">
+          <h5 class="text-center"><u>Lottery of type {{ player.lottery_order }}</u></h5>
+        </div>
+        <div>
+          <p>Consider the following lottery ticket with two possible prizes, 0 and a value v.</p>
+        </div>
+        {% include 'global/Lottery.html' %}
+      </div>
+      {% include 'global/YourSignal.html' %}
+      {% include 'global/SignalInterpretation.html' %}
+    </div>
+
+    <div style="height: 100%;">
+      <div class="d-flex flex-column align-items-center"  id="your-task">
+        <div id="additional-information" class="pt-4">
+          <div id="highest-signal" class="pt-4">
+            <p><b>You are the bidder with the highest signal.</b></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+</div>
+<div class="btn-container">
+  <button class="otree-btn-next btn btn-primary">Next</button>
+</div>
+
+{% include 'partonesample/BidRereadInstructions.html' %}
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/3.4.0/intro.min.js" integrity="sha512-QWPjvFqgUJv5X6Sq5NXmwJQSEzUEBxmCCcgqJd5/5luZnS6llRbshsChUNKrFlZ4bshKZEJxAHDB+WWdMsGvUA==" crossorigin="anonymous"></script>
+<script>
+  introJs().setOptions({
+    steps: [
+      {
+        title: '',
+        intro: js_vars.lottery_ticket_signal,
+        position: 'right',
+        element: document.querySelector(('#lottery-ticket-signal'))
+      },
+      {
+        title: '',
+        intro: js_vars.highest_signal,
+        position: 'left',
+        element: document.querySelector(('#highest-signal'))
+      },
+    ]
+  }).start();
+
+</script>
+{% endblock %}

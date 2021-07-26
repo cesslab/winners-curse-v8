@@ -7,7 +7,9 @@
     </h2>
     <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
       <div class="accordion-body">
-        {% include 'partonesample/Instructions.html' %}
+        {% include 'parttwo/PartTwoInstructions.html' %}
+        {% include 'parttwo/LotteryTicketSignalInfo.html' %}
+        {% include 'parttwo/HighestSignal.html' %}
 
         <h4>Lottery Ticket</h4>
         {% include 'partonesample/LotteryTicketIntro.html' %}
@@ -18,19 +20,22 @@
         <h4>Signal Interpretation</h4>
         {% include 'partonesample/SignalInterpretationIntro.html' %}
 
-        <h4>General Remark</h4>
-        {% include 'partonesample/GeneralRemarkIntro.html' %}
+        <h4>Your Guess</h4>
+        {% include 'parttwo/Belief.html' %}
+        {% include 'parttwo/YourGuess.html' %}
 
-        <h4>Your Task</h4>
-        {% include 'partonesample/YourTask.html' %}
+        <h4>The Expected Lottery</h4>
+        {% include 'parttwo/RightLotteryInfo.html' %}
 
-        {% include 'partonesample/BidDescriptionOne.html' %}
-        {% include 'partonesample/BidDescriptionTwo.html' %}
-        {% include 'partonesample/BidDescriptionThree.html' %}
+        <h4>The Lottery's Expected Payoff</h4>
+        {% include 'parttwo/LotteryExpectedPayoffInfo.html' %}
 
         <h4>Your Bid</h4>
         {% include 'partonesample/YourBidOne.html' %}
         {% include 'partonesample/YourBidTwo.html' %}
+
+        <h4>General Remark</h4>
+        {% include 'partonesample/GeneralRemarkIntro.html' %}
 
         <h4>Lottery Types</h4>
         {% include 'partonesample/LotteryTypesIntro.html' %}
