@@ -115,15 +115,10 @@
           element: document.querySelector(('#your-guess'))
         },
         {
-          title: 'Your Guess (Continued)',
-          intro: js_vars.your_guess,
-          position: 'right',
-          element: document.querySelector(('#your-guess'))
-        },
-        {
-          title: "The Expected Lottery",
-          intro: js_vars.right_lottery_info,
-          element: document.querySelector(('#lottery-ticket-info'))
+          title: 'The Expected Lottery',
+          intro: js_vars.right_top_ticket_info,
+          position: 'left',
+          element: document.querySelector(('#right-top-ticket-info'))
         },
         {
           title: "The Lottery's Expected Payoff",
@@ -141,6 +136,17 @@
           intro: js_vars.your_bid_two,
           position: 'left',
           element: document.querySelector(('#your-bid'))
+        },
+        {
+          title: 'Benchmark 1: Your Guess',
+          intro: js_vars.your_guess,
+          position: 'right',
+          element: document.querySelector(('#your-guess'))
+        },
+        {
+          title: "Benchmark 2: The Expected Lottery",
+          intro: js_vars.right_lottery_info,
+          element: document.querySelector(('#lottery-ticket-info'))
         },
       ]
     }).start();

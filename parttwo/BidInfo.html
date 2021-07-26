@@ -39,6 +39,9 @@
       <div class="d-flex flex-column align-items-center"  id="your-task">
         <div id="additional-information" class="pt-4">
           <div id="highest-signal" class="pt-4">
+            <div class="lottery-header pb-3">
+              <h5 class="text-center"><u>Your new info in Part II</u></h5>
+            </div>
             <p><b>You are the bidder with the highest signal.</b></p>
           </div>
         </div>
@@ -50,28 +53,30 @@
   <button class="otree-btn-next btn btn-primary">Next</button>
 </div>
 
-{% include 'partonesample/BidRereadInstructions.html' %}
+{% include 'parttwo/BidInfoRereadInstructions.html' %}
 {% endblock %}
 
 {% block scripts %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/3.4.0/intro.min.js" integrity="sha512-QWPjvFqgUJv5X6Sq5NXmwJQSEzUEBxmCCcgqJd5/5luZnS6llRbshsChUNKrFlZ4bshKZEJxAHDB+WWdMsGvUA==" crossorigin="anonymous"></script>
 <script>
-  introJs().setOptions({
-    steps: [
-      {
-        title: '',
-        intro: js_vars.lottery_ticket_signal,
-        position: 'right',
-        element: document.querySelector(('#lottery-ticket-signal'))
-      },
-      {
-        title: '',
-        intro: js_vars.highest_signal,
-        position: 'left',
-        element: document.querySelector(('#highest-signal'))
-      },
-    ]
-  }).start();
+  if (js_vars.display_intro) {
+    introJs().setOptions({
+      steps: [
+        {
+          title: '',
+          intro: js_vars.lottery_ticket_signal,
+          position: 'right',
+          element: document.querySelector(('#lottery-ticket-signal'))
+        },
+        {
+          title: '',
+          intro: js_vars.highest_signal,
+          position: 'left',
+          element: document.querySelector(('#highest-signal'))
+        },
+      ]
+    }).start();
+  }
 
 </script>
 {% endblock %}
