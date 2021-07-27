@@ -36,6 +36,8 @@ class Outcome(Page):
             "player": player,
             "num_rounds": range(1, Constants.ROUNDS_PER_LOTTERY + 1),
             "num_lotteries": range(1, Constants.NUM_LOTTERIES + 1),
+            "highest_others_bid": player.highest_others_bid,
+            "others_high_bid": player.others_high_bid,
         }
 
 
@@ -115,6 +117,7 @@ class Bid(Page):
             player.participant.vars['bid_payoff_data'] = {
             "bid": player.bid,
             "new_highest_bid": player.new_highest_bid,
+            "highest_others_bid": player.others_high_bid,
             "tie": player.tie,
             "win_tie_break": player.win_tie_break,
             "winner": player.winner,

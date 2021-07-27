@@ -109,6 +109,10 @@ class BidHistoryPlayer:
     def is_bid_tied(self):
         return self.bid == self.bid1 or self.bid == self.bid2 or self.bid == self.bid3
 
+    @property
+    def highest_others_bid(self):
+        return max([self.bid1, self.bid2, self.bid3])
+
     def break_tie(self):
         return random.choice([True, False])
 
