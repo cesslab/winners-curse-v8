@@ -26,9 +26,6 @@ output {
     grid-column: 1;
 }
 
-#hint-lottery-item {
-}
-
 #your-guess {
 }
 
@@ -39,10 +36,6 @@ output {
 #hint-lottery-item {
     grid-row: 2;
     grid-column: 2;
-    border-style: solid;
-    border-width: 3px 3px 3px 3px;
-    border-color: #17a2b8;
-    border-radius: 0.2em;
     padding: 10px;
 }
 
@@ -61,12 +54,15 @@ output {
 .guess-item {
     grid-row: 2;
     grid-column: 1;
+    padding: 10px;
+    margin-right: 10px;
+}
+
+.rounded-border {
     border-style: solid;
     border-width: 3px 3px 3px 3px;
     border-color: #17a2b8;
     border-radius: 0.2em;
-    padding: 10px;
-    margin-right: 10px;
 }
 
 .title-item {
@@ -188,4 +184,12 @@ input[type=number].form-control {
 
 #lottery-navbar {
     margin-top: 10px;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.highlight-background {
+    background-color: #eaeaea;
 }

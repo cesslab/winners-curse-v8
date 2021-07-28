@@ -1,0 +1,156 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'global/css/bid.css' %}">
+<link rel="stylesheet" href="{% static 'global/css/progress.css' %}">
+
+<link rel="stylesheet" href="{% static 'global/css/round_navbar.css' %}">
+<link rel="stylesheet" href="{% static 'global/css/lottery_navbar.css' %}">
+<link rel="stylesheet" href="{% static 'global/css/footer.css' %}">
+<link rel="stylesheet" href="{% static 'global/css/custom_font.css' %}">
+
+<link href='https://fonts.googleapis.com/css?family=Palanquin:500' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="{% static 'global/css/font-awesome.css' %}">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/3.4.0/introjs.css" integrity="sha512-i+WzzATeaDcwcfi5CfLn63qBxrKqiQvDLC+IChU1zVlaPguPgJlddOR07nU28XOoIOno9WPmJ+3ccUInpmHxBg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="{% static 'global/css/tooltip.css' %}">
+{% endblock %}
+
+{% block content %}
+  {% include 'global/LotteryRoundNavbar.html' %}
+  <div class="bid-grid">
+    <div class="lottery-item">
+      <div class="lottery-header">
+        <h5 class="text-center"><u>Lottery of type {{ player.lottery_order }}</u></h5>
+      </div>
+      {% include 'global/Lottery.html' %}
+      {% include 'global/YourSignal.html' %}
+    </div>
+    <div class="guess-item worth-table text-center" style="display: flex; flex-direction: column;" id="your-guess">
+      <p>
+        Your own guess about the highest of the other 3 bids was:
+      </p>
+      <table class="table align-self-center" style="table-layout: fixed;" id="belief-table">
+        <thead>
+        <tr>
+          <th>At Least</th>
+          <th>Best</th>
+          <th>At Most</th>
+        </tr>
+        </thead>
+        <tr>
+          <td>{{min_guess}}</td>
+          <td>{{guess}}</td>
+          <td>{{max_guess}}</td>
+        </tr>
+      </table>
+    </div>
+    <div class="hint-text-item">
+      <div class="span-item highest-signal-item" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+        <div id="highest-signal">
+          <div class="lottery-header pb-3">
+            <h5 class="text-center"><u>Your new info in Part II</u></h5>
+          </div>
+          <p><b>You are the bidder with the highest signal.</b></p>
+        </div>
+      </div>
+    </div>
+    <div id="hint-lottery-item">
+      <div id="lottery-ticket-info">
+        <div id="right-top-ticket-info">
+          <p>Given that your signal of {{player.signal4}} is the highest one, the lottery ticket
+            is probably as follows:</p>
+        </div>
+        <div id="right-lottery">
+          {% include 'global/RightLottery.html' %}
+        </div>
+      </div>
+      <div id="lottery-expected-payoff">
+        {% include 'global/LotteryInfo.html' %}
+      </div>
+    </div>
+  </div>
+  <div>
+    <div id="your-bid" style="display: flex; flex-direction: column;">
+      <div class="align-self-center">
+        <h4>Your Bid</h4>
+      </div>
+      <div class="align-self-center">
+        <input type="number" id="bid" name="bid" min="0" max="100" step="1"
+               class="center-input form-control" value="{{ form.bid.object_data }}" placeholder=""
+               data-for="bid-selected-probability" required>
+      </div>
+      {% if form.bid.errors %}
+      <div class="alert alert-danger align-self-center">
+        {{ form.bid.errors }}
+      </div>
+      {% endif %}
+    </div>
+    <div style="display: flex; flex-direction: column;">
+      <div class="btn-container align-self-center">
+        <button class="otree-btn-next btn btn-primary">Next</button>
+      </div>
+    </div>
+  </div>
+  {% include 'partonesample/BidRereadInstructions.html' %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+  let alertList = document.querySelectorAll('.alert')
+  alertList.forEach(function (alert) {
+    new bootstrap.Alert(alert)
+  })
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/3.4.0/intro.min.js" integrity="sha512-QWPjvFqgUJv5X6Sq5NXmwJQSEzUEBxmCCcgqJd5/5luZnS6llRbshsChUNKrFlZ4bshKZEJxAHDB+WWdMsGvUA==" crossorigin="anonymous"></script>
+<script>
+  if (js_vars.display_intro) {
+    introJs().setOptions({
+      steps: [
+        {
+          title: 'Your Guess',
+          intro: js_vars.belief,
+          position: 'left',
+          element: document.querySelector(('#your-guess'))
+        },
+        {
+          title: 'The Expected Lottery',
+          intro: js_vars.right_top_ticket_info,
+          position: 'left',
+          element: document.querySelector(('#right-top-ticket-info'))
+        },
+        {
+          title: "The Lottery's Expected Payoff",
+          intro: js_vars.lottery_expected_payoff,
+          element: document.querySelector(('#lottery-expected-payoff'))
+        },
+        {
+          title: 'Your Bid',
+          intro: js_vars.your_bid_one,
+          position: 'left',
+          element: document.querySelector(('#your-bid'))
+        },
+        {
+          title: 'Your Bid (Continued)',
+          intro: js_vars.your_bid_two,
+          position: 'left',
+          element: document.querySelector(('#your-bid'))
+        },
+        {
+          title: 'Benchmark 1: Your Guess',
+          intro: js_vars.your_guess,
+          position: 'right',
+          element: document.querySelector(('#your-guess'))
+        },
+        {
+          title: "Benchmark 2: The Expected Lottery",
+          intro: js_vars.right_lottery_info,
+          element: document.querySelector(('#lottery-ticket-info'))
+        },
+      ]
+    }).start();
+  }
+
+</script>
+{% endblock %}

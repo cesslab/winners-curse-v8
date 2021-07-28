@@ -6,12 +6,12 @@ from exp.models import (
 )
 
 from .views import (
-    InstructionsPage, Bid, BestGuessLeft, BestGuessRight, Interval, Outcome, Summary, Payoff
+    Instructions, BidOne, Outcome
 )
 from .constants import Constants
 
 doc = """
-Part I (Walkthrough)
+Part II (Walkthrough)
 """
 
 
@@ -68,4 +68,4 @@ class Player(BasePlayer, BidHistoryPlayer):
     be_bid = models.FloatField(initial=0.0)
 
 
-page_sequence = [InstructionsPage, BestGuessLeft, BestGuessRight, Interval, Summary, Payoff]
+page_sequence = [Instructions, BidOne, Outcome]
