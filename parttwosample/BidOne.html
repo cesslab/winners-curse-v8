@@ -235,65 +235,81 @@
   function btnClickHandler(e, eventType, currentScreenState) {
     switch (currentScreenState) {
       case screenStates.oldBidInfo:
-        switch (eventType) {
-          case eventTypes.next:
-            $("#old-bid-info").hide();
-            $("#new-bid-info").fadeIn("slow", () => {
-            $("#previous-btn").show();
-            showNewBidInfoWalkThrough();
-            });
-            screenState = screenStates.newBidInfo
+        if (eventType === eventTypes.next) {
+          $("#old-bid-info").hide();
+          $("#previous-btn").show();
+          $("#new-bid-info").fadeIn("slow", () => {
+          showNewBidInfoWalkThrough();
+          });
+          screenState = screenStates.newBidInfo
         }
         break;
       case screenStates.newBidInfo:
-        switch (eventType) {
-          case eventTypes.next:
-            $("#your-guess-container").hide();
-            $("#your-guess-container").removeClass("hidden");
-            $("#your-guess").removeClass("highlight-background");
-            $("#your-guess").addClass("rounded-border");
-            $("#your-guess-container").fadeIn("slow", () => {
-              showGuessWalkThrough();
-            });
-            screenState = screenStates.benchmarkGuess;
-            break;
-          case eventTypes.previous:
-            $("#previous-btn").hide();
-            $("#new-bid-info").fadeOut("slow", () => {
-              $("#old-bid-info").fadeIn("slow")
-            });
-            screenState = screenStates.oldBidInfo;
+        if (eventType === eventTypes.next) {
+          $("#your-guess-container").hide();
+          $("#your-guess-container").removeClass("hidden");
+          $("#your-guess").removeClass("highlight-background");
+          $("#your-guess").addClass("rounded-border");
+          $("#your-guess-container").fadeIn("slow", () => {
+            showGuessWalkThrough();
+          });
+          screenState = screenStates.benchmarkGuess;
+        }
+        // Previous
+        else {
+          $("#previous-btn").hide();
+          $("#new-bid-info").fadeOut("slow", () => {
+          $("#old-bid-info").fadeIn("slow")
+          });
+          screenState = screenStates.oldBidInfo;
         }
         break;
       case screenStates.benchmarkGuess:
-        switch (eventType) {
-          case eventTypes.next:
-            $("#hint-lottery-container").hide();
-            $("#hint-lottery-container").removeClass("hidden");
-            $("#hint-lottery-item").removeClass("highlight-background");
-            $("#hint-lottery-item").addClass("rounded-border");
-            $("#hint-lottery-container").fadeIn("slow", () => {
+        if (eventType === eventTypes.next) {
+          $("#hint-lottery-container").hide();
+          $("#hint-lottery-container").removeClass("hidden");
+          $("#hint-lottery-item").removeClass("highlight-background");
+          $("#hint-lottery-item").addClass("rounded-border");
+          $("#hint-lottery-container").fadeIn("slow", () => {
               showExpectedLotteryWalkThrough();
-            });
-            screenState = screenStates.benchmarkExpectedLottery;
+          });
+          screenState = screenStates.benchmarkExpectedLottery;
+        }
+        // Previous
+        else {
+          $("#your-guess-container").fadeOut(() => {
+            $("#your-guess").removeClass("rounded-border");
+            $("#your-guess").hide();
+            $("#your-guess").addClass("highlight-background");
+            $("#your-guess").fadeIn("slow")
+          });
+          screenState = screenStates.newBidInfo;
         }
         break;
       case screenStates.benchmarkExpectedLottery:
-        console.log("benchmark expected lottery")
-        switch (eventType) {
-          case eventTypes.next:
-            $("#your-bid").show()
-            $("#your-bid").fadeIn("slow", () => {
-              showYourBidWalkThrough();
-            });
-            $("#next-btn").hide();
-            $("#otree-next-btn").show();
-            screenState = screenStates.bidInput;
-            break;
-          case eventTypes.previous:
+        if (eventType === eventTypes.next) {
+          $("#your-bid").show()
+          $("#your-bid").fadeIn("slow", () => {
+            showYourBidWalkThrough();
+          });
+          $("#next-btn").hide();
+          $("#otree-next-btn").show();
+          screenState = screenStates.bidInput;
+        }
+        // Previous
+        else {
+          $("#hint-lottery-item").fadeOut("slow", () => {
+            $("#hint-lottery-item").removeClass("rounded-border");
+            $("#hint-lottery-container").addClass("hidden");
+            $("#hint-lottery-item").addClass("highlight-background");
+            $("#hint-lottery-item").fadeIn("slow");
+          });
+          screenState = screenStates.benchmarkGuess;
         }
         break;
       case screenState.bidInput:
+        if (eventType === eventTypes.previous) {
+        }
         break;
     }
   }
