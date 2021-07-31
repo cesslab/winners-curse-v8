@@ -1,11 +1,13 @@
 <div id="lottery-signal">
-  <h5 class="text-center lottery-header"><u>Your Signal and its Interpretation</u></h5>
+  <h5 class="text-center lottery-header"><u>Your signal and its interpretation</u></h5>
   <p class="text-center">
     {% if player.is_value_treatment %}
     Your signal about v is: <b>{{ player.signal }}</b>
     {% else %}
     Your signal about p is: <b>{{ player.signal }}%</b>
     {% endif %} (with x = {{ player.epsilon }}).
+  </p>
+  <p class="text-center">
     {% if player.is_value_treatment %}
     Given your signal, the Selected Value must lie between <b><span class="credits">C</span>{{ player.min_signal }}</b>
     and <b><span class="credits">C</span>{{ player.max_signal }}</b>.

@@ -31,7 +31,7 @@
       {% include 'global/YourSignalAndInterpretation.html' %}
       <div id="">
         <div class="lottery-header pb-3">
-          <h5 class="text-center"><u>Your new info in Part II</u></h5>
+          <h5 class="text-center"><u>Your new info in part II</u></h5>
         </div>
         <div class="text-center">
           <span><b>You are the bidder with the highest signal.</b></span>
@@ -46,12 +46,16 @@
         {% include 'global/ExpectedLotterySlider.html' %}
       </div>
     </div>
+
+
+
   </div>
 
-  <div>
+  <div class="bid-grid-container">
+    <div></div>
     <div id="your-bid" style="display: flex; flex-direction: column;">
       <div class="align-self-center">
-        <h4>Your Bid</h4>
+        <h5>Your Bid</h5>
       </div>
       <div class="align-self-center">
         <input type="number" id="bid" name="bid" min="0" max="100" step="1"
@@ -63,10 +67,10 @@
         {{ form.bid.errors }}
       </div>
       {% endif %}
-    </div>
-    <div style="display: flex; flex-direction: column;">
-      <div class="btn-container align-self-center">
-        <button class="otree-btn-next btn btn-primary">Next</button>
+      <div style="display: flex; flex-direction: column;">
+        <div class="btn-container align-self-center">
+          <button class="otree-btn-next btn btn-primary">Next</button>
+        </div>
       </div>
     </div>
   </div>
@@ -85,16 +89,6 @@
     prefix: '<span class="credits">C</span>',
   })
 
-  // let creditFormatter = {
-  //   to: function(value) {
-  //     return '<span class="credits">C</span>' + value;
-  //   },
-  //   from: function(value) {
-  //     let dollar_value = value.split(" (")[0].slice(1)
-  //     return Number(dollar_value)
-  //   },
-  // }
-
   prob_style = (js_vars.is_value_treatment) ? 'text-primary':'text-success';
   value_style = (js_vars.is_value_treatment) ? 'text-success':'text-primary';
 
@@ -103,21 +97,23 @@
       value: 0,
       formatter: wNumb({
         decimals: 0,
-        prefix: `<span class="${prob_style}">${js_vars.one_minus_p}%</span>: <span class="credits">C</span>`
+        prefix: `<span class="${prob_style}">${js_vars.one_minus_p}%</span><br><span class="${value_style}"><span class="credits">C</span>`,
+        suffix: '</span>'
       })
     },
     {
       value: js_vars.exp_payoff,
       formatter: wNumb({
         decimals: 0,
-        prefix: 'Avg: <span class="credits">C</span>',
+        prefix: 'Avg<br><span class="credits">C</span>',
       })
     },
     {
       value: js_vars.exp_value,
       formatter: wNumb({
         decimals: 0,
-        prefix: `<span class="${prob_style}">${js_vars.exp_value_prob}%</span>: <span class="credits">C</span>`,
+        prefix: `<span class="${prob_style}">${js_vars.exp_value_prob}%</span><br><span class="${value_style}" ><span class="credits">C</span>`,
+        suffix: '</span>'
       })
     }
   ]
@@ -135,7 +131,7 @@
       'max': 100,
     },
     behaviour: 'tap-drag',
-    tooltips: [creditFormatter, creditFormatter, creditFormatter],
+    tooltips: [false, creditFormatter, false],
     pips: {
       mode: 'values',
       values: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
