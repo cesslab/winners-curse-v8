@@ -51,11 +51,9 @@ output {
     height: 100%;
 }
 
-.guess-item {
-    grid-row: 2;
-    grid-column: 1;
-    padding: 10px;
-    margin-right: 10px;
+#guess-expected-lottery-item {
+    grid-row: 1;
+    grid-column: 2;
 }
 
 .rounded-border {
@@ -82,7 +80,14 @@ output {
     display: grid;
     /* grid-gap: 5em; */
     grid-template-columns: 50% 50%;
-    grid-column-gap: 30px;
+    /*grid-column-gap: 30px;*/
+}
+
+.bid-grid-container {
+    display: grid;
+    /* grid-gap: 5em; */
+    grid-template-columns: 40% 60%;
+    /*grid-column-gap: 30px;*/
 }
 
 .header-item {
@@ -192,4 +197,20 @@ input[type=number].form-control {
 
 .highlight-background {
     background-color: #eaeaea;
+}
+
+#guess-slider {
+    margin: 3.5em 2em 3.5em 2em;
+}
+#expected-lottery-slider {
+    margin: 3.5em 2em 3.5em 2em;
+}
+
+#expected-lottery-item {
+    margin-top: 10px;
+}
+
+.slider-summary {
+    color: #888;
+    margin-left: 30px;
 }

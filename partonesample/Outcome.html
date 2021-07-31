@@ -1,0 +1,18 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'global/css/outcome.css' %}">
+    <link rel="stylesheet" href="{% static 'global/css/round_navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'global/css/lottery_navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'global/css/custom_font.css' %}">
+{% endblock %}
+
+{% block content %}
+  <div id="outcome-header">
+      <h3 class="text-center">Outcome of the Auction</h3>
+  </div>
+
+  {% include 'partonesample/OutcomeIntro.html' %}
+  {% next_button %}
+{% endblock %}

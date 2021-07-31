@@ -1,0 +1,22 @@
+<div id="expected-lottery-info" class="rounded-border">
+  <div class="text-center">
+    <h5><u>The Expected Lottery</u></h5>
+  </div>
+  <div id="expected-lottery-slider">
+  </div>
+  <div class="text-center">
+    <p>
+      {% if player.is_value_treatment %}
+        Given that your signal is the highest one, the lottery pays either
+        <b><span class="text-success"><span class="credits">C</span>0</span></b> or
+        an expected Selected Value of <b><span class="text-success"><span class="credits">C</span>{{player.up_ticket}}</span></b>
+        on average, it would pay out <b><span class="credits">C</span>{{player.prep_worth}}</b>
+        (={{player.up_ticket}}x{{player.fixed_value}}/100).
+      {% else %}
+       **Need text description for CP treatment**
+      {% endif %}
+    </p>
+  </div>
+</div>
+{% if player.is_value_treatment %}
+{% endif %}

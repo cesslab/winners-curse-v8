@@ -1,11 +1,10 @@
-import random
-
 import ibis
 from pathlib import Path
 
-from otree.api import Page, cu
+from otree.api import Page
 
 from .constants import Constants
+
 
 class Outcome(Page):
     form_model = "player"
@@ -37,6 +36,9 @@ class Bid(Page):
 
     @staticmethod
     def vars_for_template(player):
+        one_minus_p = (100-player.fixed_value) if player.is_value_treatment else (100-player.up_ticket)
+        exp_value = player.up_ticket if player.is_value_treatment else player.fixed_value
+        exp_value_prob = player.fixed_value if player.is_value_treatment else player.up_ticket
         return {
             "player": player,
             "num_rounds": range(1, Constants.ROUNDS_PER_LOTTERY+1),
@@ -51,12 +53,23 @@ class Bid(Page):
             "guess": player.get_guess(),
             "min_guess": player.get_min_guess(),
             "max_guess": player.get_max_guess(),
+            "one_minus_p": one_minus_p,
+            "exp_value": exp_value,
+            "exp_value_prob": exp_value_prob,
         }
 
     @staticmethod
     def js_vars(player):
         loader = ibis.loaders.FileLoader(Path(__file__).parent)
         return dict(
+            guess=player.get_guess(),
+            min_guess=player.get_min_guess(),
+            max_guess=player.get_max_guess(),
+            one_minus_p=(100-player.fixed_value) if player.is_value_treatment else (100-player.up_ticket),
+            exp_payoff=player.prep_worth,
+            exp_value=player.up_ticket if player.is_value_treatment else player.fixed_value,
+            exp_value_prob=player.fixed_value if player.is_value_treatment else player.up_ticket,
+            is_value_treatment=player.is_value_treatment,
             display_intro=(player.round_number == 1),
             highest_signal=loader('HighestSignal.html').render({"player": player}),
             belief=loader('Belief.html').render({"player": player}),

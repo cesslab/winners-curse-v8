@@ -13,64 +13,41 @@
 <link href='https://fonts.googleapis.com/css?family=Palanquin:500' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="{% static 'global/css/font-awesome.css' %}">
 
+<link rel="stylesheet" href="{% static 'global/css/nouislider.css' %}">
+<link rel="stylesheet" href="{% static 'global/css/custom_nouislider.css' %}">
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/3.4.0/introjs.css" integrity="sha512-i+WzzATeaDcwcfi5CfLn63qBxrKqiQvDLC+IChU1zVlaPguPgJlddOR07nU28XOoIOno9WPmJ+3ccUInpmHxBg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="{% static 'global/css/tooltip.css' %}">
 {% endblock %}
 
 {% block content %}
   {% include 'global/LotteryRoundNavbar.html' %}
-  <div class="bid-grid">
+  <div class="bid-grid-container">
     <div class="lottery-item">
       <div class="lottery-header">
         <h5 class="text-center"><u>Lottery of type {{ player.lottery_order }}</u></h5>
       </div>
       {% include 'global/Lottery.html' %}
-      {% include 'global/YourSignal.html' %}
-    </div>
-    <div class="guess-item worth-table text-center" style="display: flex; flex-direction: column;" id="your-guess">
-      <p>
-        Your own guess about the highest of the other 3 bids was:
-      </p>
-      <table class="table align-self-center" style="table-layout: fixed;" id="belief-table">
-        <thead>
-        <tr>
-          <th>At Least</th>
-          <th>Best</th>
-          <th>At Most</th>
-        </tr>
-        </thead>
-        <tr>
-          <td>{{min_guess}}</td>
-          <td>{{guess}}</td>
-          <td>{{max_guess}}</td>
-        </tr>
-      </table>
-    </div>
-    <div class="hint-text-item">
-      <div class="span-item highest-signal-item" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
-        <div id="highest-signal">
-          <div class="lottery-header pb-3">
-            <h5 class="text-center"><u>Your new info in Part II</u></h5>
-          </div>
-          <p><b>You are the bidder with the highest signal.</b></p>
+      {% include 'global/YourSignalAndInterpretation.html' %}
+      <div id="">
+        <div class="lottery-header pb-3">
+          <h5 class="text-center"><u>Your new info in Part II</u></h5>
+        </div>
+        <div class="text-center">
+          <span><b>You are the bidder with the highest signal.</b></span>
         </div>
       </div>
     </div>
-    <div id="hint-lottery-item">
-      <div id="lottery-ticket-info">
-        <div id="right-top-ticket-info">
-          <p>Given that your signal of {{player.signal4}} is the highest one, the lottery ticket
-            is probably as follows:</p>
-        </div>
-        <div id="right-lottery">
-          {% include 'global/RightLottery.html' %}
-        </div>
+    <div id="guess-expected-lottery-item">
+      <div id="guess-item">
+        {% include 'global/GuessSlider.html' %}
       </div>
-      <div id="lottery-expected-payoff">
-        {% include 'global/LotteryInfo.html' %}
+      <div id="expected-lottery-item">
+        {% include 'global/ExpectedLotterySlider.html' %}
       </div>
     </div>
   </div>
+
   <div>
     <div id="your-bid" style="display: flex; flex-direction: column;">
       <div class="align-self-center">
@@ -97,6 +74,107 @@
 {% endblock %}
 
 {% block scripts %}
+<script src="{% static 'global/js/wNumb.js' %}"></script>
+<script src="{% static 'global/js/nouislider.js' %}"></script>
+<script>
+  let guessSlider = document.getElementById('guess-slider');
+  let expectedLotterySlider = document.getElementById('expected-lottery-slider');
+
+  let creditFormatter = wNumb({
+    decimals: 0,
+    prefix: '<span class="credits">C</span>',
+  })
+
+  // let creditFormatter = {
+  //   to: function(value) {
+  //     return '<span class="credits">C</span>' + value;
+  //   },
+  //   from: function(value) {
+  //     let dollar_value = value.split(" (")[0].slice(1)
+  //     return Number(dollar_value)
+  //   },
+  // }
+
+  prob_style = (js_vars.is_value_treatment) ? 'text-primary':'text-success';
+  value_style = (js_vars.is_value_treatment) ? 'text-success':'text-primary';
+
+  expectedLotteryValues = [
+    {
+      value: 0,
+      formatter: wNumb({
+        decimals: 0,
+        prefix: `<span class="${prob_style}">${js_vars.one_minus_p}%</span><br><span class="credits">C</span>`
+      })
+    },
+    {
+      value: js_vars.exp_payoff,
+      formatter: wNumb({
+        decimals: 0,
+        prefix: 'Avg<br><span class="credits">C</span>',
+      })
+    },
+    {
+      value: js_vars.exp_value,
+      formatter: wNumb({
+        decimals: 0,
+        prefix: `<span class="${prob_style}">${js_vars.exp_value_prob}%</span><br><span class="credits">C</span>`,
+      })
+    }
+  ]
+
+  expectedLotteryValues.sort((a, b) => (a.value > b.value) ? 1 : -1)
+
+  guessSlider.setAttribute('disabled', true) ;
+  noUiSlider.create(guessSlider, {
+    start: [js_vars.min_guess, js_vars.guess, js_vars.max_guess],
+    direction: 'ltr',
+    connect: true,
+    step: 1,
+    range: {
+      'min': 0,
+      'max': 100,
+    },
+    behaviour: 'tap-drag',
+    tooltips: [creditFormatter, creditFormatter, creditFormatter],
+    pips: {
+      mode: 'values',
+      values: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+      density: 1,
+      stepped: true,
+      format: wNumb({
+        decimals: 0,
+        prefix: '<span class="credits">C</span>',
+      }),
+    }
+  });
+
+  expectedLotterySlider.setAttribute('disabled', true);
+  noUiSlider.create(expectedLotterySlider, {
+    start: [expectedLotteryValues[0].value, expectedLotteryValues[1].value, expectedLotteryValues[2].value],
+    direction: 'ltr',
+    connect: false,
+    step: 1,
+    range: {
+      'min': 0,
+      'max': 100,
+    },
+    behaviour: 'tap-drag',
+    tooltips: [expectedLotteryValues[0].formatter, expectedLotteryValues[1].formatter, expectedLotteryValues[2].formatter],
+    pips: {
+      mode: 'values',
+      values: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+      density: 1,
+      stepped: true,
+      format: wNumb({
+        decimals: 0,
+        prefix: '<span class="credits">C</span>',
+      }),
+    }
+  });
+
+  // mergeTooltips(expectedLotterySlider, 15, ' - ');
+
+</script>
 <script>
   let alertList = document.querySelectorAll('.alert')
   alertList.forEach(function (alert) {
@@ -104,53 +182,4 @@
   })
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/3.4.0/intro.min.js" integrity="sha512-QWPjvFqgUJv5X6Sq5NXmwJQSEzUEBxmCCcgqJd5/5luZnS6llRbshsChUNKrFlZ4bshKZEJxAHDB+WWdMsGvUA==" crossorigin="anonymous"></script>
-<script>
-  if (js_vars.display_intro) {
-    introJs().setOptions({
-      steps: [
-        {
-          title: 'Your Guess',
-          intro: js_vars.belief,
-          position: 'left',
-          element: document.querySelector(('#your-guess'))
-        },
-        {
-          title: 'The Expected Lottery',
-          intro: js_vars.right_top_ticket_info,
-          position: 'left',
-          element: document.querySelector(('#right-top-ticket-info'))
-        },
-        {
-          title: "The Lottery's Expected Payoff",
-          intro: js_vars.lottery_expected_payoff,
-          element: document.querySelector(('#lottery-expected-payoff'))
-        },
-        {
-          title: 'Your Bid',
-          intro: js_vars.your_bid_one,
-          position: 'left',
-          element: document.querySelector(('#your-bid'))
-        },
-        {
-          title: 'Your Bid (Continued)',
-          intro: js_vars.your_bid_two,
-          position: 'left',
-          element: document.querySelector(('#your-bid'))
-        },
-        {
-          title: 'Benchmark 1: Your Guess',
-          intro: js_vars.your_guess,
-          position: 'right',
-          element: document.querySelector(('#your-guess'))
-        },
-        {
-          title: "Benchmark 2: The Expected Lottery",
-          intro: js_vars.right_lottery_info,
-          element: document.querySelector(('#lottery-ticket-info'))
-        },
-      ]
-    }).start();
-  }
-
-</script>
 {% endblock %}
