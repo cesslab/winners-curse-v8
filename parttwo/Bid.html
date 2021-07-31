@@ -103,21 +103,21 @@
       value: 0,
       formatter: wNumb({
         decimals: 0,
-        prefix: `<span class="${prob_style}">${js_vars.one_minus_p}%</span><br><span class="credits">C</span>`
+        prefix: `<span class="${prob_style}">${js_vars.one_minus_p}%</span>: <span class="credits">C</span>`
       })
     },
     {
       value: js_vars.exp_payoff,
       formatter: wNumb({
         decimals: 0,
-        prefix: 'Avg<br><span class="credits">C</span>',
+        prefix: 'Avg: <span class="credits">C</span>',
       })
     },
     {
       value: js_vars.exp_value,
       formatter: wNumb({
         decimals: 0,
-        prefix: `<span class="${prob_style}">${js_vars.exp_value_prob}%</span><br><span class="credits">C</span>`,
+        prefix: `<span class="${prob_style}">${js_vars.exp_value_prob}%</span>: <span class="credits">C</span>`,
       })
     }
   ]
