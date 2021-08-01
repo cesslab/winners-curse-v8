@@ -8,12 +8,13 @@
 <link rel="stylesheet" href="{% static 'global/css/round_navbar.css' %}">
 <link rel="stylesheet" href="{% static 'global/css/lottery_navbar.css' %}">
 <link rel="stylesheet" href="{% static 'global/css/footer.css' %}">
-<link rel="stylesheet" href="{% static 'global/css/custom_font.css' %}">
+<!--<link rel="stylesheet" href="{% static 'global/css/custom_font.css' %}">-->
 
 <link href='https://fonts.googleapis.com/css?family=Palanquin:500' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="{% static 'global/css/font-awesome.css' %}">
 
 <link rel="stylesheet" href="{% static 'global/css/nouislider.css' %}">
+<link rel="stylesheet" href="{% static 'global/css/nouislider_small_tooltips.css' %}">
 <link rel="stylesheet" href="{% static 'global/css/custom_nouislider.css' %}">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/3.4.0/introjs.css" integrity="sha512-i+WzzATeaDcwcfi5CfLn63qBxrKqiQvDLC+IChU1zVlaPguPgJlddOR07nU28XOoIOno9WPmJ+3ccUInpmHxBg==" crossorigin="anonymous" />
@@ -37,6 +38,26 @@
           <span><b>You are the bidder with the highest signal.</b></span>
         </div>
       </div>
+      <div id="your-bid" style="display: flex; flex-direction: column;">
+        <div class="align-self-center">
+          <h5>Your Bid</h5>
+        </div>
+        <div class="align-self-center">
+          <input type="number" id="bid" name="bid" min="0" max="100" step="1"
+                 class="center-input form-control" value="{{ form.bid.object_data }}" placeholder=""
+                 data-for="bid-selected-probability" required>
+        </div>
+        {% if form.bid.errors %}
+        <div class="alert alert-danger align-self-center">
+          {{ form.bid.errors }}
+        </div>
+        {% endif %}
+        <div style="display: flex; flex-direction: column;">
+          <div class="btn-container align-self-center">
+            <button class="otree-btn-next btn btn-primary">Next</button>
+          </div>
+        </div>
+      </div>
     </div>
     <div id="guess-expected-lottery-item">
       <div id="guess-item">
@@ -50,26 +71,6 @@
 
   <div class="bid-grid-container">
     <div></div>
-    <div id="your-bid" style="display: flex; flex-direction: column;">
-      <div class="align-self-center">
-        <h5>Your Bid</h5>
-      </div>
-      <div class="align-self-center">
-        <input type="number" id="bid" name="bid" min="0" max="100" step="1"
-               class="center-input form-control" value="{{ form.bid.object_data }}" placeholder=""
-               data-for="bid-selected-probability" required>
-      </div>
-      {% if form.bid.errors %}
-      <div class="alert alert-danger align-self-center">
-        {{ form.bid.errors }}
-      </div>
-      {% endif %}
-      <div style="display: flex; flex-direction: column;">
-        <div class="btn-container align-self-center">
-          <button class="otree-btn-next btn btn-primary">Next</button>
-        </div>
-      </div>
-    </div>
   </div>
   {% include 'parttwosample/BidRereadInstructions.html' %}
 {% endblock %}
@@ -83,7 +84,8 @@
 
   let creditFormatter = wNumb({
     decimals: 0,
-    prefix: '<span class="credits">C</span>',
+    prefix: '<div style="display: inline; border: 1px solid #D9D9D9; border-radius: 3px; padding: 5px;"><span class="small-credits">C</span>',
+    suffix: '</div>'
   })
 
   prob_style = (js_vars.is_value_treatment) ? 'text-primary':'text-success';
@@ -94,23 +96,24 @@
       value: 0,
       formatter: wNumb({
         decimals: 0,
-        prefix: `<span class="${prob_style}">${js_vars.one_minus_p}%</span><br><span class="${value_style}"><span class="credits">C</span>`,
-        suffix: '</span>'
+        prefix: `<div style="display: inline; border: 1px solid #D9D9D9; border-radius: 3px; padding: 5px;"><span class="${prob_style}">${js_vars.one_minus_p}%</span><br><span class="${value_style}"><span class="small-credits">C</span>`,
+        suffix: '</span></div>'
       })
     },
     {
       value: js_vars.exp_payoff,
       formatter: wNumb({
         decimals: 0,
-        prefix: 'Avg<br><span class="credits">C</span>',
+        prefix: '<div style="display: inline; border: 1px solid #D9D9D9; border-radius: 3px; padding: 5px;"><span>Avg<br><span class="small-credits">C</span>',
+        suffix: '</span></div>'
       })
     },
     {
       value: js_vars.exp_value,
       formatter: wNumb({
         decimals: 0,
-        prefix: `<span class="${prob_style}">${js_vars.exp_value_prob}%</span><br><span class="${value_style}" ><span class="credits">C</span>`,
-        suffix: '</span>'
+        prefix: `<div style="display: inline; border: 1px solid #D9D9D9; border-radius: 3px; padding: 5px;"><span><span class="${prob_style}">${js_vars.exp_value_prob}%</span><br><span class="${value_style}" ><span class="small-credits">C</span>`,
+        suffix: '</span></span></div>'
       })
     }
   ]

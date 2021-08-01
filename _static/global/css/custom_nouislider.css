@@ -8,3 +8,17 @@
 .noUi-handle::before, .noUi-handle::after {
     content: none;
 }
+
+.grid-tooltip-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.noUi-horizontal .noUi-tooltip {
+    display: flex;
+}
+
+.noUi-tooltip {
+    border: none !important;
+    padding: 0 !important;
+}

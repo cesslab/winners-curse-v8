@@ -5,6 +5,13 @@ span.credits::before {
     content: '\2016';
     position: absolute;
     margin-left: 2px;
+    font-size: 1rem;
+    font-weight: 400;
+}
+span.small-credits::before {
+    content: '\2016';
+    position: absolute;
+    margin-left: 2px;
     font-size: 0.75rem;
     font-weight: 400;
 }
