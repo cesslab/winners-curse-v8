@@ -86,7 +86,7 @@ output {
 .bid-grid-container {
     display: grid;
     /* grid-gap: 5em; */
-    grid-template-columns: 40% 60%;
+    grid-template-columns: 50% 50%;
     /*grid-column-gap: 30px;*/
 }
 
@@ -214,3 +214,4 @@ input[type=number].form-control {
     color: #888;
     margin-left: 30px;
 }
+

@@ -1,0 +1,42 @@
+<div class="accordion" id="accordionExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        Re-read Instructions
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        {% include 'parttwosample/PartTwoInstructions.html' %}
+
+        <h4>The auction</h4>
+        {% include 'parttwosample/PartOneLotteryInfo.html' %}
+
+        <h4>Your new info</h4>
+        {% include 'parttwosample/HighestSignalInfo.html' %}
+
+        <h4>Your bid</h4>
+        {% include 'parttwosample/YourBidPartOne.html' %}
+        {% include 'parttwosample/YourBidPartTwo.html' %}
+
+        <h4>Benchmarks</h4>
+        {% include 'parttwosample/BenchmarkInfo.html' %}
+
+        <h4>Benchmark 1: Your guess about others' highest bid</h4>
+        {% include 'parttwosample/BenchmarkGuessInfo.html' %}
+
+        <h4>Benchmark 2: Expected Lottery</h4>
+        {% include 'parttwosample/BenchmarkExpectedLotteryInfo.html' %}
+
+        <h4>The Expected Selected Value</h4>
+        {% include 'parttwosample/BenchmarkExpectedSelectedValueInfo.html' %}
+
+        <h4>The Expected Payoff</h4>
+        {% include 'parttwosample/BenchmarkExpectedPayoffInfo.html' %}
+
+        <h4>Benchmark 2: The Expected Lottery (continued)</h4>
+        {% include 'parttwosample/BenchmarkExpectedLotteryContinuedInfo.html' %}
+      </div>
+    </div>
+  </div>
+</div>

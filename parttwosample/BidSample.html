@@ -1,0 +1,380 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'global/css/bid.css' %}">
+<link rel="stylesheet" href="{% static 'global/css/progress.css' %}">
+
+<link rel="stylesheet" href="{% static 'global/css/round_navbar.css' %}">
+<link rel="stylesheet" href="{% static 'global/css/lottery_navbar.css' %}">
+<link rel="stylesheet" href="{% static 'global/css/footer.css' %}">
+
+<link href='https://fonts.googleapis.com/css?family=Palanquin:500' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="{% static 'global/css/font-awesome.css' %}">
+
+<link rel="stylesheet" href="{% static 'global/css/custom_font.css' %}">
+<link rel="stylesheet" href="{% static 'global/css/nouislider.css' %}">
+<!--<link rel="stylesheet" href="{% static 'global/css/nouislider_small_tooltips.css' %}">-->
+<link rel="stylesheet" href="{% static 'global/css/custom_nouislider.css' %}">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/3.4.0/introjs.css" integrity="sha512-i+WzzATeaDcwcfi5CfLn63qBxrKqiQvDLC+IChU1zVlaPguPgJlddOR07nU28XOoIOno9WPmJ+3ccUInpmHxBg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="{% static 'global/css/tooltip.css' %}">
+{% endblock %}
+
+  {% block content %}
+  {% include 'global/LotteryRoundNavbar.html' %}
+  <div class="grid-container" id="old-bid-info">
+    <div id="lottery-ticket-signal">
+      <div id="lottery-ticket">
+        <div class="lottery-header">
+          <h5 class="text-center"><u>Lottery of type {{ player.lottery_order }}</u></h5>
+        </div>
+        <div>
+          <p>Consider the following lottery ticket with two possible prizes, 0 and a value v.</p>
+        </div>
+        {% include 'global/Lottery.html' %}
+      </div>
+      {% include 'global/YourSignal.html' %}
+      {% include 'global/SignalInterpretation.html' %}
+    </div>
+    <div style="height: 100%;">
+      <div class="d-flex flex-column align-items-center"  id="your-task">
+        <div id="additional-information" class="pt-4">
+          <div id="highest-signal-1" class="pt-4">
+            <div class="lottery-header pb-3">
+              <h5 class="text-center"><u>Your new info in Part II</u></h5>
+            </div>
+            <p><b>You are the bidder with the highest signal.</b></p>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+<div id="bid-lottery-benchmark-container"  class="bid-grid-container">
+  <div class="lottery-item">
+    <div class="lottery-header">
+      <h5 class="text-center"><u>Lottery of type {{ player.lottery_order }}</u></h5>
+    </div>
+    {% include 'global/Lottery.html' %}
+    {% include 'global/YourSignalAndInterpretation.html' %}
+    <div id="">
+      <div class="lottery-header pb-3">
+        <h5 class="text-center"><u>Your new info in part II</u></h5>
+      </div>
+      <div class="text-center">
+        <span><b>You are the bidder with the highest signal.</b></span>
+      </div>
+    </div>
+  </div>
+
+  <div id="guess-expected-lottery-item">
+    <div id="guess-item">
+      <div id="guess-item-container">
+        {% include 'global/GuessSlider.html' %}
+      </div>
+    </div>
+    <div id="expected-lottery-item">
+      <div id="expected-lottery-item-container">
+        {% include 'global/ExpectedLotterySlider.html' %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="bid-input" class="bid-grid-container">
+  <div></div>
+  <div id="bid-item">
+    <div id="bid-item-container" style="display: flex; flex-direction: column;">
+      <div class="align-self-center">
+        <h5>Your Bid</h5>
+      </div>
+      <div class="align-self-center">
+        <input type="number" id="bid" name="bid" min="0" max="100" step="1"
+               class="center-input form-control" value="" placeholder=""
+               data-for="bid-selected-probability" disabled>
+      </div>
+    </div>
+  </div>
+</div>
+<button id="previous-btn" class="btn btn-success mb-3 otree-btn-next" type="button">previous</button>
+<button id="next-btn" class="btn btn-primary mb-3 otree-btn-next" type="button">next</button>
+
+<button id="otree-next-btn" class="otree-btn-next btn mb-3 btn-primary">Next</button>
+
+{% include 'parttwosample/BidRereadInstructions.html' %}
+{% endblock %}
+
+{% block scripts %}
+<script   src="https://code.jquery.com/jquery-3.6.0.min.js"   integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="   crossorigin="anonymous"></script>
+<script   src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"   integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="   crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/3.4.0/intro.min.js" integrity="sha512-QWPjvFqgUJv5X6Sq5NXmwJQSEzUEBxmCCcgqJd5/5luZnS6llRbshsChUNKrFlZ4bshKZEJxAHDB+WWdMsGvUA==" crossorigin="anonymous"></script>
+<script src="{% static 'global/js/wNumb.js' %}"></script>
+<script src="{% static 'global/js/nouislider.js' %}"></script>
+<script>
+  let guessSlider = document.getElementById('guess-slider');
+  let expectedLotterySlider = document.getElementById('expected-lottery-slider');
+
+  let creditFormatter = wNumb({
+    decimals: 0,
+    prefix: '<span class="credits">C</span>',
+  })
+
+  prob_style = (js_vars.is_value_treatment) ? 'text-primary':'text-success';
+  value_style = (js_vars.is_value_treatment) ? 'text-success':'text-primary';
+
+  expectedLotteryValues = [
+    {
+      value: 0,
+      formatter: wNumb({
+        decimals: 0,
+        prefix: `<span class="${prob_style}">${js_vars.one_minus_p}%</span><br><span class="${value_style}"><span class="credits">C</span>`,
+        suffix: '</span>'
+      })
+    },
+    {
+      value: js_vars.exp_payoff,
+      formatter: wNumb({
+        decimals: 0,
+        prefix: 'Avg<br><span class="credits">C</span>',
+      })
+    },
+    {
+      value: js_vars.exp_value,
+      formatter: wNumb({
+        decimals: 0,
+        prefix: `<span class="${prob_style}">${js_vars.exp_value_prob}%</span><br><span class="${value_style}" ><span class="credits">C</span>`,
+        suffix: '</span>'
+      })
+    }
+  ]
+
+  expectedLotteryValues.sort((a, b) => (a.value > b.value) ? 1 : -1)
+
+  guessSlider.setAttribute('disabled', true) ;
+  noUiSlider.create(guessSlider, {
+    start: [js_vars.min_guess, js_vars.guess, js_vars.max_guess],
+    direction: 'ltr',
+    connect: true,
+    step: 1,
+    range: {
+      'min': 0,
+      'max': 100,
+    },
+    behaviour: 'tap-drag',
+    tooltips: [false, creditFormatter, false],
+    pips: {
+      mode: 'values',
+      values: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+      density: 1,
+      stepped: true,
+      format: wNumb({
+        decimals: 0,
+        prefix: '<span class="credits">C</span>',
+      }),
+    }
+  });
+
+  expectedLotterySlider.setAttribute('disabled', true);
+  noUiSlider.create(expectedLotterySlider, {
+    start: [expectedLotteryValues[0].value, expectedLotteryValues[1].value, expectedLotteryValues[2].value],
+    direction: 'ltr',
+    connect: false,
+    step: 1,
+    range: {
+      'min': 0,
+      'max': 100,
+    },
+    behaviour: 'tap-drag',
+    tooltips: [expectedLotteryValues[0].formatter, expectedLotteryValues[1].formatter, expectedLotteryValues[2].formatter],
+    pips: {
+      mode: 'values',
+      values: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+      density: 1,
+      stepped: true,
+      format: wNumb({
+        decimals: 0,
+        prefix: '<span class="credits">C</span>',
+      }),
+    }
+  });
+</script>
+<script>
+  function showOldBidInfoWalkThrough() {
+    introJs().setOptions({
+      steps: [
+        {
+          title: '',
+          intro: js_vars.part_one_lottery_info,
+          position: 'right',
+          element: document.querySelector(('#lottery-ticket-signal'))
+        },
+        {
+          title: '',
+          intro: js_vars.highest_signal_info,
+          position: 'left',
+          element: document.querySelector(('#highest-signal-1'))
+        },
+      ]
+    }).start();
+  }
+
+  function showBenchMarkInfo() {
+    introJs().setOptions({
+      steps: [
+        {
+          title: 'Your Bid',
+          intro: js_vars.your_bid_one,
+          position: 'left',
+          element: document.querySelector(('#bid-item'))
+        },
+        {
+          title: 'Your Bid (Continued)',
+          intro: js_vars.your_bid_two,
+          position: 'left',
+          element: document.querySelector(('#bid-item'))
+        },
+        {
+          title: 'Benchmarks',
+          intro: js_vars.benchmark_info,
+          position: 'left',
+          element: document.querySelector(('#guess-expected-lottery-item'))
+        },
+        {
+          title: "Benchmark 1: Your guess about others' highest bid",
+          intro: js_vars.benchmark_guess_info,
+          position: 'left',
+          element: document.querySelector(('#guess-item'))
+        },
+        {
+          title: "Benchmark 2: The Expected Lottery",
+          intro: js_vars.benchmark_expected_lottery_info,
+          position: 'left',
+          element: document.querySelector(('#expected-lottery-item'))
+        },
+        {
+          title: "The Expected Selected Value",
+          intro: js_vars.benchmark_expected_selected_value_info,
+          position: 'left',
+          element: document.querySelector(('#expected-lottery-item'))
+        },
+        {
+          title: "The Expected Payoff",
+          intro: js_vars.benchmark_expected_payoff_info,
+          position: 'left',
+          element: document.querySelector(('#expected-lottery-item'))
+        },
+        {
+          title: "Benchmark 2: The Expected Lottery (continued)",
+          intro: js_vars.benchmark_expected_lottery_continued_info,
+          position: 'left',
+          element: document.querySelector(('#expected-lottery-item'))
+        },
+      ]
+    }).start();
+  }
+
+  function showExpectedLotteryWalkThrough() {
+    introJs().setOptions({
+      steps: [
+        {
+          title: 'The Expected Lottery',
+          intro: js_vars.right_top_ticket_info,
+          position: 'left',
+          element: document.querySelector(('#right-top-ticket-info'))
+        },
+        {
+          title: "The Lottery's Expected Payoff",
+          intro: js_vars.lottery_expected_payoff,
+          element: document.querySelector(('#lottery-expected-payoff'))
+        },
+        {
+          title: "Benchmark 2: The Expected Lottery",
+          intro: js_vars.right_lottery_info,
+          element: document.querySelector(('#lottery-ticket-info'))
+        },
+      ]
+    }).start();
+  }
+
+  let screenStates = {oldBidInfo: 0, newBidInfo: 1, benchmarks: 2}
+  let eventTypes = {next: 0, previous: 1};
+  let screenState = screenStates.oldBidInfo;
+
+  showOldBidInfoWalkThrough();
+
+  $("#previous-btn").hide();
+  $("#otree-next-btn").hide();
+  $("#new-bid-info").hide();
+  $("#your-bid").hide();
+
+  $("#bid-lottery-benchmark-container").hide();
+  $("#bid-input").hide();
+
+  $("#guess-item-container").addClass("hidden");
+  $("#guess-item").addClass("highlight-background");
+
+  $("#expected-lottery-item-container").addClass("hidden");
+  $("#expected-lottery-item").addClass("highlight-background");
+
+  $("#bid-item-container").addClass("hidden");
+  $("#bid-item").addClass("highlight-background");
+  function btnClickHandler(e, eventType, currentScreenState) {
+    switch (currentScreenState) {
+      case screenStates.oldBidInfo:
+        if (eventType === eventTypes.next) {
+          $("#old-bid-info").fadeOut("slow", () => {
+            // $("#previous-btn").show();
+
+            $("#bid-lottery-benchmark-container").fadeIn("slow");
+            $("#bid-input").fadeIn("slow")
+            screenState = screenStates.newBidInfo
+          });
+        }
+        break;
+      case screenStates.newBidInfo:
+        if (eventType === eventTypes.next) {
+          $("#guess-item-container").hide();
+          $("#guess-item-container").removeClass("hidden");
+          $("#guess-item").removeClass("highlight-background");
+          $("#guess-item-container").fadeIn("slow", () => {
+          });
+
+          $("#expected-lottery-item-container").hide()
+          $("#expected-lottery-item-container").removeClass("hidden")
+          $("#expected-lottery-item").removeClass("highlight-background");
+          $("#expected-lottery-item-container").fadeIn("slow", () => {
+          });
+
+          $("#bid-item-container").hide()
+          $("#bid-item-container").removeClass("hidden");
+          $("#bid-item").removeClass("highlight-background");
+          $("#bid-item-container").fadeIn("slow", () => {
+            showBenchMarkInfo();
+          });
+
+          $("#next-btn").hide();
+          $("#otree-next-btn").show();
+        }
+        // Previous
+        else {
+          $("#previous-btn").hide();
+          $("#new-bid-info").fadeOut("slow", () => {
+          $("#old-bid-info").fadeIn("slow")
+          });
+          screenState = screenStates.oldBidInfo;
+        }
+        break;
+    }
+  }
+
+  document.getElementById("next-btn").addEventListener('click', e => {
+    console.log(`next ${screenState}`)
+    btnClickHandler(e, eventTypes.next, screenState)
+  });
+
+  document.getElementById("previous-btn").addEventListener('click', e => {
+    btnClickHandler(e, eventTypes.previous, screenState)
+  });
+
+</script>
+{% endblock %}
