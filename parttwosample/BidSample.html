@@ -23,50 +23,27 @@
 
   {% block content %}
   {% include 'global/LotteryRoundNavbar.html' %}
-  <div class="grid-container" id="old-bid-info">
-    <div id="lottery-ticket-signal">
-      <div id="lottery-ticket">
+<div id="bid-lottery-benchmark-container"  class="bid-grid-container">
+  <div id="bid-lottery-benchmark-item" class="lottery-item">
+    <div id="lottery-signal-interpretation-item">
+      <div>
         <div class="lottery-header">
           <h5 class="text-center"><u>Lottery of type {{ player.lottery_order }}</u></h5>
         </div>
-        <div>
-          <p>Consider the following lottery ticket with two possible prizes, 0 and a value v.</p>
-        </div>
         {% include 'global/Lottery.html' %}
       </div>
-      {% include 'global/YourSignal.html' %}
-      {% include 'global/SignalInterpretation.html' %}
+      <div>
+        {% include 'global/YourSignalAndInterpretation.html' %}
+      </div>
     </div>
-    <div style="height: 100%;">
-      <div class="d-flex flex-column align-items-center"  id="your-task">
-        <div id="additional-information" class="pt-4">
-          <div id="highest-signal-1" class="pt-4">
-            <div class="lottery-header">
-              <h5 class="text-center"><u>Your new info in Part II</u></h5>
-            </div>
-            <p><b>You are the bidder with the highest signal.</b></p>
-          </div>
+    <div id="highest-signal-item">
+      <div id="highest-signal-container">
+        <div class="lottery-header pb-3">
+          <h5 class="text-center"><u>Your new info in part II</u></h5>
         </div>
-      </div>
-    </div>
-</div>
-<div id="bid-lottery-benchmark-container"  class="bid-grid-container">
-  <div class="lottery-item">
-    <div>
-      <div class="lottery-header">
-        <h5 class="text-center"><u>Lottery of type {{ player.lottery_order }}</u></h5>
-      </div>
-      {% include 'global/Lottery.html' %}
-    </div>
-    <div>
-      {% include 'global/YourSignalAndInterpretation.html' %}
-    </div>
-    <div>
-      <div class="lottery-header pb-3">
-        <h5 class="text-center"><u>Your new info in part II</u></h5>
-      </div>
-      <div class="text-center">
-        <span><b>You are the bidder with the highest signal.</b></span>
+        <div class="text-center">
+          <span><b>You are the bidder with the highest signal.</b></span>
+        </div>
       </div>
     </div>
     <div id="bid-item">
@@ -295,19 +272,27 @@ function mergeTooltips(slider, threshold, separator) {
           title: '',
           intro: js_vars.part_one_lottery_info,
           position: 'right',
-          element: document.querySelector(('#lottery-ticket-signal'))
-        },
-        {
-          title: '',
-          intro: js_vars.highest_signal_info,
-          position: 'left',
-          element: document.querySelector(('#highest-signal-1'))
+          element: document.querySelector(('#lottery-signal-interpretation-item'))
         },
       ]
     }).start();
   }
 
-  function showBenchMarkInfo() {
+  function showNewInfoPartTwo(){
+    introJs().setOptions({
+      steps: [
+        {
+          title: '',
+          intro: js_vars.highest_signal_info,
+          position: 'left',
+          element: document.querySelector(('#highest-signal-container'))
+        },
+      ]
+    }).start();
+
+  }
+
+  function showBidInfo() {
     introJs().setOptions({
       steps: [
         {
@@ -322,6 +307,14 @@ function mergeTooltips(slider, threshold, separator) {
           position: 'left',
           element: document.querySelector(('#bid-item'))
         },
+      ]
+    }).start();
+
+  }
+
+  function showBenchMarkInfo() {
+    introJs().setOptions({
+      steps: [
         {
           title: 'Benchmarks',
           intro: js_vars.benchmark_info,
@@ -350,7 +343,7 @@ function mergeTooltips(slider, threshold, separator) {
           title: "The Expected Payoff",
           intro: js_vars.benchmark_expected_payoff_info,
           position: 'left',
-          element: document.querySelector(('#expected-lottery-item'))
+          element: document.querySelector(('#expected-payoff-label'))
         },
         {
           title: "Benchmark 2: The Expected Lottery (continued)",
@@ -362,32 +355,9 @@ function mergeTooltips(slider, threshold, separator) {
     }).start();
   }
 
-  function showExpectedLotteryWalkThrough() {
-    introJs().setOptions({
-      steps: [
-        {
-          title: 'The Expected Lottery',
-          intro: js_vars.right_top_ticket_info,
-          position: 'left',
-          element: document.querySelector(('#right-top-ticket-info'))
-        },
-        {
-          title: "The Lottery's Expected Payoff",
-          intro: js_vars.lottery_expected_payoff,
-          element: document.querySelector(('#lottery-expected-payoff'))
-        },
-        {
-          title: "Benchmark 2: The Expected Lottery",
-          intro: js_vars.right_lottery_info,
-          element: document.querySelector(('#lottery-ticket-info'))
-        },
-      ]
-    }).start();
-  }
-
-  let screenStates = {oldBidInfo: 0, newBidInfo: 1, benchmarks: 2}
+  let screenStates = {signalLottery: 0, yourNewInfo: 1, bidInfo: 2, benchmarks: 3}
   let eventTypes = {next: 0, previous: 1};
-  let screenState = screenStates.oldBidInfo;
+  let screenState = screenStates.signalLottery;
 
   showOldBidInfoWalkThrough();
 
@@ -396,11 +366,14 @@ function mergeTooltips(slider, threshold, separator) {
   $("#new-bid-info").hide();
   $("#your-bid").hide();
 
-  $("#bid-lottery-benchmark-container").hide();
+  // $("#bid-lottery-benchmark-container").hide();
   $("#bid-input").hide();
 
   $("#guess-item-container").addClass("hidden");
   $("#guess-item").addClass("highlight-background");
+
+  $("#highest-signal-container").addClass("hidden");
+  $("#highest-signal-item").addClass("highlight-background");
 
   $("#expected-lottery-item-container").addClass("hidden");
   $("#expected-lottery-item").addClass("highlight-background");
@@ -409,18 +382,29 @@ function mergeTooltips(slider, threshold, separator) {
   $("#bid-item").addClass("highlight-background");
   function btnClickHandler(e, eventType, currentScreenState) {
     switch (currentScreenState) {
-      case screenStates.oldBidInfo:
+      case screenStates.signalLottery:
         if (eventType === eventTypes.next) {
-          $("#old-bid-info").fadeOut("slow", () => {
-            // $("#previous-btn").show();
-
-            $("#bid-lottery-benchmark-container").fadeIn("slow");
-            $("#bid-input").fadeIn("slow")
-            screenState = screenStates.newBidInfo
+          $("#highest-signal-container").hide();
+          $("#highest-signal-container").removeClass("hidden");
+          $("#highest-signal-item").removeClass("highlight-background");
+          $("#highest-signal-container").fadeIn("slow", () => {
+            showNewInfoPartTwo();
           });
+          screenState = screenStates.yourNewInfo;
         }
         break;
-      case screenStates.newBidInfo:
+      case screenStates.yourNewInfo:
+        if (eventType === eventTypes.next) {
+            $("#bid-item-container").hide()
+            $("#bid-item-container").removeClass("hidden");
+            $("#bid-item").removeClass("highlight-background");
+            $("#bid-item-container").fadeIn("slow", () => {
+              showBidInfo();
+            });
+          screenState = screenStates.bidInfo;
+        }
+        break;
+      case screenStates.bidInfo:
         if (eventType === eventTypes.next) {
           $("#guess-item-container").hide();
           $("#guess-item-container").removeClass("hidden");
@@ -432,25 +416,20 @@ function mergeTooltips(slider, threshold, separator) {
           $("#expected-lottery-item-container").removeClass("hidden")
           $("#expected-lottery-item").removeClass("highlight-background");
           $("#expected-lottery-item-container").fadeIn("slow", () => {
-          });
-
-          $("#bid-item-container").hide()
-          $("#bid-item-container").removeClass("hidden");
-          $("#bid-item").removeClass("highlight-background");
-          $("#bid-item-container").fadeIn("slow", () => {
             showBenchMarkInfo();
           });
 
           $("#next-btn").hide();
           $("#otree-next-btn").show();
+          screenState = screenStates.benchmarks;
         }
         // Previous
         else {
-          $("#previous-btn").hide();
-          $("#new-bid-info").fadeOut("slow", () => {
-          $("#old-bid-info").fadeIn("slow")
-          });
-          screenState = screenStates.oldBidInfo;
+          // $("#previous-btn").hide();
+          // $("#new-bid-info").fadeOut("slow", () => {
+          // $("#old-bid-info").fadeIn("slow")
+          // });
+          // screenState = screenStates.signalLottery;
         }
         break;
     }
