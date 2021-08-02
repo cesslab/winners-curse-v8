@@ -3,6 +3,7 @@
 
 {% block styles %}
   {% include 'global/QuestionCSS.html' %}
+  <link href="https://vjs.zencdn.net/7.11.4/video-js.css" rel="stylesheet" />
 {% endblock %}
 
 {% block content %}
@@ -164,14 +165,42 @@ let alertList = document.querySelectorAll('.alert')
     updateSliderHandleOnInputFieldChange(event.target);
   })
 </script>
+<script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/3.4.0/intro.min.js" integrity="sha512-QWPjvFqgUJv5X6Sq5NXmwJQSEzUEBxmCCcgqJd5/5luZnS6llRbshsChUNKrFlZ4bshKZEJxAHDB+WWdMsGvUA==" crossorigin="anonymous"></script>
 <script type="text/javascript">
-    IMG_URL = '{% static "global/img/q1a_graph.png" %}';
+    window.HELP_IMPROVE_VIDEOJS = false;
+    VIDEO_URL = '{% static "global/video/sample.mp4" %}';
+
 </script>
 <script>
   if (js_vars.display_intro) {
     introJs().setOptions({
       steps: [
+        {
+          title: 'Sample Video',
+          intro: `
+                  <video
+                      id="my-video"
+                      class="video-js"
+                      controls
+                      preload="auto"
+                      width="640"
+                      height="264"
+                      poster=""
+                      data-setup="{}"
+                    >
+                      <source src="${VIDEO_URL}" type="video/mp4" />
+                      <p class="vjs-no-js">
+                        To view this video please enable JavaScript, and consider upgrading to a
+                        web browser that
+                        <a href="https://videojs.com/html5-video-support/" target="_blank"
+                          >supports HTML5 video</a
+                        >
+                      </p>
+                    </video>
+          `,
+          element: document.querySelector(('#lottery-ticket'))
+        },
         {
           title: 'Lottery Ticket',
           intro: js_vars.lottery_ticket,
