@@ -13,14 +13,12 @@
         on average, it would pay out <span id="expected-payoff-label"><b><span class="credits">C</span>{{player.prep_worth}}</b>
         (={{player.up_ticket}}x{{player.fixed_value}}/100)</span>.
       {% else %}
-      Given that your signal is the highest one, the lottery pays an expected Selected Value of
-      <b><span class="text-primary"><span class="credits">C</span>{{player.fixed_value}}</span></b> with a
-      <b><span class="text-success">{{ player.up_ticket }}%</span></b> probability. Thus, on average, it would pay out
-      <span id="expected-payoff-label"><b><span class="credits">C</span>{{player.prep_worth}}</b>
+      Given that your signal is the highest one, the lottery pays a value of
+      <b><span class="text-primary"><span class="credits">C</span>{{player.fixed_value}}</span></b>
+      with an expected Selected Probability of <b><span class="text-success">{{ player.up_ticket }}%</span></b>.
+      Thus, on average, it would pay out <span id="expected-payoff-label"><b><span class="credits">C</span>{{player.prep_worth}}</b>
       (={{player.fixed_value}}x{{player.up_ticket}}/100).</span>
       {% endif %}
     </p>
   </div>
 </div>
-{% if player.is_value_treatment %}
-{% endif %}

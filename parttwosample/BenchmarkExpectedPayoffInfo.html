@@ -1,5 +1,11 @@
 <p>
+  {% if player.is_value_treatment %}
   The lottery pays off the {{ player.selected_value_text }} sometimes and zero otherwise. Taking into account the
   probability of getting the {{ player.selected_value_text }} and zero otherwise, you can see here what you would get, on average,
   if you played this lottery very often.
+  {% else %}
+  The lottery pays off the value sometimes and zero otherwise. Taking into account the
+   {{ player.selected_value_text }} of getting the value and zero otherwise, you can see here what you would get, on average,
+  if you played this lottery very often.
+  {% endif %}
 </p>
