@@ -53,7 +53,7 @@
   {% endif %}
 </div>
 
-<div class="text-center">
+<div>
   <div class="text-center">
     <h4>Your Answer</h4>
     <p>You estimated the highest of the other 3 bids to be between
@@ -68,7 +68,9 @@
     <p>Your earnings in this round are <span class="credits">C</span>{{earnings}}.</p>
   </div>
   <div>
-    <h4>Details</h4>
+    <div class="text-center">
+      <h4>Details</h4>
+    </div>
     <p>
       {% if high_bid_within_interval %}
       {% if computed_value_non_zero %}

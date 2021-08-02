@@ -207,7 +207,7 @@ function mergeTooltips(slider, threshold, separator) {
       value: js_vars.exp_value,
       formatter: wNumb({
         decimals: 0,
-        prefix: `<div style="display: inline; border: 1px solid #D9D9D9; border-radius: 3px; padding: 5px;"><span><span class="${prob_style}">${js_vars.exp_value_prob}%</span><br><span class="${value_style}" ><span class="small-credits">C</span>`,
+        prefix: `<div id="expected-value-label" style="display: inline; border: 1px solid #D9D9D9; border-radius: 3px; padding: 5px;"><span><span class="${prob_style}">${js_vars.exp_value_prob}%</span><br><span class="${value_style}" ><span class="small-credits">C</span>`,
         suffix: '</span></span></div>'
       })
     }
@@ -337,7 +337,7 @@ function mergeTooltips(slider, threshold, separator) {
           title: "The Expected Selected Value",
           intro: js_vars.benchmark_expected_selected_value_info,
           position: 'left',
-          element: document.querySelector(('#expected-lottery-item'))
+          element: document.querySelector(('#expected-value-label'))
         },
         {
           title: "The Expected Payoff",

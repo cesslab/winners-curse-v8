@@ -50,6 +50,7 @@ class Bid(Page):
                     player.round_number != 1
                     and ((player.round_number - 1) % Constants.ROUNDS_PER_LOTTERY) == 0
                 ),
+            "highest_others_bid": player.highest_others_bid,
             "guess": player.get_guess(),
             "min_guess": player.get_min_guess(),
             "max_guess": player.get_max_guess(),

@@ -104,7 +104,7 @@ class BidHistoryPlayer:
         return round_number == payoff_round and lottery_number == payoff_lottery
 
     def is_highest_bidder(self):
-        return self.bid > self.bid1 and self.bid > self.bid2 and self.bid > self.bid3
+        return self.bid > self.highest_others_bid
 
     def is_bid_tied(self):
         return self.bid == self.bid1 or self.bid == self.bid2 or self.bid == self.bid3
