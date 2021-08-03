@@ -13,6 +13,8 @@ class Outcome(Page):
     def vars_for_template(player):
         return {
             "player": player,
+            "tie": player.tie,
+            "win_tie_break": player.win_tie_break,
             "num_rounds": range(1, Constants.ROUNDS_PER_LOTTERY + 1),
             "num_lotteries": range(1, Constants.NUM_LOTTERIES + 1),
             "highest_others_bid": player.highest_others_bid,
