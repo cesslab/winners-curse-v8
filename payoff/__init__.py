@@ -98,4 +98,4 @@ class QuestionPayoffDebug(Page):
         }
 
 
-page_sequence = [GuessPayoff, BidPayoff, FinalPayoff, PayoffDebug]
+page_sequence = [GuessPayoff, BidPayoff, FinalPayoff]
