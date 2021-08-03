@@ -42,3 +42,15 @@ ADMIN_PASSWORD = environ.get('OTREE_ADMIN_PASSWORD')
 DEMO_PAGE_INTRO_HTML = """ """
 
 SECRET_KEY = getenv("SECRET_KEY", "6264303853766")
+
+ROOMS = [
+    {
+        'name': 'cess_lab',
+        'display_name': 'CESS Lab',
+    },
+]
+# for flexibility, you can set it in the environment variable OTREE_AUTH_LEVEL
+AUTH_LEVEL = environ.get('OTREE_AUTH_LEVEL')
+
+# Consider '', None, and '0' to be empty/false
+DEBUG = (environ.get('OTREE_PRODUCTION') in {None, '', '0'})
