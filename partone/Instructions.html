@@ -9,9 +9,14 @@ Part I
 {% endblock %}
 
 {% block content %}
-<p>
-  You will now begin the experiment. From now on, every single decision of yours might be relevant for your final payment.
-</p>
+<div class="text-center py-1">
+  {% include 'global/PartOneInstructionVideo.html' %}
+</div>
+<div>
+  <p>
+    You will now begin the experiment. From now on, every single decision of yours might be relevant for your final payment.
+  </p>
+</div>
 
 {% next_button %}
 {% endblock %}
