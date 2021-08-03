@@ -19,6 +19,8 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/3.4.0/introjs.css" integrity="sha512-i+WzzATeaDcwcfi5CfLn63qBxrKqiQvDLC+IChU1zVlaPguPgJlddOR07nU28XOoIOno9WPmJ+3ccUInpmHxBg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="{% static 'global/css/tooltip.css' %}">
+
+<link href="https://vjs.zencdn.net/7.11.4/video-js.css" rel="stylesheet" />
 {% endblock %}
 
 {% block content %}
@@ -69,10 +71,9 @@
     </div>
   </div>
 
-  <div class="bid-grid-container">
-    <div></div>
+  <div class="pt-3">
+    {% include 'parttwosample/BidRereadInstructions.html' %}
   </div>
-  {% include 'parttwosample/BidRereadInstructions.html' %}
 {% endblock %}
 
 {% block scripts %}
@@ -99,13 +100,17 @@
       }
     });
 
+    // Executes per handle on update
+    // positions <array>: handle values
     slider.noUiSlider.on('update', function (values, handle, unencoded, tap, positions) {
-
+      if (handle > 0) {
+        return;
+      }
       var pools = [[]];
       var poolPositions = [[]];
       var poolValues = [[]];
       var poolTooltips = [[]];
-      var atPool = 0;
+      var gPoolIndex = 0;
 
       // Assign the first tooltip to the first pool, if the tooltip is configured
       if (tooltips[0]) {
@@ -115,30 +120,34 @@
         poolTooltips[0][0] = tooltips[0].innerHTML;
       }
 
-      for (var i = 1; i < positions.length; i++) {
-        if (!tooltips[i] || (positions[i] - positions[i - 1]) > threshold) {
-          atPool++;
-          pools[atPool] = [];
-          poolValues[atPool] = [];
-          poolPositions[atPool] = [];
-          poolTooltips[atPool] = [];
+      // Initialize arrays for merging
+      for (var handleIndex = 1; handleIndex < positions.length; handleIndex++) {
+        if (!tooltips[handleIndex] || (positions[handleIndex] - positions[handleIndex - 1]) > threshold) {
+          gPoolIndex++;
+          pools[gPoolIndex] = [];
+          poolValues[gPoolIndex] = [];
+          poolPositions[gPoolIndex] = [];
+          poolTooltips[gPoolIndex] = [];
         }
 
-        if (tooltips[i]) {
-          pools[atPool].push(i);
-          poolValues[atPool].push(values[i]);
-          poolPositions[atPool].push(positions[i]);
-          poolTooltips[atPool].push(tooltips[i].innerHTML)
+        // Add the tooltips and associated values to their corresponding pool arrays
+        if (tooltips[handleIndex]) {
+          pools[gPoolIndex].push(handleIndex);
+          poolValues[gPoolIndex].push(values[handleIndex]);
+          poolPositions[gPoolIndex].push(positions[handleIndex]);
+          poolTooltips[gPoolIndex].push(tooltips[handleIndex].innerHTML)
         }
       }
 
       pools.forEach(function (pool, poolIndex) {
         var handlesInPool = pool.length;
 
-        for (var j = 0; j < handlesInPool; j++) {
-          var handleNumber = pool[j];
+        // Loop through each tooltip in this pool.
+        for (var poolHandleIndex = 0; poolHandleIndex < handlesInPool; poolHandleIndex++) {
+          var handleNumber = pool[poolHandleIndex];
 
-          if (j === handlesInPool - 1) {
+          // Is the last tooltip in this pool list
+          if (poolHandleIndex === (handlesInPool - 1)) {
             var offset = 0;
 
             poolPositions[poolIndex].forEach(function (value) {
@@ -150,20 +159,22 @@
             var lastOffset = 1000 - 10 * poolPositions[poolIndex][last];
             offset = (textIsRtl && !isVertical ? 100 : 0) + (offset / handlesInPool) - lastOffset;
 
-            // Center this tooltip over the affected handles
+            // Merge all the tooltips in this pool separated by the separator, and override the
+            // inner HTML for the last tooltip with the merged result.
             tooltips[handleNumber].innerHTML = poolTooltips[poolIndex].join(separator);
             tooltips[handleNumber].style.display = 'flex';
             tooltips[handleNumber].style[direction] = offset + '%';
-          } else {
-            // Hide this tooltip
+          }
+          // Hide all tooltips in this pool but the last
+          else {
             tooltips[handleNumber].style.display = 'none';
           }
         }
       });
+      slider.noUiSlider.off('update.__tooltips');
     });
   }
-</script>
-<script>
+
   let guessSlider = document.getElementById('guess-slider');
   let expectedLotterySlider = document.getElementById('expected-lottery-slider');
 
@@ -179,33 +190,62 @@
   expectedLotteryValues = [
     {
       value: 0,
-      formatter: wNumb({
-        decimals: 0,
-        prefix: `<div style="display: inline; border: 1px solid #D9D9D9; border-radius: 3px; padding: 5px;"><span class="${prob_style}">${js_vars.one_minus_p}%</span><br><span class="${value_style}"><span class="small-credits">C</span>`,
-        suffix: '</span></div>'
-      })
+      formatter: {
+        to: function(value) {
+          return `
+            <div style="display: inline; border: 1px solid #D9D9D9; border-radius: 3px; padding: 5px;">
+                  <span class="${prob_style}">${js_vars.one_minus_p}%</span>
+                  <br>
+                  <span class="${value_style}"><span class="small-credits">C</span>${value}</span>
+              </div>`;
+        }
+      }
+      // formatter: wNumb({
+      //   decimals: 0,
+      //   prefix: `<div style="display: inline; border: 1px solid #D9D9D9; border-radius: 3px; padding: 5px;"><span class="${prob_style}">${js_vars.one_minus_p}%</span><br><span class="${value_style}"><span class="small-credits">C</span>`,
+      //   suffix: '</span></div>'
+      // })
     },
     {
       value: js_vars.exp_payoff,
-      formatter: wNumb({
-        decimals: 0,
-        prefix: '<div style="display: inline; border: 1px solid #D9D9D9; border-radius: 3px; padding: 5px;"><span>Avg<br><span class="small-credits">C</span>',
-        suffix: '</span></div>'
-      })
+      formatter: {
+        to: function(value) {
+          return `
+            <div style="display: inline; border: 1px solid #D9D9D9; border-radius: 3px; padding: 5px;">
+                <span>Avg<br><span class="small-credits">C</span>${value}</span>
+            </div>`;
+        }
+      }
+      // formatter: wNumb({
+      //   decimals: 0,
+      //   prefix: '<div style="display: inline; border: 1px solid #D9D9D9; border-radius: 3px; padding: 5px;"><span>Avg<br><span class="small-credits">C</span>',
+      //   suffix: '</span></div>'
+      // })
     },
     {
       value: js_vars.exp_value,
-      formatter: wNumb({
-        decimals: 0,
-        prefix: `<div style="display: inline; border: 1px solid #D9D9D9; border-radius: 3px; padding: 5px;"><span><span class="${prob_style}">${js_vars.exp_value_prob}%</span><br><span class="${value_style}" ><span class="small-credits">C</span>`,
-        suffix: '</span></span></div>'
-      })
+      formatter: {
+        to: function(value) {
+          return `
+            <div style="display: inline; border: 1px solid #D9D9D9; border-radius: 3px; padding: 5px;">
+              <span>
+                <span class="${prob_style}">${js_vars.exp_value_prob}%</span>
+                <br>
+                <span class="${value_style}" ><span class="small-credits">C</span>${value}</span>
+              </span>
+            </div>`;
+        }
+      }
+      // formatter: wNumb({
+      //   decimals: 0,
+      //   prefix: `<div style="display: inline; border: 1px solid #D9D9D9; border-radius: 3px; padding: 5px;"><span><span class="${prob_style}">${js_vars.exp_value_prob}%</span><br><span class="${value_style}" ><span class="small-credits">C</span>`,
+      //   suffix: '</span></span></div>'
+      // })
     }
   ]
 
   expectedLotteryValues.sort((a, b) => (a.value > b.value) ? 1 : -1)
 
-  guessSlider.setAttribute('disabled', true) ;
   noUiSlider.create(guessSlider, {
     start: [js_vars.min_guess, js_vars.guess, js_vars.max_guess],
     direction: 'ltr',
@@ -228,8 +268,8 @@
       }),
     }
   });
+  guessSlider.setAttribute('disabled', true) ;
 
-  expectedLotterySlider.setAttribute('disabled', true);
   noUiSlider.create(expectedLotterySlider, {
     start: [expectedLotteryValues[0].value, expectedLotteryValues[1].value, expectedLotteryValues[2].value],
     direction: 'ltr',
@@ -252,9 +292,8 @@
       }),
     }
   });
-
+  expectedLotterySlider.setAttribute('disabled', true);
   mergeTooltips(expectedLotterySlider, 10, '');
-
 </script>
 <script>
   let alertList = document.querySelectorAll('.alert')
@@ -262,5 +301,5 @@
     new bootstrap.Alert(alert)
   })
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/3.4.0/intro.min.js" integrity="sha512-QWPjvFqgUJv5X6Sq5NXmwJQSEzUEBxmCCcgqJd5/5luZnS6llRbshsChUNKrFlZ4bshKZEJxAHDB+WWdMsGvUA==" crossorigin="anonymous"></script>
+<script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
 {% endblock %}

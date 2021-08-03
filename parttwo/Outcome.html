@@ -30,15 +30,19 @@
     </div>
     <div class="text-center">
         <span>
+          {% if player.tie %}
+              You and at least one other bidder submitted identical highest bids.
+              {% if player.win_tie_break %}
+              <br>The computer randomly selected you as the winner.<br><br>
+              {% else %}
+              <br>The computer randomly selected one other bidder as the winner.<br><br>
+              {% endif %}
+          {% endif %}
+
+        </span>
+        <span>
         {% if player.winner %}
             You bought the lottery.
-        {% elif player.tie %}
-            You and at least one other bidder submitted identical highest bids.
-          {% if player.win_tie_break %}
-          The computer randomly selected you as the winner.
-          {% else %}
-          The computer randomly selected one other bidder as the winner.
-          {% endif %}
         {% else %}
             You did not buy the lottery.
         {% endif %}

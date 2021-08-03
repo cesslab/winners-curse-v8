@@ -5,10 +5,14 @@
 {% endblock %}
 
 {% block styles %}
+<link href="https://vjs.zencdn.net/7.11.4/video-js.css" rel="stylesheet" />
 {% endblock %}
 
 {% block content %}
 {% include 'parttwosample/PartTwoInstructions.html' %}
-
 {% next_button %}
+{% endblock %}
+
+{% block scripts %}
+<script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
 {% endblock %}

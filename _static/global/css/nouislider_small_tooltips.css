@@ -22,3 +22,8 @@ span.credits {
 .font-weight-bold {
     font-weight: bold;
 }
+
+.noUi-tooltip {
+    border: none !important;
+    padding: 0 !important;
+}

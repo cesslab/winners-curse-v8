@@ -1,44 +1,53 @@
-<h3>Part I</h3>
-<p>
-  The experiment has 20 rounds. In each round, you will participate in an auction. At the beginning of every auction,
-  you will be randomly matched with three other participants who participated in this auction in a previous
-  experimental session. Your bid will be compared with theirs to calculate your payoff.
-</p>
-<p>
-  We will explain to you the procedure of an auction in the following order:
-</p>
-<ol type="1">
-  <li>The auction prize: a lottery ticket</li>
-  <li>Information about the lottery</li>
-  <li>The possible auction outcomes</li>
-  <li>In Part I you will make a guess about something</li>
-  <li>In Part II you will place a bid</li>
-</ol>
-<h4>What is the prize?</h4>
-<p>
-  In every round a prize will be auctioned off. The prize will be a lottery ticket. Any lottery is characterized by two features:
-</p>
-
-<ol type="1">
-  <li>A {% if player.is_value_treatment %}Selected {% endif %}Value (in <span class="credits">C</span> ): a non-zero amount of credits that the lottery possibly pays off and,</li>
-  <li>A {% if player.is_value_treatment %}probability{% else %}Selected Probability{% endif %} (in %): the probability of receiving the non-zero amount of credits.</li>
-</ol>
-<p>For instance, consider the following lottery ticket:</p>
-
-{% include 'partonesample/SampleLottery.html' %}
+<div class="text-center pt-2">
+  <h3>Part I</h3>
+</div>
+<div class="text-center py-1">
+  {% include 'global/PartOneInstructionVideo.html' %}
+</div>
 
 <div>
   <p>
-    In the auction you will be bidding for such lotteries. In this example,
-    <span class="credits">C</span>{% if player.is_value_treatment%}20 {%else%}70 {%endif%}
-    is the {% if player.is_value_treatment%} Selected Value {%else%} value {%endif%} and
-    {% if player.is_value_treatment%} 70% {%else%} 20% {%endif%} is the
-    {% if player.is_value_treatment %} probability {% else %} Selected Probability {% endif %}.
-    This means that this lottery pays <span class="credits">C</span>{% if player.is_value_treatment%}20 {%else%}70 {%endif%}
-    with a {% if player.is_value_treatment %} 70% {% else %} 20% {%endif%} chance and pays
-    <span class="credits">C</span>0 with {% if player.is_value_treatment %} a 30% {% else %} an 80% {% endif %} chance.
-    The outcome of this lottery is then either
-    <span class="credits">C</span>{% if player.is_value_treatment%}20 {%else%}70 {%endif%} or
-    <span class="credits">C</span>0.
+    The experiment has 20 rounds. In each round, you will participate in an auction. At the beginning of every auction,
+    you will be randomly matched with three other participants who participated in this auction in a previous
+    experimental session. Your bid will be compared with theirs to calculate your payoff.
   </p>
+  <p>
+    We will explain to you the procedure of an auction in the following order:
+  </p>
+  <ol type="1">
+    <li>The auction prize: a lottery ticket</li>
+    <li>Information about the lottery</li>
+    <li>The possible auction outcomes</li>
+    <li>In Part I you will make a guess about something</li>
+    <li>In Part II you will place a bid</li>
+  </ol>
+  <h4>What is the prize?</h4>
+  <p>
+    In every round a prize will be auctioned off. The prize will be a lottery ticket. Any lottery is characterized by two features:
+  </p>
+
+  <ol type="1">
+    <li>A {% if player.is_value_treatment %}Selected {% endif %}Value (in <span class="credits">C</span> ): a non-zero amount of credits that the lottery possibly pays off and,</li>
+    <li>A {% if player.is_value_treatment %}probability{% else %}Selected Probability{% endif %} (in %): the probability of receiving the non-zero amount of credits.</li>
+  </ol>
+  <p>For instance, consider the following lottery ticket:</p>
+
+  {% include 'partonesample/SampleLottery.html' %}
+
+  <div>
+    <p>
+      In the auction you will be bidding for such lotteries. In this example,
+      <span class="credits">C</span>{% if player.is_value_treatment%}20 {%else%}70 {%endif%}
+      is the {% if player.is_value_treatment%} Selected Value {%else%} value {%endif%} and
+      {% if player.is_value_treatment%} 70% {%else%} 20% {%endif%} is the
+      {% if player.is_value_treatment %} probability {% else %} Selected Probability {% endif %}.
+      This means that this lottery pays <span class="credits">C</span>{% if player.is_value_treatment%}20 {%else%}70 {%endif%}
+      with a {% if player.is_value_treatment %} 70% {% else %} 20% {%endif%} chance and pays
+      <span class="credits">C</span>0 with {% if player.is_value_treatment %} a 30% {% else %} an 80% {% endif %} chance.
+      The outcome of this lottery is then either
+      <span class="credits">C</span>{% if player.is_value_treatment%}20 {%else%}70 {%endif%} or
+      <span class="credits">C</span>0.
+    </p>
+  </div>
+
 </div>

@@ -19,6 +19,8 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/3.4.0/introjs.css" integrity="sha512-i+WzzATeaDcwcfi5CfLn63qBxrKqiQvDLC+IChU1zVlaPguPgJlddOR07nU28XOoIOno9WPmJ+3ccUInpmHxBg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="{% static 'global/css/tooltip.css' %}">
+
+<link href="https://vjs.zencdn.net/7.11.4/video-js.css" rel="stylesheet" />
 {% endblock %}
 
   {% block content %}
@@ -335,7 +337,7 @@ function mergeTooltips(slider, threshold, separator) {
           element: document.querySelector(('#expected-lottery-item'))
         },
         {
-          title: "The Expected Selected Value",
+          title: `The Expected ${js_vars.selected_value_text}`,
           intro: js_vars.benchmark_expected_selected_value_info,
           position: 'left',
           element: document.querySelector(('#expected-value-label'))
@@ -446,4 +448,5 @@ function mergeTooltips(slider, threshold, separator) {
   });
 
 </script>
+<script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
 {% endblock %}

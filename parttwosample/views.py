@@ -93,6 +93,7 @@ class BidSample(Page):
             exp_value_prob=player.fixed_value if player.is_value_treatment else player.up_ticket,
             is_value_treatment=player.is_value_treatment,
             display_intro=(player.round_number == 1),
+            selected_value_text=player.selected_value_text,
             # Walk-Through
             part_one_lottery_info=loader('PartOneLotteryInfo.html').render({"player": player}),
             highest_signal_info=loader('HighestSignalInfo.html').render({"player": player}),

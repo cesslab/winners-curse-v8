@@ -9,13 +9,18 @@ Summary
 {% endblock %}
 
 {% block content %}
-<p>
-  To summarize, every round has the following structure:
-</p>
-<ol>
-  <li> A lottery ticket is auctioned off.</li>
-  <li>You will receive some information about the lottery.</li>
-  <li>You will guess the highest of the other 3 bids.</li>
-</ol>
-{% next_button %}
+<div>
+  <p>
+    To summarize, every round has the following structure:
+  </p>
+  <ol>
+    <li> A lottery ticket is auctioned off.</li>
+    <li>You will receive some information about the lottery.</li>
+    <li>You will guess the highest of the other 3 bids.</li>
+  </ol>
+  {% next_button %}
+</div>
+<div>
+  {% include 'partonesample/RewatchInstructionVideo.html' %}
+</div>
 {% endblock %}
